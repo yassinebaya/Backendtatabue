@@ -19,11 +19,11 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authConfig -> {
                     authConfig.requestMatchers("/").permitAll();
-                    authConfig.requestMatchers("/user/**").authenticated();
+                    authConfig.requestMatchers("/Test/**").authenticated();
                     authConfig.requestMatchers("/admin/**").denyAll();
 
                 })
-                .formLogin(Customizer.withDefaults()) // Login with browser and Form
+               // .formLogin(Customizer.withDefaults()) // Login with browser and Form
                 .httpBasic(Customizer.withDefaults()); // Login with Insomnia and Basic Auth
         return http.build();
     }

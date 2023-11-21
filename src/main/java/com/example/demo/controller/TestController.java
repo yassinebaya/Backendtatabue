@@ -16,7 +16,7 @@ import java.util.List;
 @CrossOrigin("*")
 public class TestController {
     @GetMapping("/Test")
-    public Object[] demerrertest() {
+    public String demerrertest() {
         Object[] partnerIds = new Object[0];
         try {
             XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
@@ -59,7 +59,7 @@ public class TestController {
             e.printStackTrace();
         }
 
-        return partnerIds;
+        return "yassssss";
     }
 
 }
