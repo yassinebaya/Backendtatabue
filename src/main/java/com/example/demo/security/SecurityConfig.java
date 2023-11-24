@@ -23,12 +23,13 @@ public class SecurityConfig {
 
                 .sessionManagement(sm->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(csrf->csrf.disable())
-                .authorizeHttpRequests(authConfig -> {
+               /* .authorizeHttpRequests(authConfig -> {
                     authConfig.requestMatchers("/").permitAll();
                     authConfig.requestMatchers("/Test/**").authenticated();
                     authConfig.requestMatchers("/admin/**").denyAll();
 
-                })
+                })*/
+                .authorizeHttpRequests(ar->ar.anyRequest().authenticated())
                // .formLogin(Customizer.withDefaults()) // Login with browser and Form
                 .httpBasic(Customizer.withDefaults()); // Login with Insomnia and Basic Auth
         return http.build();
