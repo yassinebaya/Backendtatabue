@@ -62,7 +62,7 @@ public class SecurityConfig {
         var user = User.builder()
                 .username("Ken De Keyser")
                 .password(( passwordEncoder1.encode("password")))
-                .roles("USER")
+                .roles("ATEST")
                 .build();
         return new InMemoryUserDetailsManager(admin, user);
     }
