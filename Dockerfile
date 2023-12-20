@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY target/test_springboot1.jar /app/test_springboot1.jar
 
-EXPOSE 8080
+EXPOSE 8082
 
 CMD ["java", "-jar", "test_springboot1.jar"]
