@@ -80,6 +80,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>test_springboot1</finalName>
 	</build>
 
 </project>
