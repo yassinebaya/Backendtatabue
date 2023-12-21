@@ -22,7 +22,7 @@ public class DemoApplication extends SpringBootServletInitializer{
     }
 	@GetMapping("/Test2")
 	public String demarres(){
-		return "bravo";
+		return "bravo12";
 	}
 
 }
