@@ -42,9 +42,9 @@ public class SecurityConfig {
 
                 })
                // .authorizeHttpRequests(ar->ar.anyRequest().authenticated())
-                //.oauth2ResourceServer(oa->oa.jwt(Customizer.withDefaults()));
+                .oauth2ResourceServer(oa->oa.jwt(Customizer.withDefaults()));
                // .formLogin(Customizer.withDefaults()) // Login with browser and Form
-               .httpBasic(Customizer.withDefaults()); // Login with Insomnia and Basic Auth
+              // .httpBasic(Customizer.withDefaults()); // Login with Insomnia and Basic Auth
 
         return http.build();
     }
