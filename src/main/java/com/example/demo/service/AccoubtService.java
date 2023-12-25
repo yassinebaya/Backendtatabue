@@ -8,5 +8,4 @@ public interface AccoubtService  {
     AppRole addnewRole(String rolname);
     void addRoleToUser();
     void removeRoleFromUser(String username,String Role);
-
 }
