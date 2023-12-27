@@ -35,7 +35,6 @@ import javax.crypto.spec.SecretKeySpec;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
-@AllArgsConstructor
 public class SecurityConfig {
    
     @Autowired
