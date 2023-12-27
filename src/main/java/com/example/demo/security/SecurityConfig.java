@@ -4,6 +4,7 @@ import com.example.demo.service.UserDetailserviceimpl;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -37,6 +38,7 @@ import javax.crypto.spec.SecretKeySpec;
 @AllArgsConstructor
 public class SecurityConfig {
    
+    @Autowired
     private UserDetailserviceimpl userDetailsService;
 
     @Bean

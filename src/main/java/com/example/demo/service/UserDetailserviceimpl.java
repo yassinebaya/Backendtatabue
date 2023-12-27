@@ -1,6 +1,7 @@
 
 package com.example.demo.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,7 +15,7 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class UserDetailserviceimpl implements UserDetailsService {
-
+@Autowired
     private AccoubtService accoubtService;
 
     @Override
