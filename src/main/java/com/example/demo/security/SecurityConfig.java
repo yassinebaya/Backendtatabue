@@ -50,6 +50,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authConfig -> {
                     authConfig.requestMatchers("/").permitAll();
                     authConfig.requestMatchers("/login/**").permitAll();
+                    authConfig.requestMatchers("/profile/**").permitAll();
+
                     authConfig.requestMatchers("/admin/**").denyAll();
 
                 })
