@@ -1,12 +1,18 @@
 package com.example.demo.security;
 
+import com.example.demo.service.UserDetailserviceimpl;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
+
+import lombok.AllArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
@@ -27,7 +33,11 @@ import javax.crypto.spec.SecretKeySpec;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
+@AllArgsConstructor
 public class SecurityConfig {
+   
+    private UserDetailserviceimpl userDetailsService;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -35,22 +45,23 @@ public class SecurityConfig {
 
                 .sessionManagement(sm->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(csrf->csrf.disable())
+            
                 .authorizeHttpRequests(authConfig -> {
                     authConfig.requestMatchers("/").permitAll();
                     authConfig.requestMatchers("/login/**").permitAll();
                     authConfig.requestMatchers("/admin/**").denyAll();
 
                 })
+               
                // .authorizeHttpRequests(ar->ar.anyRequest().authenticated())
-                .oauth2ResourceServer(oa->oa.jwt(Customizer.withDefaults()));
-               // .formLogin(Customizer.withDefaults()) // Login with browser and Form
-              // .httpBasic(Customizer.withDefaults()); // Login with Insomnia and Basic Auth
+                .oauth2ResourceServer(oa->oa.jwt(Customizer.withDefaults()))
+                .userDetailsService(userDetailsService);
 
         return http.build();
     }
 
 
-    @Bean
+   /*  @Bean
     UserDetailsService userDetailsService() {
         PasswordEncoder passwordEncoder1=passwordEncoder();
 
@@ -65,7 +76,7 @@ public class SecurityConfig {
                 .roles("ATEST")
                 .build();
         return new InMemoryUserDetailsManager(admin, user);
-    }
+    }*/
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();

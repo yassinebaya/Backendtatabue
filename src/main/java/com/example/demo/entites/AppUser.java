@@ -18,6 +18,7 @@ public class AppUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
+    private String password;
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<AppRole> appRoles;
 }
