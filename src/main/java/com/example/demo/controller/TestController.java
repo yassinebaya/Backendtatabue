@@ -4,6 +4,7 @@ import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,7 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dtos.UserDTO;
 import com.example.demo.entites.AppUser;
 import com.example.demo.mappers.Maperuser;
+import com.example.demo.repo.AppUserRepository;
 import com.example.demo.service.AccoubtService;
+import com.example.demo.service.ReportService;
 
 import java.net.URL;
 import java.time.Instant;
@@ -41,11 +44,18 @@ public class TestController {
     private AccoubtService accoubtService;
     @Autowired
     private Maperuser maperuser;
-
+    @Autowired
+    private ReportService reportService;
+     private AppUserRepository appUserRepository;
       @GetMapping("/Test1")
       @PreAuthorize("hasAuthority('SCOPE_USER')")
-      public AppUser Btest(String username){
-      AppUser appUser=accoubtService.loadAppUserByname(username);
+      public ResponseEntity<byte[]> Btest1(String username){
+        return reportService.generateReport();
+      }
+      @GetMapping("/Test12")
+      @PreAuthorize("hasAuthority('SCOPE_USER')")
+      public List<AppUser> Btest(String username){
+        List<AppUser> appUser = appUserRepository.findAll();
         return appUser;
       }
 
