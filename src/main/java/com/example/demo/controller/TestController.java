@@ -4,6 +4,7 @@ import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -12,7 +13,13 @@ import org.springframework.security.oauth2.jwt.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.dtos.UserDTO;
+import com.example.demo.entites.AppUser;
+import com.example.demo.mappers.Maperuser;
+import com.example.demo.service.AccoubtService;
 
 import java.net.URL;
 import java.time.Instant;
@@ -26,14 +33,29 @@ import java.util.stream.Collectors;
 @RestController
 @CrossOrigin("*")
 public class TestController {
-
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
     private JwtEncoder jwtEncoder;
+    @Autowired
+    private AccoubtService accoubtService;
+    @Autowired
+    private Maperuser maperuser;
+
+      @GetMapping("/Test1")
+      @PreAuthorize("hasAuthority('SCOPE_USER')")
+      public AppUser Btest(String username){
+      AppUser appUser=accoubtService.loadAppUserByname(username);
+        return appUser;
+      }
+
 
     @PostMapping("/login")
-    public Map<String,String> login(String username, String password){
+    public UserDTO login(String username, String password){
+         AppUser appUser=accoubtService.loadAppUserByname(username);
+
+        
+
     Authentication authentication= authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(username,password));
         Instant instant=Instant.now();
@@ -46,7 +68,10 @@ public class TestController {
                 .build();
         JwtEncoderParameters jwtEncoderParameters=JwtEncoderParameters.from(JwsHeader.with(MacAlgorithm.HS512).build(),jwtClaimsSet);
 String jwt=jwtEncoder.encode(jwtEncoderParameters).getTokenValue();
-return Map.of("access-token",jwt);
+UserDTO userDTO=maperuser.fromUser(appUser);
+userDTO.setJwt(jwt);
+
+return userDTO ;
 
 
     }

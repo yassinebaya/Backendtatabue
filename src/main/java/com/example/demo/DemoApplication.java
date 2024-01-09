@@ -33,6 +33,7 @@ public class DemoApplication extends SpringBootServletInitializer{
 			accoubtService.addnewRole("STAGAIRE");
 			accoubtService.addNewUser("user1","123");
 			accoubtService.addNewUser("user2","123");
+			
 			accoubtService.addRoleToUser("user1","USER");
 			accoubtService.addRoleToUser("user2","ADMIN");
 

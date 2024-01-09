@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.entites.AppRole;
 import com.example.demo.entites.AppUser;
+import com.example.demo.entites.Stagaire;
 import com.example.demo.repo.AppRoleRepository;
 import com.example.demo.repo.AppUserRepository;
 import jakarta.transaction.Transactional;
@@ -25,11 +26,10 @@ public class Accountserviceimpl implements AccoubtService {
   
        AppUser appUser=appUserRepository.findByUsername(username);
         if (appUser!=null) throw new RuntimeException("this user existe déja");
-        AppUser user=AppUser.builder()
-        .username(username)
-        .password(passwordEncoder.encode(password))
-        .build();
-        AppUser savedAppUser=appUserRepository.save(user);
+        Stagaire user=new Stagaire();
+        user.setUsername(username);
+        user.setPassword(passwordEncoder.encode(password));
+        Stagaire savedAppUser=appUserRepository.save(user);
         return savedAppUser;
     }
 

@@ -45,12 +45,13 @@ public class SecurityConfig {
         http
 
                 .sessionManagement(sm->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .cors(cors->cors.disable())
                 .csrf(csrf->csrf.disable())
             
                 .authorizeHttpRequests(authConfig -> {
                     authConfig.requestMatchers("/").permitAll();
                     authConfig.requestMatchers("/login/**").permitAll();
-                    authConfig.requestMatchers("/profile/**").permitAll();
+                    authConfig.requestMatchers("/Test1/**").permitAll();
 
                     authConfig.requestMatchers("/admin/**").denyAll();
 
