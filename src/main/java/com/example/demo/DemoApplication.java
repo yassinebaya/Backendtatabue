@@ -24,18 +24,18 @@ public class DemoApplication extends SpringBootServletInitializer{
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         return builder.sources(DemoApplication.class);
     }
-	@Bean
+//	@Bean
 	CommandLineRunner commandLineRunner(AccoubtService accoubtService){
 
 		return args->{
-		 	accoubtService.addnewRole("USER");
-			accoubtService.addnewRole("ADMIN");
-			accoubtService.addnewRole("STAGAIRE");
-			accoubtService.addNewUser("user1","123");
-			accoubtService.addNewUser("user2","123");
+		 	accoubtService.addnewRole("PUBLIC");
+			//accoubtService.addnewRole("ADMIN");
+			//accoubtService.addnewRole("STAGAIRE");
+			accoubtService.addNewUser("public","123");
+			//accoubtService.addNewUser("user2","123");
 			
-			accoubtService.addRoleToUser("user1","USER");
-			accoubtService.addRoleToUser("user2","ADMIN");
+			//accoubtService.addRoleToUser("user1","USER");
+			accoubtService.addRoleToUser("public","PUBLIC");
 
 		};
 

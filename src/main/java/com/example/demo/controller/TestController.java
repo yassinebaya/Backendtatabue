@@ -46,6 +46,7 @@ public class TestController {
     private Maperuser maperuser;
     @Autowired
     private ReportService reportService;
+        @Autowired
      private AppUserRepository appUserRepository;
       @GetMapping("/Test1")
       @PreAuthorize("hasAuthority('SCOPE_USER')")
@@ -55,8 +56,28 @@ public class TestController {
       @GetMapping("/Test12")
       @PreAuthorize("hasAuthority('SCOPE_USER')")
       public List<AppUser> Btest(String username){
+        System.out.println(username);
         List<AppUser> appUser = appUserRepository.findAll();
         return appUser;
+      }
+      @PostMapping("/addnewrole")
+      @PreAuthorize("hasAuthority('SCOPE_USER')")
+      public String addnewrole(String role){
+               accoubtService.addnewRole(role);
+        return role + "est ajouter sur la base de donné";
+      }
+
+      @PostMapping("/addnewuser")
+    // @PreAuthorize("hasAuthority('SCOPE_USER')")
+      public String addnewuser(String username,String password){
+               accoubtService.addNewUser(username,password);
+        return username + "est ajouter sur la base de donné";
+      }
+      @PostMapping("/addroletouser")
+      @PreAuthorize("hasAuthority('SCOPE_USER')")
+      public String addroletouser(String username,String rol){
+               accoubtService.addRoleToUser(username,rol);
+        return username + "est ajouter sur la base de donné";
       }
 
 

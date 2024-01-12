@@ -47,17 +47,15 @@ public class SecurityConfig {
                 .sessionManagement(sm->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .cors(cors->cors.disable())
                 .csrf(csrf->csrf.disable())
-            
                 .authorizeHttpRequests(authConfig -> {
-                    authConfig.requestMatchers("/").permitAll();
+                    authConfig.requestMatchers("/addnewuser/**").permitAll();
                     authConfig.requestMatchers("/login/**").permitAll();
-                    authConfig.requestMatchers("/Test1/**").permitAll();
-
+                    authConfig.requestMatchers("/Test1/**","/Test12/**","/addnewrole/**","/addroletouser/**").permitAll();
                     authConfig.requestMatchers("/admin/**").denyAll();
 
                 })
                
-               // .authorizeHttpRequests(ar->ar.anyRequest().authenticated())
+                .authorizeHttpRequests(ar->ar.anyRequest().authenticated())
                 .oauth2ResourceServer(oa->oa.jwt(Customizer.withDefaults()))
                 .userDetailsService(userDetailsService);
 
