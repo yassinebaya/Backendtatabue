@@ -30,6 +30,7 @@ public class Accountserviceimpl implements AccoubtService {
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
         Stagaire savedAppUser=appUserRepository.save(user);
+        addnewRole("stagaire");
         return savedAppUser;
     }
 
