@@ -9,9 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.example.demo.service.AccoubtService;
-
 @RestController
 @CrossOrigin("*")
 @SpringBootApplication
@@ -24,7 +22,7 @@ public class DemoApplication extends SpringBootServletInitializer{
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         return builder.sources(DemoApplication.class);
     }
-//	@Bean
+	//@Bean
 	CommandLineRunner commandLineRunner(AccoubtService accoubtService){
 
 		return args->{
@@ -35,7 +33,7 @@ public class DemoApplication extends SpringBootServletInitializer{
 			//accoubtService.addNewUser("user2","123");
 			
 			//accoubtService.addRoleToUser("user1","USER");
-			accoubtService.addRoleToUser("public","PUBLIC");
+		
 
 		};
 

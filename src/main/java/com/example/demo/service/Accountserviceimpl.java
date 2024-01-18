@@ -2,14 +2,18 @@ package com.example.demo.service;
 
 import javax.management.RuntimeErrorException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entites.AppRole;
 import com.example.demo.entites.AppUser;
+import com.example.demo.entites.Inscriptions;
 import com.example.demo.entites.Stagaire;
 import com.example.demo.repo.AppRoleRepository;
 import com.example.demo.repo.AppUserRepository;
+import com.example.demo.repo.InscriptionRepository;
+
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
@@ -17,9 +21,11 @@ import lombok.AllArgsConstructor;
 @Transactional
 @AllArgsConstructor
 public class Accountserviceimpl implements AccoubtService {
+
     private AppUserRepository appUserRepository;
     private AppRoleRepository appRoleRepository;
     private PasswordEncoder passwordEncoder;
+    private InscriptionRepository inscriptionRepository;
 
     @Override
     public AppUser addNewUser(String username,String password) {
@@ -30,7 +36,6 @@ public class Accountserviceimpl implements AccoubtService {
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
         Stagaire savedAppUser=appUserRepository.save(user);
-        addnewRole("stagaire");
         return savedAppUser;
     }
 
@@ -41,14 +46,14 @@ public class Accountserviceimpl implements AccoubtService {
        appRole=AppRole.builder()
               .rolename(rolname)
               .build();
-
-      return appRoleRepository.save(appRole);
+       return appRoleRepository.save(appRole);
     }
 
     @Override
     public void addRoleToUser(String username,String Role) {
-        AppUser appUser=appUserRepository.findByUsername(username);
-        AppRole appRole=appRoleRepository.findByRolename(Role);
+      AppUser appUser=appUserRepository.findByUsername(username);
+      AppRole appRole=appRoleRepository.findByRolename(Role);
+        
         appUser.getAppRoles().add(appRole);
  
     }
@@ -65,6 +70,18 @@ public class Accountserviceimpl implements AccoubtService {
     public AppUser loadAppUserByname(String username) {
        return appUserRepository.findByUsername(username);
     }
+    @Override
+    public Inscriptions loadbyiddossier(String iddossier) {
+       return inscriptionRepository.findByDossier(iddossier);
+    } 
+    @Override
+    public void Activercompte(String dossier) {
+      Inscriptions inscriptions=inscriptionRepository.findByDossier(dossier);
+      if (inscriptions==null && inscriptions.getStatutcompte().equals("active")); throw new RuntimeException("inscriptions est null ou déja activé");
+
+      
+    }
     
+  
 
 }

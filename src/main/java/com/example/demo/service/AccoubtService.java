@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.entites.AppRole;
 import com.example.demo.entites.AppUser;
+import com.example.demo.entites.Inscriptions;
 
 public interface AccoubtService  {
     AppUser addNewUser(String username,String password);
@@ -9,4 +10,8 @@ public interface AccoubtService  {
     void addRoleToUser(String username,String role);
     void removeRoleFromUser(String username,String Role);
     AppUser loadAppUserByname(String username);
+    void Activercompte(String dossier );
+    Inscriptions loadbyiddossier(String userInscription);
+
+    
 }

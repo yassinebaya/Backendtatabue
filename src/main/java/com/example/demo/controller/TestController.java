@@ -4,6 +4,7 @@ import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,17 +14,23 @@ import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.MediaType;
 
 import com.example.demo.dtos.UserDTO;
 import com.example.demo.entites.AppUser;
+import com.example.demo.entites.Inscriptions;
 import com.example.demo.mappers.Maperuser;
 import com.example.demo.repo.AppUserRepository;
 import com.example.demo.service.AccoubtService;
 import com.example.demo.service.ReportService;
+import com.example.demo.services.StorageService;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -48,11 +55,17 @@ public class TestController {
     private ReportService reportService;
         @Autowired
      private AppUserRepository appUserRepository;
-      @GetMapping("/Test1")
+     @Autowired
+     private StorageService service;
+    private Inscriptions inscriptions;
+    
+     @GetMapping("/Test1")
       @PreAuthorize("hasAuthority('SCOPE_USER')")
       public ResponseEntity<byte[]> Btest1(String username){
         return reportService.generateReport();
       }
+
+
       @GetMapping("/Test12")
       @PreAuthorize("hasAuthority('SCOPE_USER')")
       public List<AppUser> Btest(String username){
@@ -60,34 +73,54 @@ public class TestController {
         List<AppUser> appUser = appUserRepository.findAll();
         return appUser;
       }
+
       @PostMapping("/addnewrole")
       @PreAuthorize("hasAuthority('SCOPE_USER')")
       public String addnewrole(String role){
                accoubtService.addnewRole(role);
         return role + "est ajouter sur la base de donné";
       }
-
+      @PostMapping("/addusertorol")
+      // @PreAuthorize("hasAuthority('SCOPE_USER')")
+        public String addusertorol(String username,String rol){
+                 accoubtService.addRoleToUser(username,rol);
+                 return username+"est ajouté" ;
+        }
       @PostMapping("/addnewuser")
     // @PreAuthorize("hasAuthority('SCOPE_USER')")
       public String addnewuser(String username,String password){
                accoubtService.addNewUser(username,password);
-        return username + "est ajouter sur la base de donné";
+               return username+"est ajouté" ;
       }
-      @PostMapping("/addroletouser")
-      @PreAuthorize("hasAuthority('SCOPE_USER')")
-      public String addroletouser(String username,String rol){
-               accoubtService.addRoleToUser(username,rol);
-        return username + "est ajouter sur la base de donné";
+    
+      @PostMapping("/Inscription")
+    // @PreAuthorize("hasAuthority('SCOPE_USER')")
+      public String inscription(String numdossier,String Email,String username,String password){
+               accoubtService.Activercompte(numdossier);
+        return username + "est activer";
       }
+      
+	@PostMapping("/uploadImag")
+	public ResponseEntity<?> uploadImage(@RequestParam("image")MultipartFile file) throws IOException {
+		String uploadImage = service.uploadImage(file);
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(uploadImage);
+	}
 
+	@GetMapping("downloadImage/{fileName}")
+	public ResponseEntity<?> downloadImage(@PathVariable String fileName){
+		byte[] imageData=service.downloadImage(fileName);
+		return ResponseEntity.status(HttpStatus.OK)
+				.contentType(MediaType.valueOf("image/png"))
+				.body(imageData);
+
+	}
+    
 
     @PostMapping("/login")
     public UserDTO login(String username, String password){
          AppUser appUser=accoubtService.loadAppUserByname(username);
-
-        
-
-    Authentication authentication= authenticationManager.authenticate(
+          Authentication authentication= authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(username,password));
         Instant instant=Instant.now();
         String scope=authentication.getAuthorities().stream().map(a->a.getAuthority()).collect(Collectors.joining(" "));

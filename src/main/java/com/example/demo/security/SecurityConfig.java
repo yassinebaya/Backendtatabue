@@ -48,14 +48,12 @@ public class SecurityConfig {
                 .cors(cors->cors.disable())
                 .csrf(csrf->csrf.disable())
                 .authorizeHttpRequests(authConfig -> {
-                    authConfig.requestMatchers("/addnewuser/**").permitAll();
+                    authConfig.requestMatchers("/addnewuser/**","/addusertorol/**","/uploadImag/**","/downloadImage/**").permitAll();
                     authConfig.requestMatchers("/login/**").permitAll();
-                    authConfig.requestMatchers("/Test1/**","/Test12/**","/addnewrole/**","/addroletouser/**").permitAll();
+                    authConfig.requestMatchers("/Test1/**","/Test12/**","/addnewrole/**","/addroletouser/**","/Inscription/**").permitAll();
                     authConfig.requestMatchers("/admin/**").denyAll();
 
                 })
-               
-                .authorizeHttpRequests(ar->ar.anyRequest().authenticated())
                 .oauth2ResourceServer(oa->oa.jwt(Customizer.withDefaults()))
                 .userDetailsService(userDetailsService);
 
