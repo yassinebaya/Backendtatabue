@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.MediaType;
-
 import com.example.demo.dtos.UserDTO;
 import com.example.demo.entites.AppUser;
 import com.example.demo.entites.Inscriptions;
