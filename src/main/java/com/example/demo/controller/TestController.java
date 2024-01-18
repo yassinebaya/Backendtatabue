@@ -99,7 +99,7 @@ public class TestController {
                accoubtService.Activercompte(numdossier);
         return username + "est activer";
       }
-      
+
 	@PostMapping("/uploadImag")
 	public ResponseEntity<?> uploadImage(@RequestParam("image")MultipartFile file) throws IOException {
 		String uploadImage = service.uploadImage(file);
@@ -111,7 +111,7 @@ public class TestController {
 	public ResponseEntity<?> downloadImage(@PathVariable String fileName){
 		byte[] imageData=service.downloadImage(fileName);
 		return ResponseEntity.status(HttpStatus.OK)
-				.contentType(MediaType.valueOf("image/png"))
+				.contentType(MediaType.APPLICATION_PDF)
 				.body(imageData);
 
 	}
