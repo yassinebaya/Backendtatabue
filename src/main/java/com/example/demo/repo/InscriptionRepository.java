@@ -6,6 +6,9 @@ import com.example.demo.entites.Inscriptions;
 import java.util.List;
 
 public interface InscriptionRepository extends JpaRepository<Inscriptions,Long> {
-    Inscriptions findByDossier(String dossier);
+    Inscriptions findByNomuser(String nomuser);
+    Inscriptions findByEmail(String email);
+
+    
     
 } 

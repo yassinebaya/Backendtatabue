@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @DiscriminatorValue("Asistent")
 public class Assistant extends AppUser {
-    
+   
      @OneToMany(fetch = FetchType.EAGER)
     private Collection<Groupe> groupe;
 }

@@ -48,7 +48,7 @@ public class SecurityConfig {
                 .cors(cors->cors.disable())
                 .csrf(csrf->csrf.disable())
                 .authorizeHttpRequests(authConfig -> {
-                    authConfig.requestMatchers("/addnewuser/**","/addusertorol/**","/uploadImag/**","/downloadImage/**").permitAll();
+                    authConfig.requestMatchers("/addnewuser/**","/addusertorol/**","/uploadImag/**","/downloadImage/**","/objet/**","/ajouterinscription/**").permitAll();
                     authConfig.requestMatchers("/login/**").permitAll();
                     authConfig.requestMatchers("/Test1/**","/Test12/**","/addnewrole/**","/addroletouser/**","/Inscription/**").permitAll();
                     authConfig.requestMatchers("/admin/**").denyAll();

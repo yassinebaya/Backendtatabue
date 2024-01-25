@@ -19,10 +19,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @DiscriminatorValue("Stag")
 public class Stagaire extends AppUser {
-    private String Nom;
-    private String Tel;
-    
+
 @OneToMany(fetch = FetchType.EAGER)
     private Collection<Stagairequsetion> Stagairequsetion;
+
+@OneToMany(fetch = FetchType.EAGER)
+private Collection<StagiaireSujects> stagiaireSujects;
     
 }

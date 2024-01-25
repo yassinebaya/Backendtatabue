@@ -18,9 +18,14 @@ public abstract class AppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = true, unique = true)
     private String username;
-    private String Nom;
+    @Column(nullable = true, unique = true)
+    private String email;
+    @Column(nullable = true)
     private String password;
+    private String nom;
+    private String tel;
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<AppRole> appRoles;
 }

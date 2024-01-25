@@ -1,7 +1,8 @@
 package com.example.demo.service;
 
-import javax.management.RuntimeErrorException;
+import java.util.List;
 
+import javax.management.RuntimeErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -50,9 +51,9 @@ public class Accountserviceimpl implements AccoubtService {
     }
 
     @Override
-    public void addRoleToUser(String username,String Role) {
+    public void addRoleToUser(String username,String rol) {
       AppUser appUser=appUserRepository.findByUsername(username);
-      AppRole appRole=appRoleRepository.findByRolename(Role);
+      AppRole appRole=appRoleRepository.findByRolename(rol);
         
         appUser.getAppRoles().add(appRole);
  
@@ -61,7 +62,7 @@ public class Accountserviceimpl implements AccoubtService {
     @Override
     public void removeRoleFromUser(String username, String Role) {
           AppUser appUser=appUserRepository.findByUsername(username);
-        AppRole appRole=appRoleRepository.findByRolename(Role);
+           AppRole appRole=appRoleRepository.findByRolename(Role);
         appUser.getAppRoles().remove(appRole);
    
     }
@@ -70,16 +71,34 @@ public class Accountserviceimpl implements AccoubtService {
     public AppUser loadAppUserByname(String username) {
        return appUserRepository.findByUsername(username);
     }
+  
     @Override
-    public Inscriptions loadbyiddossier(String iddossier) {
-       return inscriptionRepository.findByDossier(iddossier);
-    } 
-    @Override
-    public void Activercompte(String dossier) {
-      Inscriptions inscriptions=inscriptionRepository.findByDossier(dossier);
-      if (inscriptions==null && inscriptions.getStatutcompte().equals("active")); throw new RuntimeException("inscriptions est null ou déja activé");
+    public AppUser Activercompte(String dossier,String email,String password) {
+                  String active;
+            Inscriptions inscriptions= findInscriptions(dossier,email);
+           AppUser appUser=appUserRepository.findByEmail(email);
 
-      
+           if (inscriptions==null || appUser!=null ) {
+           appUser=null;
+           }else{
+           Stagaire user=new Stagaire();
+            user.setUsername(dossier);
+            user.setPassword(passwordEncoder.encode(password));
+            user.setEmail(email);
+            user.setNom(inscriptions.getNom());
+            user.setTel(inscriptions.getTel());
+            appUserRepository.save(user); 
+             appUser=appUserRepository.findByEmail(email);
+           }
+             return appUser;
+    }
+
+    @Override
+    public Inscriptions findInscriptions(String dossier, String email) {
+    Inscriptions inscriptions=inscriptionRepository.findByNomuser(dossier);
+    Inscriptions inscription1=inscriptionRepository.findByEmail(email);
+     if (inscriptions==null || inscription1==null) inscription1=null;
+     return inscription1;
     }
     
   

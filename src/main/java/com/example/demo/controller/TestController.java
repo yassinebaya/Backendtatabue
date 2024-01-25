@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,8 +24,10 @@ import org.springframework.http.MediaType;
 import com.example.demo.dtos.UserDTO;
 import com.example.demo.entites.AppUser;
 import com.example.demo.entites.Inscriptions;
+import com.example.demo.entites.Stagaire;
 import com.example.demo.mappers.Maperuser;
 import com.example.demo.repo.AppUserRepository;
+import com.example.demo.repo.InscriptionRepository;
 import com.example.demo.service.AccoubtService;
 import com.example.demo.service.ReportService;
 import com.example.demo.services.StorageService;
@@ -57,8 +60,10 @@ public class TestController {
      @Autowired
      private StorageService service;
     private Inscriptions inscriptions;
+    @Autowired
+    private InscriptionRepository inscriptionRepository;
     
-     @GetMapping("/Test1")
+      @GetMapping("/Test1")
       @PreAuthorize("hasAuthority('SCOPE_USER')")
       public ResponseEntity<byte[]> Btest1(String username){
         return reportService.generateReport();
@@ -79,24 +84,40 @@ public class TestController {
                accoubtService.addnewRole(role);
         return role + "est ajouter sur la base de donné";
       }
+      @PostMapping("/ajouterinscription")
+      // @PreAuthorize("hasAuthority('SCOPE_USER')")
+        public Inscriptions ajouterinscription(String username,String email,String nom,String tel){
+                  Inscriptions inscriptions=new Inscriptions();
+            inscriptions.setNomuser(username);
+            inscriptions.setEmail(email);
+            inscriptions.setNom(nom);
+            inscriptions.setTel(tel);
+             inscriptionRepository.save(inscriptions);
+            return inscriptions;
+        }
+
+
+
       @PostMapping("/addusertorol")
       // @PreAuthorize("hasAuthority('SCOPE_USER')")
-        public String addusertorol(String username,String rol){
+        public AppUser addusertorol(String username,String rol){
                  accoubtService.addRoleToUser(username,rol);
-                 return username+"est ajouté" ;
+               AppUser  appUser=appUserRepository.findByUsername(username);
+               System.out.println(appUser);
+                 return appUser;
         }
       @PostMapping("/addnewuser")
     // @PreAuthorize("hasAuthority('SCOPE_USER')")
       public String addnewuser(String username,String password){
                accoubtService.addNewUser(username,password);
+              
                return username+"est ajouté" ;
       }
     
       @PostMapping("/Inscription")
     // @PreAuthorize("hasAuthority('SCOPE_USER')")
-      public String inscription(String numdossier,String Email,String username,String password){
-               accoubtService.Activercompte(numdossier);
-        return username + "est activer";
+      public AppUser inscription(String numdossier,String email,String password){
+        return accoubtService.Activercompte(numdossier,email,password);
       }
 
 	@PostMapping("/uploadImag")
@@ -115,6 +136,16 @@ public class TestController {
 
 	}
     
+  @PostMapping("/objet")
+  // @PreAuthorize("hasAuthority('SCOPE_USER')")
+    public int objet(@RequestBody List<UserDTO> employeeDetails){
+      int i=0;
+             for(UserDTO appUser:employeeDetails){
+              System.out.println(appUser.getId());
+                i =i+1;
+             }
+             return i;
+    }
 
     @PostMapping("/login")
     public UserDTO login(String username, String password){

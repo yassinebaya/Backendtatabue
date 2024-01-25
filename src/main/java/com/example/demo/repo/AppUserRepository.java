@@ -1,9 +1,17 @@
 package com.example.demo.repo;
 
 import com.example.demo.entites.AppUser;
+
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface AppUserRepository extends JpaRepository<AppUser,Long>{
-    AppUser findByUsername(String username);
 
+
+public interface AppUserRepository extends JpaRepository<AppUser,Long>{
+AppUser findByEmail(String email);
+ // boolean existByEmail(String email);
+  AppUser findByUsername(String username);
+
+   
 }

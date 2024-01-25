@@ -10,8 +10,8 @@ public interface AccoubtService  {
     void addRoleToUser(String username,String role);
     void removeRoleFromUser(String username,String Role);
     AppUser loadAppUserByname(String username);
-    void Activercompte(String dossier );
-    Inscriptions loadbyiddossier(String userInscription);
+    AppUser Activercompte(String dossier,String email,String password );
+    Inscriptions findInscriptions(String dossier,String email);
 
     
 }

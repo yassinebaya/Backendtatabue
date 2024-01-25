@@ -11,7 +11,9 @@ import lombok.Data;
 public class UserDTO {
     private Long id;
     private String username;
-    private String type;
+    private String Email;
+    private String nom;
+    private String tel;
     private Collection<AppRole> appRoles;
     private String jwt;
     
