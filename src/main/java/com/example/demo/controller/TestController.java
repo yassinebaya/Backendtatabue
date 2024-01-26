@@ -42,10 +42,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -74,7 +76,6 @@ public class TestController {
       public ResponseEntity<byte[]> Btest1(String username){
         return reportService.generateReport();
       }
-
 
       @GetMapping("/Test12")
       @PreAuthorize("hasAuthority('SCOPE_USER')")
@@ -171,13 +172,17 @@ public class TestController {
     
   @PostMapping("/objet")
   // @PreAuthorize("hasAuthority('SCOPE_USER')")
-    public int objet(@RequestBody List<UserDTO> employeeDetails){
-      int i=0;
+    public List<Assistant>  objet(@RequestBody List<UserDTO> employeeDetails){
+     List<Assistant> stagaires=new ArrayList<>();
              for(UserDTO appUser:employeeDetails){
               System.out.println(appUser.getId());
-                i =i+1;
+              Assistant stage=appUserRepository.findById(appUser.getId());
+              System.out.println(stage);
+                       stage.setUsername(appUser.getUsername());
+                       stagaires.add(stage);
              }
-             return i;
+             appUserRepository.saveAll(stagaires);
+             return stagaires;
     }
 
     @PostMapping("/login")
