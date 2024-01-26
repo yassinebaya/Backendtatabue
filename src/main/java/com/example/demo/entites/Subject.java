@@ -25,10 +25,17 @@ public class Subject {
 
     @ManyToOne
     SubjectCategorie subjectCategorie;
-    
+    @ManyToOne
+    Projets projets;
+    @ManyToOne
+    Projetphase projetphase;
+    @ManyToOne
+    DocumentType documentType;
     @OneToMany(fetch = FetchType.EAGER)
       private Collection<Question> questions;
     @OneToMany(fetch = FetchType.EAGER)
       private Collection<Stagairequsetion> stagairequsetions;
+      @OneToMany(fetch = FetchType.EAGER)
+      private Collection<StagiaireSujects> stagiaireSujects;
     
 }

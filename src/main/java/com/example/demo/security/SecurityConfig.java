@@ -36,6 +36,9 @@ import javax.crypto.spec.SecretKeySpec;
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
+
+
+
    
     @Autowired
     private UserDetailserviceimpl userDetailsService;
@@ -50,7 +53,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authConfig -> {
                     authConfig.requestMatchers("/addnewuser/**","/addusertorol/**","/uploadImag/**","/downloadImage/**","/objet/**","/ajouterinscription/**").permitAll();
                     authConfig.requestMatchers("/login/**").permitAll();
-                    authConfig.requestMatchers("/Test1/**","/Test12/**","/addnewrole/**","/addroletouser/**","/Inscription/**").permitAll();
+                    authConfig.requestMatchers("/Test1/**","/Test12/**","/addnewrole/**","/addroletouser/**","/Inscription/**","/listestagaire/**","/ajouterassistant/**","/listassistant/**").permitAll();
                     authConfig.requestMatchers("/admin/**").denyAll();
 
                 })

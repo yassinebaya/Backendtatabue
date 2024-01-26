@@ -7,6 +7,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,5 +24,8 @@ public class Projetphase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-   
+     @ManyToOne
+      Projets projets;
+ @OneToMany(fetch = FetchType.EAGER)
+private Collection<Subject> subjects;
 }

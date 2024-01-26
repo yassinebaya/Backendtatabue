@@ -97,6 +97,9 @@ public class Accountserviceimpl implements AccoubtService {
     public Inscriptions findInscriptions(String dossier, String email) {
     Inscriptions inscriptions=inscriptionRepository.findByNomuser(dossier);
     Inscriptions inscription1=inscriptionRepository.findByEmail(email);
+    System.out.println(inscriptions);
+    System.out.println(inscription1);
+
      if (inscriptions==null || inscription1==null) inscription1=null;
      return inscription1;
     }

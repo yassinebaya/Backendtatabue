@@ -22,4 +22,7 @@ public class Stagairequsetion {
     private Question question;
     @ManyToOne
     private Stagaire stagaire;
+    @ManyToOne
+    private Subject subject;
+
 }

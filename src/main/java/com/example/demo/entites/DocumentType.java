@@ -1,8 +1,12 @@
 package com.example.demo.entites;
+import java.util.Collection;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +22,8 @@ public class DocumentType {
     private Long id;
     private String type;
     private String icon;
+    @OneToMany(fetch = FetchType.EAGER)
+private Collection<Subject> subjects;
 }
     
 

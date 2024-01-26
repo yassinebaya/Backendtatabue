@@ -4,6 +4,8 @@ import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.MediaType;
 import com.example.demo.dtos.UserDTO;
 import com.example.demo.entites.AppUser;
+import com.example.demo.entites.Assistant;
 import com.example.demo.entites.Inscriptions;
 import com.example.demo.entites.Stagaire;
 import com.example.demo.mappers.Maperuser;
@@ -31,6 +34,9 @@ import com.example.demo.repo.InscriptionRepository;
 import com.example.demo.service.AccoubtService;
 import com.example.demo.service.ReportService;
 import com.example.demo.services.StorageService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
 import java.net.URL;
@@ -95,9 +101,35 @@ public class TestController {
              inscriptionRepository.save(inscriptions);
             return inscriptions;
         }
+        @PostMapping("/ajouterassistant")
+   public Assistant ajouterassistant(String username,String password,String email,String nom,String tel){
+         Assistant assistant=new Assistant();
+         assistant.setUsername(username);
+         assistant.setPassword(password);
+         assistant.setEmail(email);
+         assistant.setNom(nom);
+         assistant.setTel(tel);
+         appUserRepository.save(assistant); 
+    return assistant;
+}
 
-
-
+        @GetMapping("/listestagaire")
+        // @PreAuthorize("hasAuthority('SCOPE_USER')")
+          public  Page<Stagaire> liststagiaire(int page ,int size){
+           
+            Pageable pageable = PageRequest.of(page, size);
+                    Page<Stagaire> listsStagaires=appUserRepository.findByStagaires(pageable);
+                    System.out.println(listsStagaires);
+              return listsStagaires;
+          }
+          @GetMapping("/listassistant/{page}/{size}")
+        // @PreAuthorize("hasAuthority('SCOPE_USER')")
+          public Page<Assistant> listassistant(@PathVariable int page,@PathVariable int size){
+            Pageable pageable = PageRequest.of(page,size);
+                    Page<Assistant> listsassistant=appUserRepository.findByAssistants(pageable);
+                    System.out.println(listsassistant);
+              return listsassistant;
+          }
       @PostMapping("/addusertorol")
       // @PreAuthorize("hasAuthority('SCOPE_USER')")
         public AppUser addusertorol(String username,String rol){
@@ -117,6 +149,7 @@ public class TestController {
       @PostMapping("/Inscription")
     // @PreAuthorize("hasAuthority('SCOPE_USER')")
       public AppUser inscription(String numdossier,String email,String password){
+
         return accoubtService.Activercompte(numdossier,email,password);
       }
 

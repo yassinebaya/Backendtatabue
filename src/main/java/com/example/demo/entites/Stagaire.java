@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +20,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @DiscriminatorValue("Stag")
 public class Stagaire extends AppUser {
-
+private boolean cheked;
+@ManyToOne
+Groupe groupe;
 @OneToMany(fetch = FetchType.EAGER)
     private Collection<Stagairequsetion> Stagairequsetion;
 
