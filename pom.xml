@@ -56,12 +56,11 @@
     <artifactId>jasperreports</artifactId>
     <version>6.20.6</version>
 </dependency>
-  <dependency>
-        <groupId>com.h2database</groupId>
-        <artifactId>h2</artifactId>
-       <scope>runtime</scope>
-        <!-- You can specify a different version if needed -->
-    </dependency>
+<dependency>
+  <groupId>com.mysql</groupId>
+    <artifactId>mysql-connector-j</artifactId>
+    <scope>runtime</scope>
+</dependency>
 	</dependencies>
 	<!-- https://mvnrepository.com/artifact/xmlrpc/xmlrpc -->
 

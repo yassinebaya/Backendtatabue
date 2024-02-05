@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -70,9 +71,11 @@ public class TestController {
     private Inscriptions inscriptions;
     @Autowired
     private InscriptionRepository inscriptionRepository;
+  @Autowired
+    private PasswordEncoder passwordEncoder;
     
       @GetMapping("/Test1")
-      @PreAuthorize("hasAuthority('SCOPE_USER')")
+    //  @PreAuthorize("hasAuthority('SCOPE_USER')")
       public ResponseEntity<byte[]> Btest1(String username){
         return reportService.generateReport();
       }
@@ -106,7 +109,7 @@ public class TestController {
    public Assistant ajouterassistant(String username,String password,String email,String nom,String tel){
          Assistant assistant=new Assistant();
          assistant.setUsername(username);
-         assistant.setPassword(password);
+         assistant.setPassword(passwordEncoder.encode(password));
          assistant.setEmail(email);
          assistant.setNom(nom);
          assistant.setTel(tel);
@@ -114,7 +117,7 @@ public class TestController {
     return assistant;
 }
 
-        @GetMapping("/listestagaire")
+         @GetMapping("/listestagaire")
         // @PreAuthorize("hasAuthority('SCOPE_USER')")
           public  Page<Stagaire> liststagiaire(int page ,int size){
            
@@ -131,7 +134,7 @@ public class TestController {
                     System.out.println(listsassistant);
               return listsassistant;
           }
-      @PostMapping("/addusertorol")
+        @PostMapping("/addusertorol")
       // @PreAuthorize("hasAuthority('SCOPE_USER')")
         public AppUser addusertorol(String username,String rol){
                  accoubtService.addRoleToUser(username,rol);
@@ -176,7 +179,7 @@ public class TestController {
      List<Assistant> stagaires=new ArrayList<>();
              for(UserDTO appUser:employeeDetails){
               System.out.println(appUser.getId());
-              Assistant stage=appUserRepository.findById(appUser.getId());
+              Assistant stage=appUserRepository.(appUser.getId());
               System.out.println(stage);
                        stage.setUsername(appUser.getUsername());
                        stagaires.add(stage);
@@ -188,6 +191,7 @@ public class TestController {
     @PostMapping("/login")
     public UserDTO login(String username, String password){
          AppUser appUser=accoubtService.loadAppUserByname(username);
+         System.out.println(appUser+password);
           Authentication authentication= authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(username,password));
         Instant instant=Instant.now();

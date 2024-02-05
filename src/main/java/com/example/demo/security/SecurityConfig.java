@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -29,6 +30,11 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 import javax.crypto.spec.SecretKeySpec;
 
@@ -48,11 +54,14 @@ public class SecurityConfig {
         http
 
                 .sessionManagement(sm->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .cors(cors->cors.disable())
                 .csrf(csrf->csrf.disable())
+                .cors(Customizer.withDefaults())
+               
                 .authorizeHttpRequests(authConfig -> {
                     authConfig.requestMatchers("/addnewuser/**","/addusertorol/**","/uploadImag/**","/downloadImage/**","/objet/**","/ajouterinscription/**").permitAll();
                     authConfig.requestMatchers("/login/**").permitAll();
+                    authConfig.requestMatchers("/assistants/**").permitAll();
+                    authConfig.requestMatchers("/getStudent/**").permitAll();
                     authConfig.requestMatchers("/Test1/**","/Test12/**","/addnewrole/**","/addroletouser/**","/Inscription/**","/listestagaire/**","/ajouterassistant/**","/listassistant/**").permitAll();
                     authConfig.requestMatchers("/admin/**").denyAll();
 
@@ -87,13 +96,13 @@ public class SecurityConfig {
 
     @Bean
     JwtEncoder JwtEncoder (){
-        String secrykey="404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
+        String secrykey="404E635266556A586E3272357538782F413F4428472B4B6250645367566B5972";
         return new NimbusJwtEncoder(new ImmutableSecret<>(secrykey.getBytes()));
 
     }
     @Bean
     JwtDecoder jwtDecoder(){
-        String secrykey="404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
+        String secrykey="404E635266556A586E3272357538782F413F4428472B4B6250645367566B5972";
         SecretKeySpec secretKeySpec=new SecretKeySpec(secrykey.getBytes(),"RSA");
         return NimbusJwtDecoder.withSecretKey(secretKeySpec).macAlgorithm(MacAlgorithm.HS512).build();
     }
@@ -104,7 +113,17 @@ public class SecurityConfig {
         daoAuthenticationProvider.setUserDetailsService(userDetailsService);
         return new ProviderManager( daoAuthenticationProvider);
     }
-
+@Bean
+CorsConfigurationSource corsConfigurationSource(){
+    CorsConfiguration corsConfiguration=new CorsConfiguration();
+    corsConfiguration.addAllowedOrigin("*");
+    corsConfiguration.addAllowedMethod("*");
+    corsConfiguration.addAllowedHeader("*");
+  // corsConfiguration.setExposedHeaders(List.of("x-auth-token"));
+    UrlBasedCorsConfigurationSource source=new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**",corsConfiguration);
+    return  source;
+}
 
 }
 

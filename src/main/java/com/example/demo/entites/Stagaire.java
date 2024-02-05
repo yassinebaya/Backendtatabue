@@ -20,13 +20,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @DiscriminatorValue("Stag")
 public class Stagaire extends AppUser {
-private boolean cheked;
+private boolean statut;
+private boolean checked;
+private boolean notification;
+private String projectTitle;
 @ManyToOne
 Groupe groupe;
 @OneToMany(fetch = FetchType.EAGER)
     private Collection<Stagairequsetion> Stagairequsetion;
-
 @OneToMany(fetch = FetchType.EAGER)
 private Collection<StagiaireSujects> stagiaireSujects;
+    
+@OneToMany(fetch = FetchType.EAGER)
+private Collection<Indicateurs> indicateurs;
     
 }

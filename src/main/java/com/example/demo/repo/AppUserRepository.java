@@ -18,9 +18,17 @@ public interface AppUserRepository extends JpaRepository<AppUser,Long>{
 
 AppUser findByEmail(String email);
  // boolean existByEmail(String email);
- AppUser findByUsername(String username);
+ 
+ 
+AppUser findByUsername(String username);
+Page<Assistant> findByUsernameLike(String username, Pageable pageable);
 
- Assistant findById(int id);
+ @Query("SELECT a FROM Stagaire a WHERE a.id= ?1 ")
+  Stagaire findByStagaire(int id);
+
+
+  @Query("SELECT a FROM Assistant a WHERE a.id= ?1 ")
+  Assistant findByAssistant(int id);
   
   @Query("SELECT a FROM Stagaire a ")
    Page<Stagaire> findByStagaires(Pageable pageable);
