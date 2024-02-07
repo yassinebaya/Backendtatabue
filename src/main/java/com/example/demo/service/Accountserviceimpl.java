@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.entites.AppRole;
 import com.example.demo.entites.AppUser;
+import com.example.demo.entites.Assistant;
 import com.example.demo.entites.Inscriptions;
 import com.example.demo.entites.Stagaire;
 import com.example.demo.repo.AppRoleRepository;
@@ -92,6 +93,12 @@ public class Accountserviceimpl implements AccoubtService {
            }
              return appUser;
     }
+    @Override
+    public Assistant createAssistant(Assistant assistant) {
+      assistant.setPassword(passwordEncoder.encode((assistant.getPassword())));
+		return appUserRepository.save(assistant);
+	}
+	
 
     @Override
     public Inscriptions findInscriptions(String dossier, String email) {

@@ -17,7 +17,6 @@ public class StagaireControle {
 @GetMapping("getStudent/{id}")
 @PreAuthorize("hasAuthority('SCOPE_STAGIAIRE')")
  public Stagaire getStudent(@PathVariable int id){
-    System.out.println(id);
 Stagaire stagaire=appUserRepository.findByStagaire(id);
   return stagaire;
 

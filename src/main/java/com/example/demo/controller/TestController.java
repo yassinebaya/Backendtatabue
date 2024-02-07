@@ -123,7 +123,6 @@ public class TestController {
            
             Pageable pageable = PageRequest.of(page, size);
                     Page<Stagaire> listsStagaires=appUserRepository.findByStagaires(pageable);
-                    System.out.println(listsStagaires);
               return listsStagaires;
           }
           @GetMapping("/listassistant/{page}/{size}")
@@ -131,7 +130,7 @@ public class TestController {
           public Page<Assistant> listassistant(@PathVariable int page,@PathVariable int size){
             Pageable pageable = PageRequest.of(page,size);
                     Page<Assistant> listsassistant=appUserRepository.findByAssistants(pageable);
-                    System.out.println(listsassistant);
+                    
               return listsassistant;
           }
         @PostMapping("/addusertorol")
@@ -139,7 +138,7 @@ public class TestController {
         public AppUser addusertorol(String username,String rol){
                  accoubtService.addRoleToUser(username,rol);
                AppUser  appUser=appUserRepository.findByUsername(username);
-               System.out.println(appUser);
+            
                  return appUser;
         }
       @PostMapping("/addnewuser")

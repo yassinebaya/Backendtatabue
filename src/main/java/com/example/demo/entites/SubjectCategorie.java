@@ -17,7 +17,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
 public class SubjectCategorie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -22,13 +22,24 @@ public class Subject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-
+    private String description;
+    private String dateDebut;
+    private String dateDernierDelais;
+    private String commentaire;
+    private String modeleVide;
     @ManyToOne
-    SubjectCategorie subjectCategorie;
+    private Assistant assistantId;
+    private boolean etatPublication;
+    private String labelLien;
+    private String titreLien;
+    private String langue;
+    private boolean used;
     @ManyToOne
-    Projets projets;
+    SubjectCategorie  categorieId;
     @ManyToOne
-    Projetphase projetphase;
+    Projets projetId;
+    @ManyToOne
+    Projetphase phaseId;
     @ManyToOne
     DocumentType documentType;
     @OneToMany(fetch = FetchType.EAGER)

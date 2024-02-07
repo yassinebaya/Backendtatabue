@@ -61,6 +61,7 @@ public class SecurityConfig {
                     authConfig.requestMatchers("/addnewuser/**","/addusertorol/**","/uploadImag/**","/downloadImage/**","/objet/**","/ajouterinscription/**").permitAll();
                     authConfig.requestMatchers("/login/**").permitAll();
                     authConfig.requestMatchers("/assistants/**").permitAll();
+                    authConfig.requestMatchers("/doctors/**").permitAll();
                     authConfig.requestMatchers("/getStudent/**").permitAll();
                     authConfig.requestMatchers("/Test1/**","/Test12/**","/addnewrole/**","/addroletouser/**","/Inscription/**","/listestagaire/**","/ajouterassistant/**","/listassistant/**").permitAll();
                     authConfig.requestMatchers("/admin/**").denyAll();
