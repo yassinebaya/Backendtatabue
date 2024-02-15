@@ -13,21 +13,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class CommentairesAssistantStagiaire {
+@GeneratedValue(strategy = GenerationType.IDENTITY)
 @Id
+private Long id;
 @ManyToOne
 Stagaire stagaire ;
 @ManyToOne
 Assistant assistant;
 String commantaire;
 String Date;
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     
 }

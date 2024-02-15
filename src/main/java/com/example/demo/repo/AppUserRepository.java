@@ -18,8 +18,6 @@ public interface AppUserRepository extends JpaRepository<AppUser,Long>{
 
 AppUser findByEmail(String email);
  // boolean existByEmail(String email);
- 
- 
 AppUser findByUsername(String username);
 Page<Assistant> findByUsernameLike(String username, Pageable pageable);
 

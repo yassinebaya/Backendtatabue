@@ -178,7 +178,7 @@ public class TestController {
      List<Assistant> stagaires=new ArrayList<>();
              for(UserDTO appUser:employeeDetails){
               System.out.println(appUser.getId());
-              Assistant stage=appUserRepository.(appUser.getId());
+              Assistant stage=appUserRepository.findByAssistant(appUser.getId());
               System.out.println(stage);
                        stage.setUsername(appUser.getUsername());
                        stagaires.add(stage);

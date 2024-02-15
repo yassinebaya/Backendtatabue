@@ -19,6 +19,8 @@ public class StagiaireSujects {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String remarquesProfesseur;
+    private String dateEnvoiVerification;
      @ManyToOne
     private SubjectEtape subjectEtape;
     @ManyToOne

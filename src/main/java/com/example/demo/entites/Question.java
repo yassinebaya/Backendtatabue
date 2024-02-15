@@ -25,8 +25,16 @@ public class Question {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id;
-private String name;
-
+private String question1;
+private String answer1;
+private String answer2;
+private String answer3;
+private String answer4;
+private String answer5;
+private String order1;
+private String type;
+private String answerInput;
+private String answerText;
 @OneToMany(fetch = FetchType.EAGER)
 private Collection<Stagairequsetion> Stagairequsetion;
 @ManyToOne
