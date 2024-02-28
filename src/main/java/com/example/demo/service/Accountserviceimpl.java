@@ -91,6 +91,7 @@ public class Accountserviceimpl implements AccoubtService {
             appUserRepository.save(user); 
              appUser=appUserRepository.findByEmail(email);
            }
+           System.out.println(appUser);
              return appUser;
     }
     @Override
@@ -102,13 +103,13 @@ public class Accountserviceimpl implements AccoubtService {
 
     @Override
     public Inscriptions findInscriptions(String dossier, String email) {
-    Inscriptions inscriptions=inscriptionRepository.findByNomuser(dossier);
-    Inscriptions inscription1=inscriptionRepository.findByEmail(email);
-    System.out.println(inscriptions);
-    System.out.println(inscription1);
+      System.out.println(email);
+      System.out.println(dossier);
 
-     if (inscriptions==null || inscription1==null) inscription1=null;
-     return inscription1;
+    Inscriptions inscriptions=inscriptionRepository.findByEmailandNumeroDossier(email,dossier);
+    System.out.println(inscriptions);
+     if (inscriptions==null) inscriptions=null;
+     return inscriptions;
     }
     
   

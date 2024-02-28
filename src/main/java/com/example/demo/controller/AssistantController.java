@@ -14,18 +14,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-
 import com.example.demo.entites.Assistant;
-
 import com.example.demo.repo.AppUserRepository;
 import com.example.demo.service.AccoubtService;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
@@ -54,7 +49,7 @@ private PasswordEncoder passwordEncoder;
 	}
 	
  @DeleteMapping("/assistants/{id}")
-	public ResponseEntity<Map<String, Boolean>> deleteEmployee(@PathVariable int id){
+	public ResponseEntity<Map<String, Boolean>> deleteEmployee(@PathVariable Long id){
 		Assistant assistant = appUserRepository.findByAssistant(id);
         if (assistant==null) throw new RuntimeException("Assistant not exist with id :" + id);
 		appUserRepository.delete(assistant);
@@ -64,13 +59,13 @@ private PasswordEncoder passwordEncoder;
 	}
 
  @GetMapping("assistants/{id}")
-public Assistant getaAssistant(@PathVariable int id){
+public Assistant getaAssistant(@PathVariable Long id){
 Assistant Assistant=appUserRepository.findByAssistant(id);
   return Assistant;
 
  }
 @PutMapping("/assistants/{id}")
-	public ResponseEntity<Assistant> updateEmployee(@PathVariable int id, Assistant assistantdetail){
+	public ResponseEntity<Assistant> updateEmployee(@PathVariable Long id, Assistant assistantdetail){
 		Assistant assistant = appUserRepository.findByAssistant(id);
 		if (assistant==null) throw new RuntimeException("Assistant not exist with id :" + id);
 		assistant.setUsername(assistantdetail.getUsername());

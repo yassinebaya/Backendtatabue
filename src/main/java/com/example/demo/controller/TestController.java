@@ -98,7 +98,7 @@ public class TestController {
       // @PreAuthorize("hasAuthority('SCOPE_USER')")
         public Inscriptions ajouterinscription(String username,String email,String nom,String tel){
                   Inscriptions inscriptions=new Inscriptions();
-            inscriptions.setNomuser(username);
+            inscriptions.setNumeroDossier(username);
             inscriptions.setEmail(email);
             inscriptions.setNom(nom);
             inscriptions.setTel(tel);
@@ -151,8 +151,7 @@ public class TestController {
     
       @PostMapping("/Inscription")
     // @PreAuthorize("hasAuthority('SCOPE_USER')")
-      public AppUser inscription(String numdossier,String email,String password){
-
+      public AppUser inscription(@RequestParam String numdossier,@RequestParam String email,@RequestParam String password){
         return accoubtService.Activercompte(numdossier,email,password);
       }
 

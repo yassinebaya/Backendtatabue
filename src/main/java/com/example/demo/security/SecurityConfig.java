@@ -31,44 +31,35 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.List;
-
 import javax.crypto.spec.SecretKeySpec;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-
-
-
-   
     @Autowired
     private UserDetailserviceimpl userDetailsService;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-
                 .sessionManagement(sm->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(csrf->csrf.disable())
-                .cors(Customizer.withDefaults())
-               
+                .cors(Customizer.withDefaults()) 
                 .authorizeHttpRequests(authConfig -> {
                     authConfig.requestMatchers("/addnewuser/**","/addusertorol/**","/uploadImag/**","/downloadImage/**","/objet/**","/ajouterinscription/**").permitAll();
                     authConfig.requestMatchers("/login/**").permitAll();
                     authConfig.requestMatchers("/assistants/**").permitAll();
                     authConfig.requestMatchers("/stagiaireSujects/**").permitAll();
-                    authConfig.requestMatchers("/CommentaireAssistantStagiaire/**").permitAll();
+                    authConfig.requestMatchers("/CommentaireAssistantStagiaire/**","/allsubjects/**","/projets/**","/subjectsbyid/**","/documentType/**").permitAll();
                     authConfig.requestMatchers("/commentairesAssistantStagiaireSubject/**").permitAll();
-                    authConfig.requestMatchers("/subjectCategorie/**","/stagiaireQuestions/**").permitAll();
-                    authConfig.requestMatchers("/questions/**").permitAll();
+                    authConfig.requestMatchers("/subjectCategorie/**","/stagiaireQuestions/**","/subjectsbyProjet/**","/phaseProjet/**").permitAll();
+                    authConfig.requestMatchers("/questions/**","/questionById/**","/questionBySubject/**").permitAll();
                     authConfig.requestMatchers("/subjects/**").permitAll();
-                    authConfig.requestMatchers("/getStudent/**").permitAll();
+                    authConfig.requestMatchers("/notifications/**").permitAll();
+                    authConfig.requestMatchers("/getStudent/**","/stagiares/**").permitAll();
                     authConfig.requestMatchers("/Test1/**","/Test12/**","/addnewrole/**","/addroletouser/**","/Inscription/**","/listestagaire/**","/ajouterassistant/**","/listassistant/**").permitAll();
                     authConfig.requestMatchers("/admin/**").denyAll();
-
                 })
                 .oauth2ResourceServer(oa->oa.jwt(Customizer.withDefaults()))
                 .userDetailsService(userDetailsService);

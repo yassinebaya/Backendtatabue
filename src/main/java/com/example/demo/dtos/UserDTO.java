@@ -7,7 +7,7 @@ import com.example.demo.entites.AppRole;
 import lombok.Data;
 @Data
 public class UserDTO {
-    private int id;
+    private Long id;
     private String username;
     private String Email;
     private String nom;

@@ -4,26 +4,25 @@ import java.util.Collection;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @DiscriminatorValue("Stag")
+@ToString
 public class Stagaire extends AppUser {
 private boolean statut;
 private boolean checked;
 private boolean notification;
 private String projectTitle;
+private String prenom;
+private String numeroDossier;
 @ManyToOne
 Groupe groupe;
 @OneToMany(fetch = FetchType.EAGER)

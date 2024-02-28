@@ -1,25 +1,29 @@
 package com.example.demo.dtos;
 
+import com.example.demo.entites.Assistant;
+import com.example.demo.entites.DocumentType;
+import com.example.demo.entites.Projetphase;
+import com.example.demo.entites.Projets;
+import com.example.demo.entites.SubjectCategorie;
 import lombok.Data;
 
 @Data
 public class SubjectDTO {
-   private int id;
-   private String name;
-   private int documentType;
-    private int categorieId;
-    private int projetId;
-    private int phaseId;
-    private int etapeId;
-   private String description;
-  /* private dateDebut": "01/12/2022",
-    "dateDernierDelais": "04/14/2023",
-    "commentaire": "moiueee",
-    "modeleVide": "ddddd",
-    "assistantId":40,
-    "etatPublication":true,
-    "labelLien": "saidee",
-    "titreLien": "aszzz",
-    "langue": "fr",
-    "used": false, */ 
+    private Long id;
+    private String name;
+    private String description;
+    private String dateDebut;
+    private String dateDernierDelais;
+    private String commentaire;
+    private String modeleVide;
+    private Assistant assistantId;
+    private boolean etatPublication;
+    private String labelLien;
+    private String titreLien;
+    private String langue;
+    private boolean used;
+    SubjectCategorie  categorieId;
+    Projets projets;
+    Projetphase phaseId;
+    DocumentType documentType;
 }

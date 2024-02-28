@@ -26,12 +26,19 @@ Page<Assistant> findByUsernameLike(String username, Pageable pageable);
 
 
   @Query("SELECT a FROM Assistant a WHERE a.id= ?1 ")
-  Assistant findByAssistant(int id);
+  Assistant findByAssistant(Long id);
+
   
   @Query("SELECT a FROM Stagaire a ")
    Page<Stagaire> findByStagaires(Pageable pageable);
    
    @Query("SELECT a FROM Assistant a ")
    Page<Assistant> findByAssistants(Pageable pageable);
+
+   @Query("SELECT a FROM Stagaire a ")
+   List<Stagaire> allStagaires();
+
+   @Query("SELECT a FROM Assistant a ")
+   List<Stagaire> allAssistent();
    
 }

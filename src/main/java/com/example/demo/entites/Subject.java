@@ -1,6 +1,10 @@
 package com.example.demo.entites;
 import java.util.Collection;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -12,11 +16,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class Subject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,16 +43,19 @@ public class Subject {
     @ManyToOne
     SubjectCategorie  categorieId;
     @ManyToOne
-    Projets projetId;
+    Projets projets;
     @ManyToOne
     Projetphase phaseId;
     @ManyToOne
     DocumentType documentType;
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "subject",cascade = CascadeType.ALL,fetch = FetchType.EAGER )
+    @JsonIgnore
       private Collection<Question> questions;
-    @OneToMany(fetch = FetchType.EAGER)
+      @OneToMany(mappedBy = "subject",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+      @JsonIgnore
       private Collection<Stagairequsetion> stagairequsetions;
-      @OneToMany(fetch = FetchType.EAGER)
+      @OneToMany(mappedBy = "subject",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+      @JsonIgnore
       private Collection<StagiaireSujects> stagiaireSujects;
     
 }

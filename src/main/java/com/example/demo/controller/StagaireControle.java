@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,10 +22,15 @@ public class StagaireControle {
 Stagaire stagaire=appUserRepository.findByStagaire(id);
   return stagaire;
 
+
  }
 
-
-
+ @GetMapping("stagiares")
+ public List<Stagaire> allStagaire(){
+  List<Stagaire> stagaire=appUserRepository.allStagaires();
+    return stagaire;
+  
+   }
 
 
 

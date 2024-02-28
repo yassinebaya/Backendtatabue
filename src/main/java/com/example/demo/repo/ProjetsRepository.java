@@ -4,9 +4,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.example.demo.entites.Projets;
+import com.lowagie.text.List;
 
 
 public interface ProjetsRepository extends JpaRepository<Projets,Long>{
      @Query("SELECT a FROM Projets a WHERE a.id= ?1 ")
      Projets findByProjets(Long id);
+
 }

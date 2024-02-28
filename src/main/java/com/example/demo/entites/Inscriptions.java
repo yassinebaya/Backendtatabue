@@ -20,11 +20,16 @@ public class Inscriptions {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = true, unique = true)
-    private String nomuser;
+    private String numeroDossier;
     @Column(nullable = true, unique = true)
+    private String statut;
     private String email;
-    private String Nom;
+    private String nom;
+    private String  prenome;
     private String Tel;
+    private int idgroupe;
+    private String projettitle;
+    private String emailEnvoie;
    
     
     

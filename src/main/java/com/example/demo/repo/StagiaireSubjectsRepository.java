@@ -9,6 +9,9 @@ import com.example.demo.entites.Subject;
 
 public interface StagiaireSubjectsRepository extends JpaRepository<StagiaireSujects,Long> {
 
+  @Query("SELECT a FROM StagiaireSujects a WHERE a.id= ?1 ")
+  StagiaireSujects findByidStagiaireSujects(Long id);
+
   @Query("SELECT a FROM StagiaireSujects a WHERE a.stagaire= ?1 ")
    StagiaireSujects findByStagiaireSujects(Stagaire stagaire);
 
