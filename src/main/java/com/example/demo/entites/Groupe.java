@@ -31,6 +31,9 @@ public class Groupe {
     private Collection<Assistant> assistants;
     @OneToMany(fetch = FetchType.EAGER)
 private Collection<Stagaire> stagaires;
+@OneToMany(fetch = FetchType.EAGER)
+private Collection<Inscriptions> inscriptions;
+
 
     
     

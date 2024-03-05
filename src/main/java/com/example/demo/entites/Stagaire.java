@@ -17,7 +17,7 @@ import lombok.ToString;
 @DiscriminatorValue("Stag")
 @ToString
 public class Stagaire extends AppUser {
-private boolean statut;
+private String statut;
 private boolean checked;
 private boolean notification;
 private String projectTitle;

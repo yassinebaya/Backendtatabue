@@ -47,7 +47,7 @@ public class SecurityConfig {
                 .csrf(csrf->csrf.disable())
                 .cors(Customizer.withDefaults()) 
                 .authorizeHttpRequests(authConfig -> {
-                    authConfig.requestMatchers("/addnewuser/**","/addusertorol/**","/uploadImag/**","/downloadImage/**","/objet/**","/ajouterinscription/**").permitAll();
+                    authConfig.requestMatchers("/addnewuser/**","/inscriptionskywordbygroube/**","/inscriptionkyword/**","/stagiareskyword/**","/stagiareskywordbygroube/**","/addnewAssistant/**","/addusertorol/**","/uploadImag/**","/downloadImage/**","/objet/**","/ajouterinscription/**").permitAll();
                     authConfig.requestMatchers("/login/**").permitAll();
                     authConfig.requestMatchers("/assistants/**").permitAll();
                     authConfig.requestMatchers("/stagiaireSujects/**").permitAll();
@@ -56,6 +56,8 @@ public class SecurityConfig {
                     authConfig.requestMatchers("/subjectCategorie/**","/stagiaireQuestions/**","/subjectsbyProjet/**","/phaseProjet/**").permitAll();
                     authConfig.requestMatchers("/questions/**","/questionById/**","/questionBySubject/**").permitAll();
                     authConfig.requestMatchers("/subjects/**").permitAll();
+                    authConfig.requestMatchers("/updateEtat/**").permitAll();
+                    authConfig.requestMatchers("/indicateurs/**").permitAll();
                     authConfig.requestMatchers("/notifications/**").permitAll();
                     authConfig.requestMatchers("/getStudent/**","/stagiares/**").permitAll();
                     authConfig.requestMatchers("/Test1/**","/Test12/**","/addnewrole/**","/addroletouser/**","/Inscription/**","/listestagaire/**","/ajouterassistant/**","/listassistant/**").permitAll();

@@ -26,10 +26,10 @@ public class DemoApplication extends SpringBootServletInitializer{
 	CommandLineRunner commandLineRunner(AccoubtService accoubtService){
 
 		return args->{
-		 	accoubtService.addnewRole("PUBLIC");
+		 	//accoubtService.addnewRole("PUBLIC");
 			//accoubtService.addnewRole("ADMIN");
 			//accoubtService.addnewRole("STAGAIRE");
-			accoubtService.addNewUser("public","123");
+			//accoubtService.addNewUser("public","123");
 			//accoubtService.addNewUser("user2","123");
 			
 			//accoubtService.addRoleToUser("user1","USER");

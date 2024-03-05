@@ -6,7 +6,8 @@ import com.example.demo.entites.Assistant;
 import com.example.demo.entites.Inscriptions;
 
 public interface AccoubtService  {
-    AppUser addNewUser(String username,String password);
+    AppUser addNewStagaire(String username,String password);
+    AppUser addNewAssistant(String username,String password);
     AppRole addnewRole(String rolname);
     void addRoleToUser(String username,String role);
     void removeRoleFromUser(String username,String Role);

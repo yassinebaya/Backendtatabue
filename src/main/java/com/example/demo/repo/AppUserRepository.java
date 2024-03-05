@@ -2,6 +2,7 @@ package com.example.demo.repo;
 
 import com.example.demo.entites.AppUser;
 import com.example.demo.entites.Assistant;
+import com.example.demo.entites.Groupe;
 import com.example.demo.entites.Stagaire;
 
 import java.util.List;
@@ -22,7 +23,7 @@ AppUser findByUsername(String username);
 Page<Assistant> findByUsernameLike(String username, Pageable pageable);
 
  @Query("SELECT a FROM Stagaire a WHERE a.id= ?1 ")
-  Stagaire findByStagaire(int id);
+  Stagaire findByStagaire(Long id);
 
 
   @Query("SELECT a FROM Assistant a WHERE a.id= ?1 ")
@@ -31,6 +32,12 @@ Page<Assistant> findByUsernameLike(String username, Pageable pageable);
   
   @Query("SELECT a FROM Stagaire a ")
    Page<Stagaire> findByStagaires(Pageable pageable);
+
+   @Query("SELECT a FROM Stagaire a WHERE a.groupe= ?1 and a.numeroDossier LIKE ?2%")
+   Page<Stagaire> findByStagairesbyGroupe(Groupe groupe,String numeroDossier, Pageable pageable);
+
+   @Query("SELECT a FROM Stagaire a WHERE a.numeroDossier LIKE ?1%")
+   Page<Stagaire> findByStagairesbykeyword(String numeroDossier, Pageable pageable);
    
    @Query("SELECT a FROM Assistant a ")
    Page<Assistant> findByAssistants(Pageable pageable);
