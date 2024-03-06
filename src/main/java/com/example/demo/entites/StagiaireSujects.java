@@ -27,10 +27,9 @@ public class StagiaireSujects {
     private Long id;
     private String remarquesProfesseur;
     private String dateEnvoiVerification;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Stagaire stagaire;
     @ManyToOne(fetch = FetchType.LAZY)
-     // @JoinColumn(name = "chest_id")
     @JsonIgnore
     private Subject subject;
     @ManyToOne

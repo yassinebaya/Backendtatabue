@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,10 +26,11 @@ public class Inscriptions {
     private String statut;
     private String email;
     private String nom;
-    private String  prenome;
+    private String prenome;
     private String Tel;
-    private int idgroupe;
-    private String projettitle;
+       @ManyToOne
+     Groupe groupe;
+    private String projectTitle;
     private String emailEnvoie;
    
     

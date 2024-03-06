@@ -1,6 +1,9 @@
 package com.example.demo.entites;
 import java.util.Collection;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,7 +20,7 @@ import lombok.ToString;
 @DiscriminatorValue("Stag")
 @ToString
 public class Stagaire extends AppUser {
-private boolean statut;
+private String statut;
 private boolean checked;
 private boolean notification;
 private String projectTitle;
@@ -25,12 +28,16 @@ private String prenom;
 private String numeroDossier;
 @ManyToOne
 Groupe groupe;
-@OneToMany(fetch = FetchType.EAGER)
+@OneToMany(fetch = FetchType.EAGER,mappedBy = "stagaire",cascade = CascadeType.ALL, orphanRemoval = true)
+ @JsonIgnore
     private Collection<Stagairequsetion> Stagairequsetion;
-@OneToMany(fetch = FetchType.EAGER)
+
+@OneToMany(fetch = FetchType.EAGER,mappedBy = "stagaire",cascade = CascadeType.ALL, orphanRemoval = true)
+@JsonIgnore
 private Collection<StagiaireSujects> stagiaireSujects;
     
-@OneToMany(fetch = FetchType.EAGER)
+@OneToMany(fetch = FetchType.EAGER,mappedBy = "stagaire",cascade = CascadeType.ALL, orphanRemoval = true)
+@JsonIgnore
 private Collection<Indicateurs> indicateurs;
     
 }

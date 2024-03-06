@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.MediaType;
 import com.example.demo.dtos.UserDTO;
+import com.example.demo.entites.Animateur;
 import com.example.demo.entites.AppUser;
 import com.example.demo.entites.Assistant;
 import com.example.demo.entites.Inscriptions;
@@ -106,7 +107,7 @@ public class TestController {
             return inscriptions;
         }
         @PostMapping("/ajouterassistant")
-   public Assistant ajouterassistant(String username,String password,String email,String nom,String tel){
+       public Assistant ajouterassistant(String username,String password,String email,String nom,String tel){
          Assistant assistant=new Assistant();
          assistant.setUsername(username);
          assistant.setPassword(passwordEncoder.encode(password));
@@ -114,8 +115,21 @@ public class TestController {
          assistant.setNom(nom);
          assistant.setTel(tel);
          appUserRepository.save(assistant); 
-    return assistant;
+       return assistant;
 }
+
+@PostMapping("/ajouterAdmin")
+public Animateur ajouterAdmin(String username,String password,String email,String nom,String tel){
+ Animateur animateur=new Animateur();
+ animateur.setUsername(username);
+animateur.setPassword(passwordEncoder.encode(password));
+ animateur.setEmail(email);
+ animateur.setNom(nom);
+ animateur.setTel(tel);
+ appUserRepository.save(animateur); 
+return animateur;
+}
+
 
          @GetMapping("/listestagaire")
         // @PreAuthorize("hasAuthority('SCOPE_USER')")
@@ -143,11 +157,18 @@ public class TestController {
         }
       @PostMapping("/addnewuser")
     // @PreAuthorize("hasAuthority('SCOPE_USER')")
-      public String addnewuser(String username,String password){
-               accoubtService.addNewUser(username,password);
+      public String addnewStaigiare(String username,String password){
+               accoubtService.addNewStagaire(username,password);
               
                return username+"est ajouté" ;
       }
+      @PostMapping("/addnewAssistant")
+      // @PreAuthorize("hasAuthority('SCOPE_USER')")
+        public String addnewAssistant(String username,String password){
+                 accoubtService.addNewStagaire(username,password);
+                
+                 return username+"est ajouté" ;
+        }
     
       @PostMapping("/Inscription")
     // @PreAuthorize("hasAuthority('SCOPE_USER')")
@@ -189,7 +210,6 @@ public class TestController {
     @PostMapping("/login")
     public UserDTO login(String username, String password){
          AppUser appUser=accoubtService.loadAppUserByname(username);
-         System.out.println(appUser+password);
           Authentication authentication= authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(username,password));
         Instant instant=Instant.now();
@@ -201,8 +221,8 @@ public class TestController {
                 .claim("scope",scope)
                 .build();
         JwtEncoderParameters jwtEncoderParameters=JwtEncoderParameters.from(JwsHeader.with(MacAlgorithm.HS512).build(),jwtClaimsSet);
-String jwt=jwtEncoder.encode(jwtEncoderParameters).getTokenValue();
-UserDTO userDTO=maperuser.fromUser(appUser);
+     String jwt=jwtEncoder.encode(jwtEncoderParameters).getTokenValue();
+     UserDTO userDTO=maperuser.fromUser(appUser);
 userDTO.setJwt(jwt);
 
 return userDTO ;

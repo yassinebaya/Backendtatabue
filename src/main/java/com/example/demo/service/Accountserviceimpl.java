@@ -30,7 +30,7 @@ public class Accountserviceimpl implements AccoubtService {
     private InscriptionRepository inscriptionRepository;
 
     @Override
-    public AppUser addNewUser(String username,String password) {
+    public AppUser addNewStagaire(String username,String password) {
   
        AppUser appUser=appUserRepository.findByUsername(username);
         if (appUser!=null) throw new RuntimeException("this user existe déja");
@@ -38,6 +38,16 @@ public class Accountserviceimpl implements AccoubtService {
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
         Stagaire savedAppUser=appUserRepository.save(user);
+        return savedAppUser;
+    }
+    @Override
+    public AppUser addNewAssistant(String username,String password) {
+       AppUser appUser=appUserRepository.findByUsername(username);
+        if (appUser!=null) throw new RuntimeException("this user existe déja");
+        Assistant user=new Assistant();
+        user.setUsername(username);
+        user.setPassword(passwordEncoder.encode(password));
+       Assistant savedAppUser=appUserRepository.save(user);
         return savedAppUser;
     }
 

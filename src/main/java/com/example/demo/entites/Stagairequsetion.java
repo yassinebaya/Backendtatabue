@@ -27,7 +27,7 @@ public class Stagairequsetion {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Question question;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Stagaire stagaire;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore

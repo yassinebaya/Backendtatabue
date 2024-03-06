@@ -1,15 +1,9 @@
 package com.example.demo.security;
-
 import com.example.demo.service.UserDetailserviceimpl;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
-
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -26,7 +20,6 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
-
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -47,8 +40,8 @@ public class SecurityConfig {
                 .csrf(csrf->csrf.disable())
                 .cors(Customizer.withDefaults()) 
                 .authorizeHttpRequests(authConfig -> {
-                    authConfig.requestMatchers("/addnewuser/**","/addusertorol/**","/uploadImag/**","/downloadImage/**","/objet/**","/ajouterinscription/**").permitAll();
-                    authConfig.requestMatchers("/login/**").permitAll();
+                    authConfig.requestMatchers("/addnewuser/**","/inscriptionskywordbygroube/**","/inscriptionkyword/**","/stagiareskyword/**","/stagiareskywordbygroube/**","/addnewAssistant/**","/addusertorol/**","/uploadImag/**","/downloadImage/**","/objet/**","/ajouterinscription/**").permitAll();
+                    authConfig.requestMatchers("/login/**","/stagiareskywordbynotegroube/**","/stagiaireDelete/**","/stagiaresCheked/**","/inscriptions/**").permitAll();
                     authConfig.requestMatchers("/assistants/**").permitAll();
                     authConfig.requestMatchers("/stagiaireSujects/**").permitAll();
                     authConfig.requestMatchers("/CommentaireAssistantStagiaire/**","/allsubjects/**","/projets/**","/subjectsbyid/**","/documentType/**").permitAll();
@@ -56,6 +49,8 @@ public class SecurityConfig {
                     authConfig.requestMatchers("/subjectCategorie/**","/stagiaireQuestions/**","/subjectsbyProjet/**","/phaseProjet/**").permitAll();
                     authConfig.requestMatchers("/questions/**","/questionById/**","/questionBySubject/**").permitAll();
                     authConfig.requestMatchers("/subjects/**").permitAll();
+                    authConfig.requestMatchers("/updateEtat/**").permitAll();
+                    authConfig.requestMatchers("/indicateurs/**").permitAll();
                     authConfig.requestMatchers("/notifications/**").permitAll();
                     authConfig.requestMatchers("/getStudent/**","/stagiares/**").permitAll();
                     authConfig.requestMatchers("/Test1/**","/Test12/**","/addnewrole/**","/addroletouser/**","/Inscription/**","/listestagaire/**","/ajouterassistant/**","/listassistant/**").permitAll();

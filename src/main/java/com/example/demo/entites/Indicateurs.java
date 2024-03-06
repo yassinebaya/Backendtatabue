@@ -2,6 +2,7 @@ package com.example.demo.entites;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,6 +23,6 @@ public class Indicateurs {
     private Long id;
     private String title;
     private String etat;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Stagaire stagaire;
 }
