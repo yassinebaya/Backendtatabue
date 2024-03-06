@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import com.example.demo.entites.Assistant;
+
 import com.example.demo.entites.Groupe;
 import com.example.demo.entites.Indicateurs;
 import com.example.demo.entites.Stagaire;
@@ -38,7 +40,10 @@ public class StagaireControle {
 @GetMapping("getStudent/{id}")
 @PreAuthorize("hasAuthority('SCOPE_STAGIAIRE')")
  public Stagaire getStudent(@PathVariable Long id){
+
  Stagaire stagaire=appUserRepository.findByStagaire(id);
+
+
   return stagaire;
 
 
@@ -115,6 +120,7 @@ public class StagaireControle {
 		return ResponseEntity.ok(updatedsStagaire);
 	}
  
+
 
 
 }

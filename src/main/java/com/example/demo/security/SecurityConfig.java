@@ -42,6 +42,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authConfig -> {
                     authConfig.requestMatchers("/addnewuser/**","/inscriptionskywordbygroube/**","/inscriptionkyword/**","/stagiareskyword/**","/stagiareskywordbygroube/**","/addnewAssistant/**","/addusertorol/**","/uploadImag/**","/downloadImage/**","/objet/**","/ajouterinscription/**").permitAll();
                     authConfig.requestMatchers("/login/**","/stagiareskywordbynotegroube/**","/stagiaireDelete/**","/stagiaresCheked/**","/inscriptions/**").permitAll();
+
+                    authConfig.requestMatchers("/login/**").permitAll();
+
                     authConfig.requestMatchers("/assistants/**").permitAll();
                     authConfig.requestMatchers("/stagiaireSujects/**").permitAll();
                     authConfig.requestMatchers("/CommentaireAssistantStagiaire/**","/allsubjects/**","/projets/**","/subjectsbyid/**","/documentType/**").permitAll();

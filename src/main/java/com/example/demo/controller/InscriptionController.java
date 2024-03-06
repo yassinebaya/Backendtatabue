@@ -6,15 +6,19 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entites.Groupe;
 import com.example.demo.entites.Inscriptions;
 import com.example.demo.entites.Stagaire;
+
 import com.example.demo.entites.Stagairequsetion;
+
 import com.example.demo.repo.InscriptionRepository;
 
 @RestController
@@ -37,11 +41,16 @@ InscriptionRepository inscriptionRepository;
        Pageable pageable = PageRequest.of(page,size);
        Page<Inscriptions> inscription=inscriptionRepository.findByInscriptionsbykeyword(numerodossier,pageable);
                      return inscription;
+
       }
         @PostMapping("/inscriptions")
     public Inscriptions saveInscriptions(Inscriptions inscriptions) {
         return inscriptionRepository.save(inscriptions);
     }
     
+
+     
+      }
+
     
-}
+

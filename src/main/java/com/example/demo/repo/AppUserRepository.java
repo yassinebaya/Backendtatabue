@@ -40,7 +40,6 @@ Page<Assistant> findByUsernameLike(String username, Pageable pageable);
    @Query("SELECT a FROM Stagaire a WHERE a.groupe<> ?1 and a.numeroDossier LIKE ?2%")
    Page<Stagaire> findByStagairesbynoteGroupe(Groupe groupe,String numeroDossier, Pageable pageable);
 
-
    @Query("SELECT a FROM Stagaire a WHERE a.numeroDossier LIKE ?1%")
    Page<Stagaire> findByStagairesbykeyword(String numeroDossier, Pageable pageable);
    

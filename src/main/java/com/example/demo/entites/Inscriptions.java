@@ -30,7 +30,9 @@ public class Inscriptions {
     private String Tel;
        @ManyToOne
      Groupe groupe;
+
     private String projectTitle;
+
     private String emailEnvoie;
    
     
