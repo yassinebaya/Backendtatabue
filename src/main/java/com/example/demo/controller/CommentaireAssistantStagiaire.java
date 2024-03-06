@@ -39,7 +39,6 @@ CommentairesAssistantStagiaire commentaireAssistantStagiaire=commentaireASReposi
  @DeleteMapping("/CommentaireAssistantStagiaire/{id}")
 	public ResponseEntity<Map<String, Boolean>> deleteCommentairesAssistantStagiaire(@PathVariable Long id){
 	CommentairesAssistantStagiaire commentairesAssistantStagiaire = commentaireASRepository.findByCommentaires(id);
-  System.out.println(commentairesAssistantStagiaire);
         if (commentairesAssistantStagiaire==null) throw new RuntimeException("Assistant not exist with id :" + id);
         commentaireASRepository.delete(commentairesAssistantStagiaire);
 		Map<String, Boolean> response = new HashMap<>();

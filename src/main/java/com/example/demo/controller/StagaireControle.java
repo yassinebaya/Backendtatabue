@@ -37,11 +37,11 @@ public class StagaireControle {
  @Autowired
  SubjectRepo subjectRepo;
  
-@GetMapping("getStudent/{id}")
-@PreAuthorize("hasAuthority('SCOPE_STAGIAIRE')")
- public Stagaire getStudent(@PathVariable Long id){
+@GetMapping("getStudent/{stagiaireId}")
+//@PreAuthorize("hasAuthority('SCOPE_STAGIAIRE')")
+ public Stagaire getStudent(@PathVariable Long stagiaireId){
 
- Stagaire stagaire=appUserRepository.findByStagaire(id);
+ Stagaire stagaire=appUserRepository.findByStagaire(stagiaireId);
 
 
   return stagaire;
@@ -120,7 +120,23 @@ public class StagaireControle {
 		return ResponseEntity.ok(updatedsStagaire);
 	}
  
+  @PutMapping("/DefaultGroupe/{idStagiaire}")
+	public ResponseEntity<Stagaire> updateDefaultGroupe(@PathVariable long idStagiaire,Stagaire stagairedetaille){
+	  Stagaire stagaire =appUserRepository.findByStagaire(idStagiaire);
+		if (stagaire==null) throw new RuntimeException("question not exist with id :" + idStagiaire);
+    stagaire.setGroupe(stagairedetaille.getGroupe());
+    Stagaire updatedsStagaire = appUserRepository.save(stagaire);
+		return ResponseEntity.ok(updatedsStagaire);
+	}
+  @PutMapping("/stagaieGroupe/{idStagiaire}")
+	public ResponseEntity<Stagaire> updatestagiregroupe(@PathVariable long idStagiaire,Stagaire stagairedetaille){
+	  Stagaire stagaire =appUserRepository.findByStagaire(idStagiaire);
+		if (stagaire==null) throw new RuntimeException("question not exist with id :" + idStagiaire);
+    stagaire.setGroupe(stagairedetaille.getGroupe());
+    Stagaire updatedsStagaire = appUserRepository.save(stagaire);
+		return ResponseEntity.ok(updatedsStagaire);
+	}
 
-
+  
 
 }

@@ -2,6 +2,8 @@ package com.example.demo.entites;
 
 import java.util.Collection;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -30,7 +32,7 @@ public class Groupe {
     @OneToMany(fetch = FetchType.EAGER)
     private Collection<Assistant> assistants;
     @OneToMany(fetch = FetchType.EAGER)
-private Collection<Stagaire> stagaires;
+   private Collection<Stagaire> stagaires;
 @OneToMany(fetch = FetchType.EAGER)
 private Collection<Inscriptions> inscriptions;
 
