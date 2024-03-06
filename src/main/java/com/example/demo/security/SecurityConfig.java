@@ -43,7 +43,7 @@ public class SecurityConfig {
                     authConfig.requestMatchers("/addnewuser/**","/inscriptionskywordbygroube/**","/inscriptionkyword/**","/stagiareskyword/**","/stagiareskywordbygroube/**","/addnewAssistant/**","/addusertorol/**","/uploadImag/**","/downloadImage/**","/objet/**","/ajouterinscription/**").permitAll();
                     authConfig.requestMatchers("/login/**","/stagiareskywordbynotegroube/**","/stagiaireDelete/**","/stagiaresCheked/**","/inscriptions/**").permitAll();
 
-                    authConfig.requestMatchers("/login/**").permitAll();
+                 
 
                     authConfig.requestMatchers("/assistants/**").permitAll();
                     authConfig.requestMatchers("/stagiaireSujects/**").permitAll();
