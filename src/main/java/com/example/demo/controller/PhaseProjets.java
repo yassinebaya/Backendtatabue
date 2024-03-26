@@ -18,6 +18,7 @@ public class PhaseProjets {
 ProjetphaseRepository projetphaseRepository;
 
      @GetMapping("/phaseProjet")
+
     public List<Projetphase> projetsAll(){
       List<Projetphase> phasesprojets=projetphaseRepository.findAll();
       return phasesprojets;

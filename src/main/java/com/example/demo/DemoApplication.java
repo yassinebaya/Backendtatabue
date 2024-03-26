@@ -6,6 +6,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,7 @@ import com.example.demo.service.AccoubtService;
 @RestController
 @CrossOrigin("*")
 @SpringBootApplication
+@EnableAsync
 public class DemoApplication extends SpringBootServletInitializer{
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);

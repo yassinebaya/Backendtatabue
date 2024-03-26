@@ -23,7 +23,7 @@ public class DocumentType {
     private String type;
     private String icon;
     @OneToMany(fetch = FetchType.EAGER)
-private Collection<Subject> subjects;
+    private Collection<Subject> subjects;
 }
     
 

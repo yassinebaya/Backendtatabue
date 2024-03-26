@@ -5,22 +5,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.example.demo.entites.Groupe;
 import com.example.demo.entites.Inscriptions;
-import com.example.demo.entites.Stagaire;
-
-import com.example.demo.entites.Stagairequsetion;
-
 import com.example.demo.repo.InscriptionRepository;
 
 @RestController
@@ -30,6 +25,7 @@ public class InscriptionController  {
 InscriptionRepository inscriptionRepository;
 
 @GetMapping("/inscriptionskywordbygroube")
+@PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant')")
   public Page<Inscriptions> getStagiareKyword(@RequestParam Groupe groupe,@RequestParam String numerodossier,@RequestParam int page,@RequestParam int size){
   
      Pageable pageable = PageRequest.of(page,size);
@@ -38,6 +34,7 @@ InscriptionRepository inscriptionRepository;
    
     }
     @GetMapping("/inscriptionkyword")
+    @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant')")
     public Page<Inscriptions> getStagiareKyword(@RequestParam String numerodossier,@RequestParam int page,@RequestParam int size){
       
        Pageable pageable = PageRequest.of(page,size);
@@ -46,11 +43,13 @@ InscriptionRepository inscriptionRepository;
 
       }
         @PostMapping("/inscriptions")
+        @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant')")
     public Inscriptions saveInscriptions(Inscriptions inscriptions) {
         return inscriptionRepository.save(inscriptions);
     }
     
 @PutMapping("/inscriptionGroupe/{idInscription}")
+@PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant')")
 	public ResponseEntity<Inscriptions> updateinscriptiongroupe(@PathVariable long idInscription,Inscriptions inscriptionsdetaille){
 	  Inscriptions inscriptions =inscriptionRepository.findByInscription(idInscription);
 		if (inscriptions==null) throw new RuntimeException("question not exist with id :" +  idInscription);
@@ -58,8 +57,17 @@ InscriptionRepository inscriptionRepository;
     Inscriptions updatedsInscriptions = inscriptionRepository.save(inscriptions);
 		return ResponseEntity.ok(updatedsInscriptions);
 	}
+
+  @PutMapping("/dateenvoi/{id}")
+  @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant')")
+	public ResponseEntity<Inscriptions> updateEnvoi(@PathVariable long id,@RequestBody Inscriptions inscriptionsDetaille){
+	   Inscriptions inscriptions =inscriptionRepository.findByInscription(id);
+		if (inscriptions==null) throw new RuntimeException("inscriptions not exist with id :" + id);
+             inscriptions.setEmailEnvoie(inscriptionsDetaille.getEmailEnvoie());
+             Inscriptions updatedinscriptions = inscriptionRepository.save(inscriptions);
+		return ResponseEntity.ok(updatedinscriptions);
      
       }
 
     
-
+    }

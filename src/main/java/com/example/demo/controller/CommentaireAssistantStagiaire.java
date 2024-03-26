@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,12 +32,14 @@ public class CommentaireAssistantStagiaire {
     @Autowired
 CommentaireASRepository commentaireASRepository;
  @GetMapping("/CommentaireAssistantStagiaire")
+ @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin')")
 public CommentairesAssistantStagiaire searchCommentairesAssistantStagiaire(@RequestParam Assistant assistant,@RequestParam Stagaire stagaire){
 CommentairesAssistantStagiaire commentaireAssistantStagiaire=commentaireASRepository.findByCommentairesAssistantStagiaire(assistant,stagaire);
   return commentaireAssistantStagiaire;
 
  }
  @DeleteMapping("/CommentaireAssistantStagiaire/{id}")
+ @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin')")
 	public ResponseEntity<Map<String, Boolean>> deleteCommentairesAssistantStagiaire(@PathVariable Long id){
 	CommentairesAssistantStagiaire commentairesAssistantStagiaire = commentaireASRepository.findByCommentaires(id);
         if (commentairesAssistantStagiaire==null) throw new RuntimeException("Assistant not exist with id :" + id);
@@ -48,6 +51,7 @@ CommentairesAssistantStagiaire commentaireAssistantStagiaire=commentaireASReposi
 
 
 	 @PostMapping("/CommentaireAssistantStagiaire")
+     @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin')")
     public CommentairesAssistantStagiaire ajouterCommentaireStagiaireSubject(CommentairesAssistantStagiaire commentaireAS) {
         return commentaireASRepository.save(commentaireAS);
     }

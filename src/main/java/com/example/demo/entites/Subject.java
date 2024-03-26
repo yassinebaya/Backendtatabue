@@ -52,13 +52,13 @@ public class Subject {
     Projetphase phaseId;
     @ManyToOne
     DocumentType documentType;
-    @OneToMany(mappedBy = "subject",cascade = CascadeType.ALL,fetch = FetchType.EAGER )
+    @OneToMany(fetch = FetchType.EAGER )
     @JsonIgnore
       private Collection<Question> questions;
-      @OneToMany(mappedBy = "subject",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+      @OneToMany(fetch = FetchType.EAGER)
       @JsonIgnore
       private Collection<Stagairequsetion> stagairequsetions;
-      @OneToMany(mappedBy = "subject",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+      @OneToMany(fetch = FetchType.EAGER)
       @JsonIgnore
       private Collection<StagiaireSujects> stagiaireSujects;
     

@@ -38,7 +38,7 @@ private String order1;
 private String type;
 private String answerInput;
 private String answerText;
-@OneToMany(fetch = FetchType.EAGER,mappedBy = "question",cascade = CascadeType.ALL, orphanRemoval = true)
+@OneToMany(fetch = FetchType.EAGER)
 private Collection<Stagairequsetion> Stagairequsetion;
 @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore

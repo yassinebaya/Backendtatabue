@@ -8,13 +8,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
+import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.jwt.*;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,11 +38,15 @@ import com.example.demo.entites.Stagaire;
 import com.example.demo.mappers.Maperuser;
 import com.example.demo.repo.AppUserRepository;
 import com.example.demo.repo.InscriptionRepository;
+
 import com.example.demo.service.AccoubtService;
 import com.example.demo.service.ReportService;
 import com.example.demo.services.StorageService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
@@ -46,10 +55,10 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+
 import java.util.stream.Collectors;
 
 @RestController
@@ -72,8 +81,12 @@ public class TestController {
     private Inscriptions inscriptions;
     @Autowired
     private InscriptionRepository inscriptionRepository;
+   
+
   @Autowired
     private PasswordEncoder passwordEncoder;
+
+    SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
     
       @GetMapping("/Test1")
     //  @PreAuthorize("hasAuthority('SCOPE_USER')")
@@ -197,7 +210,6 @@ return animateur;
     public List<Assistant>  objet(@RequestBody List<UserDTO> employeeDetails){
      List<Assistant> stagaires=new ArrayList<>();
              for(UserDTO appUser:employeeDetails){
-              System.out.println(appUser.getId());
               Assistant stage=appUserRepository.findByAssistant(appUser.getId());
               System.out.println(stage);
                        stage.setUsername(appUser.getUsername());
@@ -209,9 +221,13 @@ return animateur;
 
     @PostMapping("/login")
     public UserDTO login(String username, String password){
+           
+            
+            
          AppUser appUser=accoubtService.loadAppUserByname(username);
           Authentication authentication= authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(username,password));
+             SecurityContextHolder.getContext().setAuthentication(authentication);
         Instant instant=Instant.now();
         String scope=authentication.getAuthorities().stream().map(a->a.getAuthority()).collect(Collectors.joining(" "));
         JwtClaimsSet jwtClaimsSet=JwtClaimsSet.builder()
@@ -223,12 +239,22 @@ return animateur;
         JwtEncoderParameters jwtEncoderParameters=JwtEncoderParameters.from(JwsHeader.with(MacAlgorithm.HS512).build(),jwtClaimsSet);
      String jwt=jwtEncoder.encode(jwtEncoderParameters).getTokenValue();
      UserDTO userDTO=maperuser.fromUser(appUser);
-userDTO.setJwt(jwt);
+     userDTO.setJwt(jwt);
+           
 
 return userDTO ;
 
 
     }
+
+    @PostMapping("/logout1")
+   @Secured("SCOPE_assistant")
+public String performLogout(Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
+
+ SecurityContextHolder.clearContext();
+ System.out.println(SecurityContextHolder.getContext());
+  return "Logout";
+}
 
     @GetMapping("/Test")
     public  Object[] demerrertest() {
@@ -277,5 +303,7 @@ return userDTO ;
         return partnerIds;
     }
 
+
+  
 
 }

@@ -3,10 +3,11 @@ import java.util.Collection;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
+
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -26,17 +27,16 @@ private boolean notification;
 private String projectTitle;
 private String prenom;
 private String numeroDossier;
-@ManyToOne
+@ManyToOne()
+@JoinColumn(name = "groupe_id")
 Groupe groupe;
-@OneToMany(fetch = FetchType.EAGER,mappedBy = "stagaire",cascade = CascadeType.ALL, orphanRemoval = true)
+@OneToMany(fetch = FetchType.EAGER)
  @JsonIgnore
-    private Collection<Stagairequsetion> Stagairequsetion;
-
-@OneToMany(fetch = FetchType.EAGER,mappedBy = "stagaire",cascade = CascadeType.ALL, orphanRemoval = true)
+ private Collection<Stagairequsetion> Stagairequsetion;
+@OneToMany(fetch = FetchType.EAGER)
 @JsonIgnore
 private Collection<StagiaireSujects> stagiaireSujects;
-    
-@OneToMany(fetch = FetchType.EAGER,mappedBy = "stagaire",cascade = CascadeType.ALL, orphanRemoval = true)
+@OneToMany(fetch = FetchType.EAGER)
 @JsonIgnore
 private Collection<Indicateurs> indicateurs;
     

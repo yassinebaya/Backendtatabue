@@ -2,8 +2,10 @@ package com.example.demo.entites;
 
 import java.util.Collection;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -11,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PreRemove;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,17 +29,20 @@ public class Groupe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nom;
-    private String nombre;
+    private int nombre;
     @ManyToOne
-    private Animateur animateur;
-    @OneToMany(fetch = FetchType.EAGER)
-    private Collection<Assistant> assistants;
-    @OneToMany(fetch = FetchType.EAGER)
-   private Collection<Stagaire> stagaires;
-@OneToMany(fetch = FetchType.EAGER)
-private Collection<Inscriptions> inscriptions;
+    private Assistant assistant;
+   //@OneToMany(mappedBy = "groupe",cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = false )
+  //@JsonIgnore
+    @OneToMany
+    private Collection<Stagaire> stagaires;
+   @OneToMany
+   @JsonIgnore
+    private Collection<Inscriptions> inscriptions;
 
 
+
+
+    }
     
-    
-}
+

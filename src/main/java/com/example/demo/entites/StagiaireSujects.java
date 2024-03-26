@@ -27,10 +27,10 @@ public class StagiaireSujects {
     private Long id;
     private String remarquesProfesseur;
     private String dateEnvoiVerification;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     private Stagaire stagaire;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne()
+    //@JsonIgnore
     private Subject subject;
     @ManyToOne
     private SubjectEtape subjectEtape;

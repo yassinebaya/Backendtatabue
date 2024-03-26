@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,7 @@ public class CommentairesAssistantStagiaireSubjectController {
  @Autowired
  CommentaireASSRepository commentaireASSRepository;
 @GetMapping("/commentairesAssistantStagiaireSubject")
+ @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant','SCOP_stagiaire')")
 public CommentairesAssistantStagiaireSubject searchCommentairesAssistantStagiaireSubject(@RequestParam Assistant assistant,@RequestParam Subject subject,@RequestParam Stagaire stagaire){
 CommentairesAssistantStagiaireSubject commentaireAssistantStagiairesSubject=commentaireASSRepository.commentairesAssistantStagiaireSubject(assistant,subject,stagaire);
   return commentaireAssistantStagiairesSubject;
@@ -33,11 +35,13 @@ CommentairesAssistantStagiaireSubject commentaireAssistantStagiairesSubject=comm
  }
 
   @PostMapping("/commentairesAssistantStagiaireSubject")
+  @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant','SCOP_stagiaire')")
     public CommentairesAssistantStagiaireSubject ajouterCommentaireStagiaireSubject(CommentairesAssistantStagiaireSubject commentaireSS) {
         return commentaireASSRepository.save(commentaireSS);
     }
 
     @DeleteMapping("/commentairesAssistantStagiaireSubject/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant','SCOP_stagiaire')")
 	public ResponseEntity<Map<String, Boolean>> deleteCommentairesAssistantStagiaireSubject(@PathVariable Long id){
 		CommentairesAssistantStagiaireSubject commentairesAssistantStagiaireSubject = commentaireASSRepository.findByIdCommentaire(id);
         if (commentairesAssistantStagiaireSubject==null) throw new RuntimeException("Assistant not exist with id :" + id);

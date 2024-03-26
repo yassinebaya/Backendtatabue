@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,6 +38,7 @@ private AccoubtService accoubtService;
 private PasswordEncoder passwordEncoder;
 
 @GetMapping("/assistants")
+@PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin')")
  public Page<Assistant> assistants(@RequestParam String keyword,@RequestParam int page,@RequestParam int size){
     Pageable pageable = PageRequest.of(page,size);
     Page<Assistant> lAssistants=appUserRepository.findByUsernameLike("%"+keyword+"%",pageable);
@@ -44,11 +46,13 @@ private PasswordEncoder passwordEncoder;
     }
 
 @PostMapping("/assistants")
+@PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin')")
 	public Assistant createAssistant(Assistant assistant) {
        return accoubtService.createAssistant(assistant);
 	}
 	
  @DeleteMapping("/assistants/{id}")
+  @PreAuthorize("hasAnyAuthority('SCOPE_admin')")
 	public ResponseEntity<Map<String, Boolean>> deleteEmployee(@PathVariable Long id){
 		Assistant assistant = appUserRepository.findByAssistant(id);
         if (assistant==null) throw new RuntimeException("Assistant not exist with id :" + id);
@@ -59,12 +63,14 @@ private PasswordEncoder passwordEncoder;
 	}
 
  @GetMapping("assistants/{id}")
+ @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin','SCOPE_stagiaire')")
 public Assistant getaAssistant(@PathVariable Long id){
 Assistant Assistant=appUserRepository.findByAssistant(id);
   return Assistant;
 
  }
 @PutMapping("/assistants/{id}")
+@PreAuthorize("hasAnyAuthority('SCOPE_admin','SCOPE_assistant')")
 	public ResponseEntity<Assistant> updateEmployee(@PathVariable Long id, Assistant assistantdetail){
 		Assistant assistant = appUserRepository.findByAssistant(id);
 		if (assistant==null) throw new RuntimeException("Assistant not exist with id :" + id);

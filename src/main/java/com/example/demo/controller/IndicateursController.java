@@ -3,6 +3,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ public class IndicateursController {
     @Autowired
     IndicateurRepository indicateurRepository;
      @PutMapping("/indicateurs/{id}")
+	   @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant')")
 	public ResponseEntity<Indicateurs> updateIndecateures(@PathVariable long id,@RequestBody Indicateurs indicateursdetaille){
 	     Indicateurs indicateurs =indicateurRepository.findByIndicateurs(id);
          System.out.println(indicateursdetaille.getEtat());
@@ -29,6 +31,7 @@ public class IndicateursController {
 	}
 
     @GetMapping("/indicateurs/{stagaire}")
+	@PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant')")
 	public ResponseEntity<List<Indicateurs>> getIndecateures(@PathVariable Stagaire stagaire){
 	     List<Indicateurs> indicateurs =indicateurRepository.findByStagiaire(stagaire);
 		return ResponseEntity.ok(indicateurs);

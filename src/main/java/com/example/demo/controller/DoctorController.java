@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +32,7 @@ public class DoctorController {
     @Autowired
     private DoctorService doctorService;
     @PostMapping("/subjects")
+    @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant')")
     public Subject createSubject(Subject subject) {
         subject.setAssistantId(subject.getAssistantId());
         subject.setCategorieId(subject.getCategorieId());
@@ -40,6 +42,7 @@ public class DoctorController {
        return  doctorService.createSubject(subject);
     }
  @PutMapping("/subjects/{id}")
+ @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant')")
 	public ResponseEntity<Subject> updateSubjects(@PathVariable long id, Subject subjectdetail){
 		Subject subject = subjectRepo.findBySubject(id);
 		if (subject==null) throw new RuntimeException("question not exist with id :" + id);
@@ -64,29 +67,34 @@ public class DoctorController {
 		return ResponseEntity.ok(updatedsubject);
 	}
 @GetMapping("/subjects")
+@PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant','SCOP_stagiaire')")
 public Subject getStagiaireSubjects(@RequestParam Assistant assistantId){
 Subject subject=subjectRepo.findByAssistantSubjects(assistantId);
   return subject;
  }
  @GetMapping("/subjectsbyid")
+ @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant','SCOP_stagiaire')")
  public SubjectDTO getSubjects(@RequestParam Subject subject){
    SubjectDTO subjectdto=maperSubject.fromsubject(subject);
    return subjectdto;
   }
 
   @GetMapping("/subjectsbyProjet")
+  @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant','SCOP_stagiaire')")
   public List<Subject> getSubjectsbyProjet(@RequestParam Projets projets){
    List<Subject> subject=subjectRepo.findByProjets(projets);
      return subject;
    }
 
   @GetMapping("/allsubjects")
+  @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant','SCOP_stagiaire')")
   public List<Subject> allSubjects(){
     List<Subject> subject=subjectRepo.findAll();
       return subject;
      }
      	
  @DeleteMapping("/subjects/{id}")
+ @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant')")
 	public ResponseEntity<Map<String, Boolean>> deletesubject(@PathVariable long id){
         Subject subject = subjectRepo.findBySubject(id);
         if (subject==null) throw new RuntimeException("subject not exist with id :" + id);

@@ -2,18 +2,14 @@ package com.example.demo.entites;
 
 import java.util.Collection;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,6 +20,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @DiscriminatorValue("Assi")
 public class Assistant extends AppUser {
-    @ManyToOne
-    Groupe groupe;
+    @OneToMany
+    @JsonIgnore
+    private Collection<Groupe> groupes;
+   @OneToMany(fetch = FetchType.EAGER)
+   @JsonIgnore
+    private Collection<Subject> subjects;
+
 }
+
+

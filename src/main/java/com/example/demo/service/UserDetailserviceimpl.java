@@ -1,6 +1,7 @@
 
 package com.example.demo.service;
 
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,8 +16,10 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class UserDetailserviceimpl implements UserDetailsService {
-@Autowired
+      @Lazy
+     @Autowired
     private AccoubtService accoubtService;
+    
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

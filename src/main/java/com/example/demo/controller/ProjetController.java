@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,11 +18,13 @@ public class ProjetController {
     @Autowired
     ProjetsRepository projetsRepository;
     @GetMapping("/projets/{id}")
+    @PreAuthorize("hasAnyAuthority('SCOPE_admin','SCOPE_assistant','SCOPE_staigiare')")
  public Projets getprojets(@PathVariable long id){
     Projets projets=projetsRepository.findByProjets(id);
    return projets;
   }
   @GetMapping("/projets")
+  @PreAuthorize("hasAnyAuthority('SCOPE_admin','SCOPE_assistant')")
     public List<Projets> projetsAll(){
       List<Projets> projets=projetsRepository.findAll();
       return projets;
