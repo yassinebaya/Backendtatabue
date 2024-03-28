@@ -33,7 +33,7 @@ private AppUserRepository appUserRepository;
 @Lazy
 @Autowired
 private AccoubtService accoubtService;
-@Lazy
+ @Lazy
  @Autowired
 private PasswordEncoder passwordEncoder;
 
