@@ -47,7 +47,7 @@ public class SecurityConfig {
 
   
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-
+    @Lazy
     @Autowired
     private  UserDetailserviceimpl userDetailsService;
     private final CustomLogoutHandler logoutHandler;
