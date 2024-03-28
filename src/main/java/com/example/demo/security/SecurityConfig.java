@@ -79,6 +79,7 @@ public class SecurityConfig {
                     authConfig.requestMatchers("/updateEtat/**").permitAll();
                     authConfig.requestMatchers("/indicateurs/**").permitAll();
                     authConfig.requestMatchers("/notifications/**").permitAll();
+                    authConfig.requestMatchers("/ws/**").permitAll();
                     authConfig.requestMatchers("/getStudent/**","/stagiares/**","/DefaultGroupe/**","/stagaieGroupe/**","/inscriptionGroupe/**","/AllGroupe/**","/searchGroupes/**","/groupe/**","/sendEmail/**").permitAll();
                     authConfig.requestMatchers("/Test1/**","/Test12/**","/addnewrole/**","/addroletouser/**","/Inscription/**","/dateenvoi/**","/listestagaire/**","/ajouterassistant/**","/listassistant/**","/incrimenter/**","/dicrimenter/**","/logout1/**").permitAll();
                     authConfig.requestMatchers("/admin/**").denyAll();

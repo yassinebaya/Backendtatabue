@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,11 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.entites.Groupe;
 import com.example.demo.entites.Message;
-import com.example.demo.entites.Notifications;
 import com.example.demo.repo.MessageRepository;
 
 @RestController
@@ -25,6 +29,14 @@ public class MessageController {
 	public Message AddMessage(Message message) {
        return messageRepository.save(message);
 	}
+
+     @GetMapping("/message/{id}")
+     @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin','SCOPE_stagiaire')")
+    public List<Message> messageByGroupe(@RequestParam Groupe groupe){
+      List<Message> messages=messageRepository.findByMessageByGroupe(groupe);
+      return messages;
+    }
+
 
  @DeleteMapping("/message/{id}")
    @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin')")
