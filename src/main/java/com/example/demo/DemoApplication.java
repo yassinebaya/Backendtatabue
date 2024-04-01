@@ -10,6 +10,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.dtos.Responce;
 import com.example.demo.service.AccoubtService;
 @RestController
 @CrossOrigin("*")
@@ -28,13 +30,7 @@ public class DemoApplication extends SpringBootServletInitializer{
 	CommandLineRunner commandLineRunner(AccoubtService accoubtService){
 
 		return args->{
-		 	//accoubtService.addnewRole("PUBLIC");
-			//accoubtService.addnewRole("ADMIN");
-			//accoubtService.addnewRole("STAGAIRE");
-			//accoubtService.addNewUser("public","123");
-			//accoubtService.addNewUser("user2","123");
-			
-			//accoubtService.addRoleToUser("user1","USER");
+	
 		
 
 		};

@@ -79,7 +79,8 @@ public class SecurityConfig {
                     authConfig.requestMatchers("/updateEtat/**").permitAll();
                     authConfig.requestMatchers("/indicateurs/**").permitAll();
                     authConfig.requestMatchers("/notifications/**").permitAll();
-                    authConfig.requestMatchers("/ws/**").permitAll();
+                    authConfig.requestMatchers("/chat-socket/**").permitAll();
+                    authConfig.requestMatchers("/chat/**").permitAll();
                     authConfig.requestMatchers("/getStudent/**","/stagiares/**","/DefaultGroupe/**","/stagaieGroupe/**","/inscriptionGroupe/**","/AllGroupe/**","/searchGroupes/**","/groupe/**","/sendEmail/**").permitAll();
                     authConfig.requestMatchers("/Test1/**","/Test12/**","/addnewrole/**","/addroletouser/**","/Inscription/**","/dateenvoi/**","/listestagaire/**","/ajouterassistant/**","/listassistant/**","/incrimenter/**","/dicrimenter/**","/logout1/**").permitAll();
                     authConfig.requestMatchers("/admin/**").denyAll();
@@ -87,13 +88,10 @@ public class SecurityConfig {
                 })
              
                 .oauth2ResourceServer(oa->oa.jwt(Customizer.withDefaults()))
+            
                 .userDetailsService(userDetailsService)
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .logout(l->l
-                .logoutUrl("/logout")
-                .addLogoutHandler(logoutHandler)
-                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext()
-                )) ;
+             
+                 ;
 
         return http.build();
     }
@@ -143,9 +141,11 @@ public class SecurityConfig {
 @Bean
 CorsConfigurationSource corsConfigurationSource(){
     CorsConfiguration corsConfiguration=new CorsConfiguration();
-    corsConfiguration.addAllowedOrigin("*");
+    corsConfiguration.addAllowedOrigin("http://localhost:4200"); // Autorise seulement cette origine
     corsConfiguration.addAllowedMethod("*");
     corsConfiguration.addAllowedHeader("*");
+    corsConfiguration.setAllowCredentials(true); // Autorise les informations d'authentification
+
   // corsConfiguration.setExposedHeaders(List.of("x-auth-token"));
     UrlBasedCorsConfigurationSource source=new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**",corsConfiguration);

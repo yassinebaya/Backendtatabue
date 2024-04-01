@@ -60,7 +60,7 @@ public class CustomLogoutHandler implements LogoutHandler {
 
   
 
-                System.out.println( SecurityContextHolder.getContext());
+            
                        
       
     }

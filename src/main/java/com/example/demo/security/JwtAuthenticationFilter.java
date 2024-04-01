@@ -36,7 +36,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
              @NonNull FilterChain filterChain)
             throws ServletException, IOException {
 
-               System.out.println(SecurityContextHolder.getContext());
         filterChain.doFilter(request, response);
 
 

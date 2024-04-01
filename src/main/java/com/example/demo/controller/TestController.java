@@ -29,6 +29,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.MediaType;
+
+import com.example.demo.dtos.Responce;
 import com.example.demo.dtos.UserDTO;
 import com.example.demo.entites.Animateur;
 import com.example.demo.entites.AppUser;
@@ -81,6 +83,7 @@ public class TestController {
     private Inscriptions inscriptions;
     @Autowired
     private InscriptionRepository inscriptionRepository;
+    Responce responce;
    
 
   @Autowired
@@ -185,8 +188,11 @@ return animateur;
     
       @PostMapping("/Inscription")
     // @PreAuthorize("hasAuthority('SCOPE_USER')")
-      public AppUser inscription(@RequestParam String numdossier,@RequestParam String email,@RequestParam String password){
-        return accoubtService.Activercompte(numdossier,email,password);
+      public String inscription(@RequestParam String numdossier,@RequestParam String email,@RequestParam String password){
+      
+          accoubtService.Activercompte(numdossier,email,password);
+          String responce1=responce.getResponce();
+           return responce1;
       }
 
 	@PostMapping("/uploadImag")

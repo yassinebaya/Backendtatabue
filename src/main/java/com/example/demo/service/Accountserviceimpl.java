@@ -1,6 +1,10 @@
 package com.example.demo.service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.example.demo.dtos.Responce;
 import com.example.demo.entites.AppRole;
 import com.example.demo.entites.AppUser;
 import com.example.demo.entites.Assistant;
@@ -21,6 +25,11 @@ public class Accountserviceimpl implements AccoubtService {
     private AppRoleRepository appRoleRepository;
     private PasswordEncoder passwordEncoder;
     private InscriptionRepository inscriptionRepository;
+  
+
+ 
+ 
+    
 
     @Override
     public AppUser addNewStagaire(String username,String password) {
@@ -77,41 +86,49 @@ public class Accountserviceimpl implements AccoubtService {
     }
   
     @Override
-    public AppUser Activercompte(String dossier,String email,String password) {
-                  String active;
-            Inscriptions inscriptions= findInscriptions(dossier,email);
-           AppUser appUser=appUserRepository.findByEmail(email);
-
+    @Async
+    public void Activercompte(String dossier,String email,String password) {
+      try {
+        Inscriptions inscriptions= findInscriptions(dossier,email);
+            AppUser appUser=appUserRepository.findByEmail(email);
            if (inscriptions==null || appUser!=null ) {
-           appUser=null;
+        
+                    appUser=null;
            }else{
-           Stagaire user=new Stagaire();
-            user.setUsername(dossier);
-            user.setPassword(passwordEncoder.encode(password));
-            user.setEmail(email);
-            user.setNom(inscriptions.getNom());
-            user.setTel(inscriptions.getTel());
-            appUserRepository.save(user); 
-             appUser=appUserRepository.findByEmail(email);
+            createStagiaire(dossier,email,password,inscriptions);
+    
+        
            }
-           System.out.println(appUser);
-             return appUser;
+        
+      } catch (Exception e) {
+        // TODO: handle exception
+      }
+            
+            
     }
     @Override
     public Assistant createAssistant(Assistant assistant) {
       assistant.setPassword(passwordEncoder.encode((assistant.getPassword())));
 		return appUserRepository.save(assistant);
 	}
+  @Override
+
+  public Stagaire createStagiaire(String dossier,String email,String password,Inscriptions inscriptions) {
+    Stagaire user=new Stagaire();
+    user.setUsername(dossier);
+    user.setPassword(passwordEncoder.encode(password));
+    user.setEmail(email);
+    user.setNom(inscriptions.getNom());
+    user.setTel(inscriptions.getTel());
+    appUserRepository.save(user); 
+  return appUserRepository.save(user);
+}
 	
 
     @Override
     public Inscriptions findInscriptions(String dossier, String email) {
-      System.out.println(email);
-      System.out.println(dossier);
-
     Inscriptions inscriptions=inscriptionRepository.findByEmailandNumeroDossier(email,dossier);
-    System.out.println(inscriptions);
-     if (inscriptions==null) inscriptions=null;
+     if (inscriptions==null) ;
      return inscriptions;
     }
     

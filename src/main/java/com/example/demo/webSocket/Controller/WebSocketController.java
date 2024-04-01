@@ -15,4 +15,5 @@ public class WebSocketController {
         System.out.println(message);
         return new ChatMessage(message.getMessage(), message.getUser());
     }
+
 }
