@@ -25,7 +25,7 @@ public class InscriptionController  {
 InscriptionRepository inscriptionRepository;
 
 @GetMapping("/inscriptionskywordbygroube")
-@PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant')")
+@PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
   public Page<Inscriptions> getStagiareKyword(@RequestParam Groupe groupe,@RequestParam String numerodossier,@RequestParam int page,@RequestParam int size){
   
      Pageable pageable = PageRequest.of(page,size);
@@ -34,7 +34,7 @@ InscriptionRepository inscriptionRepository;
    
     }
     @GetMapping("/inscriptionkyword")
-    @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant')")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
     public Page<Inscriptions> getStagiareKyword(@RequestParam String numerodossier,@RequestParam int page,@RequestParam int size){
       
        Pageable pageable = PageRequest.of(page,size);
@@ -43,13 +43,13 @@ InscriptionRepository inscriptionRepository;
 
       }
         @PostMapping("/inscriptions")
-        @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant')")
+        @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
     public Inscriptions saveInscriptions(Inscriptions inscriptions) {
         return inscriptionRepository.save(inscriptions);
     }
     
 @PutMapping("/inscriptionGroupe/{idInscription}")
-@PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant')")
+@PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
 	public ResponseEntity<Inscriptions> updateinscriptiongroupe(@PathVariable long idInscription,Inscriptions inscriptionsdetaille){
 	  Inscriptions inscriptions =inscriptionRepository.findByInscription(idInscription);
 		if (inscriptions==null) throw new RuntimeException("question not exist with id :" +  idInscription);
@@ -59,7 +59,7 @@ InscriptionRepository inscriptionRepository;
 	}
 
   @PutMapping("/dateenvoi/{id}")
-  @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant')")
+  @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
 	public ResponseEntity<Inscriptions> updateEnvoi(@PathVariable long id,@RequestBody Inscriptions inscriptionsDetaille){
 	   Inscriptions inscriptions =inscriptionRepository.findByInscription(id);
 		if (inscriptions==null) throw new RuntimeException("inscriptions not exist with id :" + id);

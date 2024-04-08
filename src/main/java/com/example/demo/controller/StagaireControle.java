@@ -41,8 +41,8 @@ public class StagaireControle {
 
  }
 
- @GetMapping("stagiares")
- @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin','SCOPE_stagiaire')")
+ @GetMapping("/stagiaires")
+ @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
  public List<Stagaire> allStagaire(){
   List<Stagaire> stagaire=appUserRepository.allStagaires();
     return stagaire;
@@ -51,7 +51,7 @@ public class StagaireControle {
 
 
   @PutMapping("/updateEtat/{id}")
-  @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin')")
+  @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
 	public ResponseEntity<Subject> updateIndecateures(@PathVariable long id,@RequestBody Subject subjectsdetaille){
 	    Subject subject =subjectRepo.findBySubject(id);
 		if (subject==null) throw new RuntimeException("question not exist with id :" + id);
@@ -61,7 +61,7 @@ public class StagaireControle {
 	}
 
   @PutMapping("/stagiares/{idsujet}")
-  @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin')")
+  @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
 	public ResponseEntity<Stagaire> updatenotifications(@PathVariable long idsujet,@RequestBody Stagaire stagairedetaille){
 	  Stagaire stagaire =appUserRepository.findByStagaire(idsujet);
 		if (stagaire==null) throw new RuntimeException("question not exist with id :" + idsujet);
@@ -71,7 +71,7 @@ public class StagaireControle {
 	}
 
   @GetMapping("/stagiareskywordbygroube")
-  @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin')")
+  @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
   public Page<Stagaire> getStagiareKyword(@RequestParam Groupe groupe,@RequestParam String numerodossier,@RequestParam int page,@RequestParam int size){
   
      Pageable pageable = PageRequest.of(page,size);
@@ -80,7 +80,7 @@ public class StagaireControle {
    
     }
     @GetMapping("/stagiareskyword")
-    @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin')")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
     public Page<Stagaire> getStagiareKyword(@RequestParam String numerodossier,@RequestParam int page,@RequestParam int size){
       
        Pageable pageable = PageRequest.of(page,size);
@@ -89,7 +89,7 @@ public class StagaireControle {
      
       }
       @GetMapping("/stagiareskywordbynotegroube")
-      @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin')")
+      @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
       public Page<Stagaire> getStagiareByNotgroup(@RequestParam Groupe groupe, @RequestParam String numerodossier,@RequestParam int page,@RequestParam int size){
         
          Pageable pageable = PageRequest.of(page,size);
@@ -99,7 +99,7 @@ public class StagaireControle {
         }
 
   @DeleteMapping("/stagiaireDelete/{id}")
-  @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin')")
+  @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
 	public ResponseEntity<Map<String, Boolean>> deleteStagiaireyid(@PathVariable long id){
     Stagaire stagaire =appUserRepository.findByStagaire(id);
 		if (stagaire==null) throw new RuntimeException("question not exist with id :" + id);

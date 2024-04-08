@@ -23,8 +23,8 @@ public class Inscriptions {
     private Long id;
     @Column(nullable = true, unique = true)
     private String numeroDossier;
-    @Column(nullable = true, unique = true)
     private String statut;
+    @Column(nullable = true, unique = true)
     private String email;
     private String nom;
     private String prenome;

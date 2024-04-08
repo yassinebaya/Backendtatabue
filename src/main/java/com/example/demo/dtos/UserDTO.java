@@ -19,8 +19,7 @@ public class UserDTO {
     private String statut;
     private boolean checked;
     private boolean notification;
-   private String projectTitle;
+    private String projectTitle;
     private String prenom;
-  private String numeroDossier;
-    
+
 }

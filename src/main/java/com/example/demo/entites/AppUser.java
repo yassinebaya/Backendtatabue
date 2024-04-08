@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.Collection;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -22,6 +24,7 @@ public abstract class AppUser {
     private String username;
     @Column(nullable = true, unique = true)
     private String email;
+    @JsonIgnore
     @Column(nullable = true)
     private String password;
     private String nom;

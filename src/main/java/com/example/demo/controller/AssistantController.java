@@ -38,7 +38,7 @@ private AccoubtService accoubtService;
 private PasswordEncoder passwordEncoder;
 
 @GetMapping("/assistants")
-@PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin')")
+@PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
  public Page<Assistant> assistants(@RequestParam String keyword,@RequestParam int page,@RequestParam int size){
     Pageable pageable = PageRequest.of(page,size);
     Page<Assistant> lAssistants=appUserRepository.findByUsernameLike("%"+keyword+"%",pageable);
@@ -46,13 +46,14 @@ private PasswordEncoder passwordEncoder;
     }
 
 @PostMapping("/assistants")
-@PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin')")
+@PreAuthorize("hasAnyAuthority('SCOPE_ADMIN')")
 	public Assistant createAssistant(Assistant assistant) {
+		assistant.setPassword(passwordEncoder.encode(assistant.getPassword()));
        return accoubtService.createAssistant(assistant);
 	}
 	
  @DeleteMapping("/assistants/{id}")
-  @PreAuthorize("hasAnyAuthority('SCOPE_admin')")
+  @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN')")
 	public ResponseEntity<Map<String, Boolean>> deleteEmployee(@PathVariable Long id){
 		Assistant assistant = appUserRepository.findByAssistant(id);
         if (assistant==null) throw new RuntimeException("Assistant not exist with id :" + id);
@@ -63,14 +64,14 @@ private PasswordEncoder passwordEncoder;
 	}
 
  @GetMapping("assistants/{id}")
- @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin','SCOPE_stagiaire')")
+ @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN','SCOPE_STAGIAIRE')")
 public Assistant getaAssistant(@PathVariable Long id){
 Assistant Assistant=appUserRepository.findByAssistant(id);
   return Assistant;
 
  }
 @PutMapping("/assistants/{id}")
-@PreAuthorize("hasAnyAuthority('SCOPE_admin','SCOPE_assistant')")
+@PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT')")
 	public ResponseEntity<Assistant> updateEmployee(@PathVariable Long id, Assistant assistantdetail){
 		Assistant assistant = appUserRepository.findByAssistant(id);
 		if (assistant==null) throw new RuntimeException("Assistant not exist with id :" + id);
@@ -82,5 +83,18 @@ Assistant Assistant=appUserRepository.findByAssistant(id);
 		 Assistant updatedaAssistant = appUserRepository.save(assistant);
 		return ResponseEntity.ok(updatedaAssistant);
 	}
+	@PostMapping("/ajouterassistant")
+	@PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+	public Assistant ajouterassistant(String username,String password,String email,String nom,String tel){
+	  Assistant assistant=new Assistant();
+	  assistant.setUsername(username);
+	  assistant.setPassword(passwordEncoder.encode(password));
+	  assistant.setEmail(email);
+	  assistant.setNom(nom);
+	  assistant.setTel(tel);
+	  appUserRepository.save(assistant); 
+	return assistant;
+}
+
 
 }

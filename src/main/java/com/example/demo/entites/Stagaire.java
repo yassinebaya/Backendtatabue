@@ -28,7 +28,7 @@ private String projectTitle;
 private String prenom;
 private String numeroDossier;
 @ManyToOne()
-@JoinColumn(name = "groupe_id")
+@JoinColumn(name = "groupe_stagiaire")
 Groupe groupe;
 @OneToMany(fetch = FetchType.EAGER)
  @JsonIgnore

@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dtos.Responce;
 import com.example.demo.entites.AppRole;
 import com.example.demo.entites.AppUser;
 import com.example.demo.entites.Assistant;
@@ -13,7 +14,7 @@ public interface AccoubtService  {
     void addRoleToUser(String username,String role);
     void removeRoleFromUser(String username,String Role);
     AppUser loadAppUserByname(String username);
-void Activercompte(String dossier,String email,String password );
+Responce Activercompte(String dossier,String email,String password );
     Inscriptions findInscriptions(String dossier,String email);
     Assistant createAssistant(Assistant assistant);
     public Stagaire createStagiaire(String dossier,String email,String password,Inscriptions inscriptions);

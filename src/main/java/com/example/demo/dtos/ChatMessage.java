@@ -8,4 +8,8 @@ import lombok.Data;
 public class ChatMessage {
     String message;
     String user;
+
+    public ChatMessage() {
+      
+    }
 }

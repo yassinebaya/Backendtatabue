@@ -6,7 +6,9 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Responce {
-    String type;
     String responce;
+    public Responce(){
+
+    }
     
 }

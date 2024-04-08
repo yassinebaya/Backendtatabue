@@ -6,7 +6,6 @@ import com.example.demo.entites.Projetphase;
 import com.example.demo.entites.Projets;
 import com.example.demo.entites.SubjectCategorie;
 import lombok.Data;
-
 @Data
 public class SubjectDTO {
     private Long id;

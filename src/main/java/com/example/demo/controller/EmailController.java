@@ -19,8 +19,6 @@ public class EmailController {
         emailService.sendSimpleMessage(to,subject,text);
         ObjectMapper objectMapper = new ObjectMapper();
         String json;
-
-        System.out.println( SecurityContextHolder.getContext());
         try {
             json = objectMapper.writeValueAsString("bravo");
             return json;

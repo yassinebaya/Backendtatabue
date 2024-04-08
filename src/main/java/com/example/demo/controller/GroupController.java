@@ -34,14 +34,14 @@ public class GroupController {
     GroupeRepository groupeRepository;
 
     @GetMapping("/AllGroupe")
-     @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin','SCOPE_stagiaire')")
+     @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN','SCOPE_STAGIAIRE')")
     public List<Groupe> getMethodName() {
     List<Groupe> groupe=groupeRepository.findAll();
         return groupe;
     }
      
     @GetMapping("/searchGroupes")
-    @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin','SCOPE_stagiaire')")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN','SCOPE_STAGIAIRE')")
     public Page<Groupe> searchGroupes(@RequestParam String nom,@RequestParam int page,@RequestParam int size) {
         Pageable pageable=PageRequest.of(page,size);
         Page<Groupe> pageGroupe=groupeRepository.findByNomLike("%"+nom+"%",pageable);
@@ -60,21 +60,21 @@ public class GroupController {
 	}
 
     @PostMapping("/groupe")
-    @PreAuthorize("hasAuthority('SCOPE_admin')")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
 	public Groupe creatgroupe(Groupe groupe) {
        return groupeRepository.save(groupe);
 	}
 
     @GetMapping("/groupe/{id}")
-    @PreAuthorize("hasAuthority('SCOPE_admin')")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public Groupe getgroupe(@PathVariable Long id) {
         Groupe groupe = groupeRepository.findByGroupe(id);
         return groupe;
     }
 
       @PutMapping("/groupe/{id}")
-      @PreAuthorize("hasAuthority('SCOPE_admin')")
-	public ResponseEntity<Groupe> updateGroupe(@PathVariable long id,@RequestBody Groupe groupeDetaille){
+      @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+	     public ResponseEntity<Groupe> updateGroupe(@PathVariable long id,@RequestBody Groupe groupeDetaille){
 	    Groupe groupe =groupeRepository.findByGroupe(id);
 		if (groupe==null) throw new RuntimeException("groupe not exist with id :" + id);
              groupe.setNom(groupeDetaille.getNom());
@@ -84,7 +84,7 @@ public class GroupController {
 		return ResponseEntity.ok(updatedIndicateurs);
 	}
     @GetMapping("/incrimenter/{idGroupe}")
-    @PreAuthorize("hasAuthority('SCOPE_admin')")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
 	public Groupe incrimenter(@PathVariable long idGroupe) {
         Groupe groupe =groupeRepository.findByGroupe(idGroupe);
         if (groupe==null) throw new RuntimeException("groupe not exist with id :" + idGroupe);
@@ -94,7 +94,7 @@ public class GroupController {
 	}
     
     @GetMapping("/dicrimenter/{idGroupe}")
-    @PreAuthorize("hasAuthority('SCOPE_admin')")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
 	public Groupe dicrimenter(@PathVariable long idGroupe) {
         Groupe groupe =groupeRepository.findByGroupe(idGroupe);
         if (groupe==null) throw new RuntimeException("groupe not exist with id :" + idGroupe);

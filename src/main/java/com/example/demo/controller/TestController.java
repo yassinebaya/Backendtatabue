@@ -113,27 +113,21 @@ public class TestController {
       }
       @PostMapping("/ajouterinscription")
       // @PreAuthorize("hasAuthority('SCOPE_USER')")
-        public Inscriptions ajouterinscription(String username,String email,String nom,String tel){
-                  Inscriptions inscriptions=new Inscriptions();
-            inscriptions.setNumeroDossier(username);
-            inscriptions.setEmail(email);
-            inscriptions.setNom(nom);
-            inscriptions.setTel(tel);
+        public Inscriptions ajouterinscription(Inscriptions detailinscription){
+            Inscriptions inscriptions=new Inscriptions();
+            inscriptions.setNumeroDossier(detailinscription.getNumeroDossier());
+            inscriptions.setEmail(detailinscription.getEmail());
+            inscriptions.setNom(detailinscription.getNom());
+            inscriptions.setTel(detailinscription.getTel());
+            inscriptions.setStatut(detailinscription.getStatut());
+            inscriptions.setProjectTitle(detailinscription.getProjectTitle());
+            inscriptions.setGroupe(detailinscription.getGroupe());
+            inscriptions.setPrenome(detailinscription.getPrenome());
+            inscriptions.setEmailEnvoie(detailinscription.getEmailEnvoie());
              inscriptionRepository.save(inscriptions);
             return inscriptions;
         }
-        @PostMapping("/ajouterassistant")
-       public Assistant ajouterassistant(String username,String password,String email,String nom,String tel){
-         Assistant assistant=new Assistant();
-         assistant.setUsername(username);
-         assistant.setPassword(passwordEncoder.encode(password));
-         assistant.setEmail(email);
-         assistant.setNom(nom);
-         assistant.setTel(tel);
-         appUserRepository.save(assistant); 
-       return assistant;
-}
-
+      
 @PostMapping("/ajouterAdmin")
 public Animateur ajouterAdmin(String username,String password,String email,String nom,String tel){
  Animateur animateur=new Animateur();
@@ -188,11 +182,11 @@ return animateur;
     
       @PostMapping("/Inscription")
     // @PreAuthorize("hasAuthority('SCOPE_USER')")
-      public String inscription(@RequestParam String numdossier,@RequestParam String email,@RequestParam String password){
+      public Responce inscription(@RequestParam String numdossier,@RequestParam String email,@RequestParam String password){
       
-          accoubtService.Activercompte(numdossier,email,password);
-          String responce1=responce.getResponce();
-           return responce1;
+        Responce responce=accoubtService.Activercompte(numdossier,email,password);
+          
+           return responce ;
       }
 
 	@PostMapping("/uploadImag")
@@ -226,10 +220,8 @@ return animateur;
     }
 
     @PostMapping("/login")
-    public UserDTO login(String username, String password){
+    public Object login(String username, String password){
            
-            
-            
          AppUser appUser=accoubtService.loadAppUserByname(username);
           Authentication authentication= authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(username,password));
@@ -244,11 +236,9 @@ return animateur;
                 .build();
         JwtEncoderParameters jwtEncoderParameters=JwtEncoderParameters.from(JwsHeader.with(MacAlgorithm.HS512).build(),jwtClaimsSet);
      String jwt=jwtEncoder.encode(jwtEncoderParameters).getTokenValue();
-     UserDTO userDTO=maperuser.fromUser(appUser);
-     userDTO.setJwt(jwt);
-           
-
-return userDTO ;
+    UserDTO userDTO=maperuser.fromUser(appUser);
+        userDTO.setJwt(jwt);
+         return userDTO ;
 
 
     }

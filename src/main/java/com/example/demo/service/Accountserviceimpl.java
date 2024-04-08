@@ -1,4 +1,5 @@
 package com.example.demo.service;
+import org.eclipse.jdt.internal.compiler.flow.TryFlowContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -86,24 +87,25 @@ public class Accountserviceimpl implements AccoubtService {
     }
   
     @Override
-    @Async
-    public void Activercompte(String dossier,String email,String password) {
-      try {
-        Inscriptions inscriptions= findInscriptions(dossier,email);
-            AppUser appUser=appUserRepository.findByEmail(email);
-           if (inscriptions==null || appUser!=null ) {
+    public Responce Activercompte(String dossier,String email,String password) {
+      Responce responce;
+   try {
+    Inscriptions inscriptions= findInscriptions(dossier,email);
+           if (inscriptions==null) {
         
-                    appUser=null;
+             responce = new Responce(" Stagiare n'est pas inscrit");
            }else{
             createStagiaire(dossier,email,password,inscriptions);
-    
+            responce = new Responce("Compte est activer");
         
            }
+           return  responce;
+        } catch (Exception e) {
+      responce = new Responce("email or username existe déja");
+      return  responce;
+    }
+
         
-      } catch (Exception e) {
-        // TODO: handle exception
-      }
-            
             
     }
     @Override
@@ -120,7 +122,13 @@ public class Accountserviceimpl implements AccoubtService {
     user.setEmail(email);
     user.setNom(inscriptions.getNom());
     user.setTel(inscriptions.getTel());
+    user.setStatut("Débuté");
+    user.setProjectTitle(inscriptions.getProjectTitle());
+    user.setGroupe(inscriptions.getGroupe());
+    user.setPrenom(inscriptions.getPrenome());
+    inscriptions.setStatut("Débuté");
     appUserRepository.save(user); 
+    inscriptionRepository.save(inscriptions);
   return appUserRepository.save(user);
 }
 	
