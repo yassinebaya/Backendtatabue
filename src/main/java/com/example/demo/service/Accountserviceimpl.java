@@ -11,6 +11,7 @@ import com.example.demo.entites.AppUser;
 import com.example.demo.entites.Assistant;
 import com.example.demo.entites.Inscriptions;
 import com.example.demo.entites.Stagaire;
+import com.example.demo.exeception.UserAlreadyExistsException;
 import com.example.demo.repo.AppRoleRepository;
 import com.example.demo.repo.AppUserRepository;
 import com.example.demo.repo.InscriptionRepository;
@@ -27,16 +28,11 @@ public class Accountserviceimpl implements AccoubtService {
     private PasswordEncoder passwordEncoder;
     private InscriptionRepository inscriptionRepository;
   
-
- 
- 
-    
-
     @Override
     public AppUser addNewStagaire(String username,String password) {
   
        AppUser appUser=appUserRepository.findByUsername(username);
-        if (appUser!=null) throw new RuntimeException("this user existe déja");
+        if (appUser!=null) throw new UserAlreadyExistsException("this user existe déja");
         Stagaire user=new Stagaire();
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
@@ -46,7 +42,7 @@ public class Accountserviceimpl implements AccoubtService {
     @Override
     public AppUser addNewAssistant(String username,String password) {
        AppUser appUser=appUserRepository.findByUsername(username);
-        if (appUser!=null) throw new RuntimeException("this user existe déja");
+        if (appUser!=null) throw new UserAlreadyExistsException("this user existe déja");
         Assistant user=new Assistant();
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
@@ -57,7 +53,7 @@ public class Accountserviceimpl implements AccoubtService {
     @Override
     public AppRole addnewRole(String rolname) {
       AppRole appRole=appRoleRepository.findByRolename(rolname);
-      if (appRole!=null) throw new RuntimeException("this role existe déja");
+      if (appRole!=null) throw new UserAlreadyExistsException("this role existe déja");
        appRole=AppRole.builder()
               .rolename(rolname)
               .build();
@@ -132,7 +128,6 @@ public class Accountserviceimpl implements AccoubtService {
   return appUserRepository.save(user);
 }
 	
-
     @Override
     public Inscriptions findInscriptions(String dossier, String email) {
     Inscriptions inscriptions=inscriptionRepository.findByEmailandNumeroDossier(email,dossier);
