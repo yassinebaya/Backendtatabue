@@ -73,14 +73,14 @@ public class TestController {
     @Autowired
     private AccoubtService accoubtService;
     @Autowired
-    private Maperuser maperuser;
+     private Maperuser maperuser;
     @Autowired
-    private ReportService reportService;
-        @Autowired
+     private ReportService reportService;
+    @Autowired
      private AppUserRepository appUserRepository;
-     @Autowired
+    @Autowired
      private StorageService service;
-    private Inscriptions inscriptions;
+     private Inscriptions inscriptions;
     @Autowired
     private InscriptionRepository inscriptionRepository;
     Responce responce;

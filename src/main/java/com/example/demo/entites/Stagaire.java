@@ -1,9 +1,6 @@
 package com.example.demo.entites;
 import java.util.Collection;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

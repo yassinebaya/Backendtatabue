@@ -63,7 +63,7 @@ public class Accountserviceimpl implements AccoubtService {
     @Override
     public void addRoleToUser(String username,String rol) {
       AppUser appUser=appUserRepository.findByUsername(username);
-      AppRole appRole=appRoleRepository.findByRolename(rol);
+    AppRole appRole=appRoleRepository.findByRolename(rol);
         
         appUser.getAppRoles().add(appRole);
  
@@ -101,7 +101,6 @@ public class Accountserviceimpl implements AccoubtService {
       return  responce;
     }
 
-        
             
     }
     @Override

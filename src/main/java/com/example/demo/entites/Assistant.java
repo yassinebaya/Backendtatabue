@@ -23,8 +23,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @DiscriminatorValue("Assi")
 public class Assistant extends AppUser {
-  
-   
    @OneToMany(fetch = FetchType.EAGER)
    @JsonIgnore
     private Collection<Subject> subjects;
