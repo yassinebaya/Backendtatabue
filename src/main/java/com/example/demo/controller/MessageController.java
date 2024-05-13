@@ -25,13 +25,13 @@ public class MessageController {
     MessageRepository messageRepository;
 
 @PostMapping("/message")
-@PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin')")
+@PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
 	public Message AddMessage(Message message) {
        return messageRepository.save(message);
 	}
 
      @GetMapping("/message/{id}")
-     @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin','SCOPE_stagiaire')")
+     @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN','SCOPE_STAGIAIRE')")
     public List<Message> messageByGroupe(@RequestParam Groupe groupe){
       List<Message> messages=messageRepository.findByMessageByGroupe(groupe);
       return messages;
@@ -39,7 +39,7 @@ public class MessageController {
 
 
  @DeleteMapping("/message/{id}")
-   @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin')")
+   @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
 	public ResponseEntity<Map<String, Boolean>> deleteMessage(@PathVariable long id){
           Message message = messageRepository.findByMessage(id);
 		if (message==null) throw new RuntimeException("question not exist with id :" + id);

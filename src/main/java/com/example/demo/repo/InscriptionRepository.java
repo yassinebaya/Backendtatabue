@@ -16,6 +16,10 @@ public interface InscriptionRepository extends JpaRepository<Inscriptions,Long> 
 
     @Query("SELECT a FROM Inscriptions a WHERE a.id= ?1 ")
     Inscriptions findByInscription(Long idInscription);
+    
+    @Query("SELECT a FROM Inscriptions a  ")
+       List<Inscriptions> getinscrit();
+
 
     @Query("SELECT a FROM Inscriptions a WHERE a.email= ?1 and a.numeroDossier= ?2")
     Inscriptions findByEmailandNumeroDossier(String email,String numeroDossier );

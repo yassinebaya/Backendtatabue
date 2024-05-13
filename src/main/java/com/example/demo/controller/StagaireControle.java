@@ -30,7 +30,7 @@ public class StagaireControle {
  SubjectRepo subjectRepo;
  
 @GetMapping("getStudent/{stagiaireId}")
-@PreAuthorize("hasAuthority('SCOPE_STAGIAIRE')")
+@PreAuthorize("hasAnyAuthority('SCOPE_STAGIAIRE','SCOPE_ADMIN')")
  public Stagaire getStudent(@PathVariable Long stagiaireId){
 
  Stagaire stagaire=appUserRepository.findByStagaire(stagiaireId);
@@ -111,7 +111,7 @@ public class StagaireControle {
 }
 
 @PutMapping("/stagiaresCheked/{idStagiaire}")
-@PreAuthorize("hasAnyAuthority('SCOPE_admin')")
+@PreAuthorize("hasAnyAuthority('SCOPE_ADMIN')")
 	public ResponseEntity<Stagaire> updateCheked(@PathVariable long idStagiaire,@RequestBody Stagaire stagairedetaille){
 	  Stagaire stagaire =appUserRepository.findByStagaire(idStagiaire);
 		if (stagaire==null) throw new RuntimeException("question not exist with id :" + idStagiaire);
@@ -121,7 +121,7 @@ public class StagaireControle {
 	}
  
   @PutMapping("/DefaultGroupe/{idStagiaire}")
-  @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin')")
+  @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
 	public ResponseEntity<Stagaire> updateDefaultGroupe(@PathVariable long idStagiaire,Stagaire stagairedetaille){
 	  Stagaire stagaire =appUserRepository.findByStagaire(idStagiaire);
 		if (stagaire==null) throw new RuntimeException("question not exist with id :" + idStagiaire);
@@ -130,7 +130,7 @@ public class StagaireControle {
 		return ResponseEntity.ok(updatedsStagaire);
 	}
   @PutMapping("/stagaieGroupe/{idStagiaire}")
-  @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin')")
+  @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
 	public ResponseEntity<Stagaire> updatestagiregroupe(@PathVariable long idStagiaire,Stagaire stagairedetaille){
 	  Stagaire stagaire =appUserRepository.findByStagaire(idStagiaire);
 		if (stagaire==null) throw new RuntimeException("question not exist with id :" + idStagiaire);

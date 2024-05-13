@@ -27,14 +27,14 @@ public class NotificationController {
     NotificationRepo notificationRepo;
 
      @GetMapping("/notifications")
-     @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin','SCOPE_stagiaire')")
+     @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN','SCOPE_STAGIAIRE')")
     public List<Notifications> notificationAll(){
       List<Notifications> projets=notificationRepo.findAll();
       return projets;
     }
 
     @GetMapping("/notificationById/{id}")
-    @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin','SCOPE_stagiaire')")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN','SCOPE_STAGIAIRE')")
    public Notifications notificationById(@PathVariable long id){
    Notifications notification=notificationRepo.findByNotifications(id);
      return notification;
@@ -42,14 +42,14 @@ public class NotificationController {
 
 
    @PostMapping("/notifications")
-@PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin')")
+   @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
 	public Notifications SaveNotification(Notifications notifications) {
        return notificationRepo.save(notifications);
 	}
 	
   
     @PutMapping("/notifications/{id}")
-	  @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant')")
+	  @PreAuthorize("hasAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
 	public ResponseEntity<Notifications> updateNotification(@PathVariable long id, Notifications detaillNotifications){
 		Notifications notification = notificationRepo.findByNotifications(id);
 		if (notification==null) throw new RuntimeException("question not exist with id :" + id);
@@ -62,7 +62,7 @@ public class NotificationController {
 	}
 
    @DeleteMapping("/notifications/{id}")
-   @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin')")
+   @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
 	public ResponseEntity<Map<String, Boolean>> deleteNotifications(@PathVariable long id){
     Notifications notification = notificationRepo.findByNotifications(id);
 		if (notification==null) throw new RuntimeException("question not exist with id :" + id);

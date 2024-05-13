@@ -20,7 +20,7 @@ public class LoadingController {
      private StorageService service;
 
     	@PostMapping("/uploadImag")
-		@PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant')")
+		@PreAuthorize("hasAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
 	public ResponseEntity<?> uploadImage(@RequestParam("image")MultipartFile file) throws IOException {
 		String uploadImage = service.uploadImage(file);
 		return ResponseEntity.status(HttpStatus.OK)
@@ -28,7 +28,7 @@ public class LoadingController {
 	}
 
 	@GetMapping("downloadImage/{fileName}")
-	@PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant')")
+	@PreAuthorize("hasAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
 	public ResponseEntity<?> downloadImage(@PathVariable String fileName){
 		byte[] imageData=service.downloadImage(fileName);
 		return ResponseEntity.status(HttpStatus.OK)

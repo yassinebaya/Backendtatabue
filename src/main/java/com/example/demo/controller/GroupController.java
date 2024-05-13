@@ -49,7 +49,7 @@ public class GroupController {
     }
 
     @DeleteMapping("/groupe/{id}")
-    @PreAuthorize("hasAuthority('SCOPE_admin')")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
 	public ResponseEntity<Map<String, Boolean>> deleteEmployee(@PathVariable Long id){
 		Groupe groupe = groupeRepository.findByGroupe(id);
         if (groupe==null) throw new RuntimeException("groupe not exist with id :" + id);

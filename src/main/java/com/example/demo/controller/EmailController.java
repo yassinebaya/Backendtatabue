@@ -12,7 +12,7 @@ public class EmailController {
     private EmailService emailService;
 
     @PostMapping("/sendEmail")
-     @Secured("SCOPE_assistant")
+     @Secured("SCOPE_ASSISTANT")
     public String sendEmail(String to,String subject,String text) {
         emailService.sendSimpleMessage(to,subject,text);
         ObjectMapper objectMapper = new ObjectMapper();

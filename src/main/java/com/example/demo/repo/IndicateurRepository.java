@@ -15,5 +15,8 @@ public interface IndicateurRepository extends JpaRepository<Indicateurs,Long> {
     @Query("SELECT a FROM Indicateurs a WHERE a.stagaire= ?1 ")
     List<Indicateurs> findByStagiaire(Stagaire stagaire);
 
+    @Query("SELECT a FROM Indicateurs a  ")
+    List<Indicateurs> getAllIndicateurs();
+
        
 }

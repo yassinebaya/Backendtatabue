@@ -20,10 +20,9 @@ public class IndicateursController {
     @Autowired
     IndicateurRepository indicateurRepository;
      @PutMapping("/indicateurs/{id}")
-	   @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant')")
+	   @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
 	public ResponseEntity<Indicateurs> updateIndecateures(@PathVariable long id,@RequestBody Indicateurs indicateursdetaille){
 	     Indicateurs indicateurs =indicateurRepository.findByIndicateurs(id);
-         System.out.println(indicateursdetaille.getEtat());
 		if (indicateurs==null) throw new RuntimeException("question not exist with id :" + id);
         indicateurs.setEtat(indicateursdetaille.getEtat());
         Indicateurs updatedIndicateurs = indicateurRepository.save(indicateurs);
@@ -31,11 +30,19 @@ public class IndicateursController {
 	}
 
     @GetMapping("/indicateurs/{stagaire}")
-	@PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant')")
+	@PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
 	public ResponseEntity<List<Indicateurs>> getIndecateures(@PathVariable Stagaire stagaire){
 	     List<Indicateurs> indicateurs =indicateurRepository.findByStagiaire(stagaire);
 		return ResponseEntity.ok(indicateurs);
 	}
+
+	@GetMapping("/getAllIndicateurs")
+	@PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
+	public ResponseEntity<List<Indicateurs>> getAllIndicateurs(){
+	     List<Indicateurs> indicateurs =indicateurRepository.getAllIndicateurs();
+		return ResponseEntity.ok(indicateurs);
+	}
+
 
 
 }

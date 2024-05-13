@@ -32,7 +32,7 @@ public class DoctorController {
     @Autowired
     private DoctorService doctorService;
     @PostMapping("/subjects")
-    @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant')")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
     public Subject createSubject(Subject subject) {
         subject.setAssistantId(subject.getAssistantId());
         subject.setCategorieId(subject.getCategorieId());
@@ -42,7 +42,7 @@ public class DoctorController {
        return  doctorService.createSubject(subject);
     }
  @PutMapping("/subjects/{id}")
- @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant')")
+ @PreAuthorize("hasAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
 	public ResponseEntity<Subject> updateSubjects(@PathVariable long id, Subject subjectdetail){
 		Subject subject = subjectRepo.findBySubject(id);
 		if (subject==null) throw new RuntimeException("question not exist with id :" + id);
@@ -67,34 +67,34 @@ public class DoctorController {
 		return ResponseEntity.ok(updatedsubject);
 	}
 @GetMapping("/subjects")
-@PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant','SCOP_stagiaire')")
+@PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT','SCOP_STAGIAIRE')")
 public Subject getStagiaireSubjects(@RequestParam Assistant assistantId){
 Subject subject=subjectRepo.findByAssistantSubjects(assistantId);
   return subject;
  }
  @GetMapping("/subjectsbyid")
- @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant','SCOP_stagiaire')")
+ @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT','SCOP_STAGIAIRE')")
  public SubjectDTO getSubjects(@RequestParam Subject subject){
    SubjectDTO subjectdto=maperSubject.fromsubject(subject);
    return subjectdto;
   }
 
   @GetMapping("/subjectsbyProjet")
-  @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant','SCOP_stagiaire')")
+  @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT','SCOP_STAGIAIRE')")
   public List<Subject> getSubjectsbyProjet(@RequestParam Projets projets){
    List<Subject> subject=subjectRepo.findByProjets(projets);
      return subject;
    }
 
   @GetMapping("/allsubjects")
-  @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant','SCOP_stagiaire')")
+  @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT','SCOP_STAGIAIRE')")
   public List<Subject> allSubjects(){
     List<Subject> subject=subjectRepo.findAll();
       return subject;
      }
      	
  @DeleteMapping("/subjects/{id}")
- @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant')")
+ @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
 	public ResponseEntity<Map<String, Boolean>> deletesubject(@PathVariable long id){
         Subject subject = subjectRepo.findBySubject(id);
         if (subject==null) throw new RuntimeException("subject not exist with id :" + id);

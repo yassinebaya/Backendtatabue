@@ -1,7 +1,5 @@
 package com.example.demo.entites;
-
 import java.util.Collection;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -22,6 +20,7 @@ public class SubjectCategorie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
+    private String used;
     @OneToMany(fetch = FetchType.EAGER)
     private Collection<Subject> subjects;
 }

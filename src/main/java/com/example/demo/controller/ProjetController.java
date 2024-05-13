@@ -18,13 +18,13 @@ public class ProjetController {
     @Autowired
     ProjetsRepository projetsRepository;
     @GetMapping("/projets/{id}")
-    @PreAuthorize("hasAnyAuthority('SCOPE_admin','SCOPE_assistant','SCOPE_staigiare')")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT','SCOPE_STAGIAIRE')")
  public Projets getprojets(@PathVariable long id){
     Projets projets=projetsRepository.findByProjets(id);
    return projets;
   }
   @GetMapping("/projets")
-  @PreAuthorize("hasAnyAuthority('SCOPE_admin','SCOPE_assistant')")
+  @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT')")
     public List<Projets> projetsAll(){
       List<Projets> projets=projetsRepository.findAll();
       return projets;

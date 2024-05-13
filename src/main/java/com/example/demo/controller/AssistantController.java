@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.HashMap;
-
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +44,15 @@ private PasswordEncoder passwordEncoder;
     Page<Assistant> lAssistants=appUserRepository.findByUsernameLike("%"+keyword+"%",pageable);
      return lAssistants;
     }
+
+	
+@GetMapping("/getallassistants")
+@PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
+ public List<Assistant> getAllAssistants(){
+	List<Assistant> lAssistants=appUserRepository.allAssistent();
+     return lAssistants;
+    }
+
 
 @PostMapping("/assistants")
 @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN')")

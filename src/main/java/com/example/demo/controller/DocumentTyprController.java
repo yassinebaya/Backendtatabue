@@ -17,7 +17,7 @@ public class DocumentTyprController {
     @Autowired
 DocumentypeRepository documentypeRepository;
   @GetMapping("/documentType")
-  @PreAuthorize("hasAnyAuthority('SCOPE_admin','SCOPE_assistant')")
+  @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT')")
     public List<DocumentType> projetsAll(){
       List<DocumentType> documentType=documentypeRepository.findAll();
       return documentType;

@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,15 +26,24 @@ public class InscriptionController  {
         @Autowired
 InscriptionRepository inscriptionRepository;
 
-@GetMapping("/inscriptionskywordbygroube")
+@GetMapping("/inscriptions")
 @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
-  public Page<Inscriptions> getStagiareKyword(@RequestParam Groupe groupe,@RequestParam String numerodossier,@RequestParam int page,@RequestParam int size){
-  
-     Pageable pageable = PageRequest.of(page,size);
-     Page<Inscriptions> inscription=inscriptionRepository.findByInscriptionsbyGroupe(groupe,numerodossier,pageable);
+  public List<Inscriptions> getInscrits(){
+   List<Inscriptions> inscription=inscriptionRepository.getinscrit();
      return inscription;
    
     }
+
+    @GetMapping("/inscriptionskywordbygroube")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
+      public Page<Inscriptions> getStagiareKyword(@RequestParam Groupe groupe,@RequestParam String numerodossier,@RequestParam int page,@RequestParam int size){
+      
+         Pageable pageable = PageRequest.of(page,size);
+         Page<Inscriptions> inscription=inscriptionRepository.findByInscriptionsbyGroupe(groupe,numerodossier,pageable);
+         return inscription;
+       
+        }
+
     @GetMapping("/inscriptionkyword")
     @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
     public Page<Inscriptions> getStagiareKyword(@RequestParam String numerodossier,@RequestParam int page,@RequestParam int size){

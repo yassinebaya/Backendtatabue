@@ -81,7 +81,7 @@ public class SecurityConfig {
                     authConfig.requestMatchers("/notifications/**").permitAll();
                     authConfig.requestMatchers("/chat-socket/**").permitAll();
                     authConfig.requestMatchers("/chat/**","send/**").permitAll();
-                    authConfig.requestMatchers("/getStudent/**","/stagiaires/**","/DefaultGroupe/**","/stagaieGroupe/**","/inscriptionGroupe/**","/AllGroupe/**","/searchGroupes/**","/groupe/**","/sendEmail/**","/ajouterAdmin/**").permitAll();
+                    authConfig.requestMatchers("/getStudent/**","/stagiaires/**","/getallassistants/**","/DefaultGroupe/**","/stagaieGroupe/**","/inscriptionGroupe/**","/AllGroupe/**","/searchGroupes/**","/groupe/**","/sendEmail/**","/ajouterAdmin/**","/getallstagairequestions/**","/getAllIndicateurs/**").permitAll();
                     authConfig.requestMatchers("/Test1/**","/Test12/**","/addnewrole/**","/addroletouser/**","/Inscription/**","/dateenvoi/**","/listestagaire/**","/ajouterassistant/**","/listassistant/**","/incrimenter/**","/dicrimenter/**","/logout1/**").permitAll();
                     authConfig.requestMatchers("/admin/**").denyAll();
                    
@@ -141,7 +141,7 @@ public class SecurityConfig {
 @Bean
 CorsConfigurationSource corsConfigurationSource(){
     CorsConfiguration corsConfiguration=new CorsConfiguration();
-    corsConfiguration.addAllowedOrigin("http://localhost:61850"); // Autorise seulement cette origine
+    corsConfiguration.addAllowedOrigin("http://localhost:4200"); // Autorise seulement cette origine
     corsConfiguration.addAllowedMethod("*");
     corsConfiguration.addAllowedHeader("*");
     corsConfiguration.setAllowCredentials(true); // Autorise les informations d'authentification

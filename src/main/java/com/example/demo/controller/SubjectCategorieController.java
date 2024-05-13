@@ -17,7 +17,7 @@ public class SubjectCategorieController {
     @Autowired
     SubjectCategorieRepo subjectCategorieRepo;
 @GetMapping("/subjectCategorie")
- @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin')")
+ @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
 public List<SubjectCategorie> subjectCategorieAll(){
        List<SubjectCategorie> stagiaireSujects=subjectCategorieRepo.subjectCategorieAll();
   return stagiaireSujects;
