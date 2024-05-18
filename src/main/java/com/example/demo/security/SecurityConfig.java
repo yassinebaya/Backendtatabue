@@ -79,7 +79,7 @@ public class SecurityConfig {
                     authConfig.requestMatchers("/updateEtat/**").permitAll();
                     authConfig.requestMatchers("/indicateurs/**").permitAll();
                     authConfig.requestMatchers("/notifications/**").permitAll();
-                    authConfig.requestMatchers("/chat-socket/**").permitAll();
+                    authConfig.requestMatchers("/chat-socket/**","publiersujet/**","/swagger-ui/**").permitAll();
                     authConfig.requestMatchers("/chat/**","send/**").permitAll();
                     authConfig.requestMatchers("/getStudent/**","/stagiaires/**","/getallassistants/**","/DefaultGroupe/**","/stagaieGroupe/**","/inscriptionGroupe/**","/AllGroupe/**","/searchGroupes/**","/groupe/**","/sendEmail/**","/ajouterAdmin/**","/getallstagairequestions/**","/getAllIndicateurs/**").permitAll();
                     authConfig.requestMatchers("/Test1/**","/Test12/**","/addnewrole/**","/addroletouser/**","/Inscription/**","/dateenvoi/**","/listestagaire/**","/ajouterassistant/**","/listassistant/**","/incrimenter/**","/dicrimenter/**","/logout1/**").permitAll();

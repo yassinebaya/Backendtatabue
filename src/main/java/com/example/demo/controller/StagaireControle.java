@@ -72,10 +72,10 @@ public class StagaireControle {
 
   @GetMapping("/stagiareskywordbygroube")
   @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
-  public Page<Stagaire> getStagiareKyword(@RequestParam Groupe groupe,@RequestParam String numerodossier,@RequestParam int page,@RequestParam int size){
+  public Page<Stagaire> getStagiareKyword(@RequestParam Groupe groupe,@RequestParam int page,@RequestParam int size){
   
      Pageable pageable = PageRequest.of(page,size);
-     Page<Stagaire> stagaire=appUserRepository.findByStagairesbyGroupe(groupe,numerodossier,pageable);
+     Page<Stagaire> stagaire=appUserRepository.findByStagairesbyGroupe(groupe,pageable);
      return stagaire;
    
     }
@@ -90,10 +90,10 @@ public class StagaireControle {
       }
       @GetMapping("/stagiareskywordbynotegroube")
       @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
-      public Page<Stagaire> getStagiareByNotgroup(@RequestParam Groupe groupe, @RequestParam String numerodossier,@RequestParam int page,@RequestParam int size){
+      public Page<Stagaire> getStagiareByNotgroup(@RequestParam Groupe groupe,@RequestParam int page,@RequestParam int size){
         
          Pageable pageable = PageRequest.of(page,size);
-         Page<Stagaire> stagaire=appUserRepository.findByStagairesbynoteGroupe(groupe,numerodossier,pageable);
+         Page<Stagaire> stagaire=appUserRepository.findByStagairesbynoteGroupe(groupe,pageable);
          return stagaire;
        
         }
@@ -119,13 +119,32 @@ public class StagaireControle {
     Stagaire updatedsStagaire = appUserRepository.save(stagaire);
 		return ResponseEntity.ok(updatedsStagaire);
 	}
+
+  @PutMapping("/updateStagiaire/{idStagiaire}")
+  @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN')")
+	public ResponseEntity<Stagaire> updateStagiaire(@PathVariable long idStagiaire,@RequestBody Stagaire stagairedetaille){
+	  Stagaire stagaire =appUserRepository.findByStagaire(idStagiaire);
+		if (stagaire==null) throw new RuntimeException("question not exist with id :" + idStagiaire);
+
+    stagaire.setEmail(stagairedetaille.getEmail());
+    stagaire.setGroupe(stagairedetaille.getGroupe());
+    stagaire.setNom(stagairedetaille.getNom());
+    stagaire.setPrenom(stagairedetaille.getPrenom());
+    stagaire.setUsername(stagairedetaille.getUsername());
+    stagaire.setTel(stagairedetaille.getTel());
+    stagaire.setNumeroDossier(stagairedetaille.getNumeroDossier());
+    stagaire.setProjectTitle(stagairedetaille.getProjectTitle());
+    stagaire.setStatut(stagairedetaille.getStatut());
+    Stagaire updatedsStagaire = appUserRepository.save(stagaire);
+		return ResponseEntity.ok(updatedsStagaire);
+	}
  
   @PutMapping("/DefaultGroupe/{idStagiaire}")
   @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
 	public ResponseEntity<Stagaire> updateDefaultGroupe(@PathVariable long idStagiaire,Stagaire stagairedetaille){
 	  Stagaire stagaire =appUserRepository.findByStagaire(idStagiaire);
 		if (stagaire==null) throw new RuntimeException("question not exist with id :" + idStagiaire);
-   // stagaire.setGroupe(stagairedetaille.getGroupe());
+   stagaire.setGroupe(stagairedetaille.getGroupe());
     Stagaire updatedsStagaire = appUserRepository.save(stagaire);
 		return ResponseEntity.ok(updatedsStagaire);
 	}
@@ -134,7 +153,7 @@ public class StagaireControle {
 	public ResponseEntity<Stagaire> updatestagiregroupe(@PathVariable long idStagiaire,Stagaire stagairedetaille){
 	  Stagaire stagaire =appUserRepository.findByStagaire(idStagiaire);
 		if (stagaire==null) throw new RuntimeException("question not exist with id :" + idStagiaire);
- //   stagaire.setGroupe(stagairedetaille.getGroupe());
+      stagaire.setGroupe(stagairedetaille.getGroupe());
     Stagaire updatedsStagaire = appUserRepository.save(stagaire);
 		return ResponseEntity.ok(updatedsStagaire);
 	}

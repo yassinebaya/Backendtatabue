@@ -11,6 +11,8 @@ import com.example.demo.entites.SubjectCategorie;
 public interface SubjectCategorieRepo extends JpaRepository<SubjectCategorie,Long> {
     @Query("SELECT a FROM SubjectCategorie a ")
     List<SubjectCategorie> subjectCategorieAll();
+    @Query("SELECT a FROM SubjectCategorie a WHERE a.id= ?1 ")
+    SubjectCategorie findBySubjectCategorie(Long id);
 
     
 }

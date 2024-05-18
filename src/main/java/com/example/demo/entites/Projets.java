@@ -24,8 +24,7 @@ public class Projets {
     private String title;
      @OneToMany(fetch = FetchType.EAGER)
 private Collection<Projetphase> projetphases;
-@OneToMany(fetch = FetchType.EAGER)
-private Collection<Subject> subjects;
+
 
 
 }

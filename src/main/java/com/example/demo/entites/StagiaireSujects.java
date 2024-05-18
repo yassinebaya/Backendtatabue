@@ -32,7 +32,6 @@ public class StagiaireSujects {
     @ManyToOne()
     //@JsonIgnore
     private Subject subject;
-    @ManyToOne
-    private SubjectEtape subjectEtape;
+    private String subjectEtape;
     
 }

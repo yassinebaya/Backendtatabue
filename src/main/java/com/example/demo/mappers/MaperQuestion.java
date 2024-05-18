@@ -17,7 +17,7 @@ public class MaperQuestion {
       public QuestionsDTO fromsQuestion(Question question){
         SubjectDTO subjectDTO=maperSubject.fromsubject(question.getSubject());
            QuestionsDTO questionsDTO=new QuestionsDTO();
-           questionsDTO.setSubjectdto(subjectDTO);
+          questionsDTO.setSubjectdto(subjectDTO);
            BeanUtils.copyProperties(question,questionsDTO);
          
        return questionsDTO;

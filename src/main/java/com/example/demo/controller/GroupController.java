@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entites.Assistant;
 import com.example.demo.entites.Groupe;
-import com.example.demo.entites.Indicateurs;
 import com.example.demo.repo.GroupeRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -66,19 +65,28 @@ public class GroupController {
 	}
 
     @GetMapping("/groupe/{id}")
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+   @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public Groupe getgroupe(@PathVariable Long id) {
         Groupe groupe = groupeRepository.findByGroupe(id);
         return groupe;
     }
 
+    
+    @GetMapping("/groupe")
+ //  @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    public Groupe getgroupeByassistant(@RequestParam Assistant assistant) {
+        Groupe groupe = groupeRepository.findGroupeByAssistant(assistant);
+        return groupe;
+    }
+
       @PutMapping("/groupe/{id}")
       @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
-	     public ResponseEntity<Groupe> updateGroupe(@PathVariable long id,@RequestBody Groupe groupeDetaille){
+	     public ResponseEntity<Groupe> updateGroupe(@PathVariable long id,Groupe groupeDetaille){
 	    Groupe groupe =groupeRepository.findByGroupe(id);
 		if (groupe==null) throw new RuntimeException("groupe not exist with id :" + id);
              groupe.setNom(groupeDetaille.getNom());
              groupe.setNombre(groupeDetaille.getNombre());
+             System.out.println(groupeDetaille.getAssistant());
              groupe.setAssistant(groupeDetaille.getAssistant());
         Groupe updatedIndicateurs = groupeRepository.save(groupe);
 		return ResponseEntity.ok(updatedIndicateurs);

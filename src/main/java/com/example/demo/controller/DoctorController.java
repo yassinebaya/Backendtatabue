@@ -1,9 +1,11 @@
 package com.example.demo.controller;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,17 +13,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dtos.SubjectDTO;
 import com.example.demo.entites.Assistant;
 import com.example.demo.entites.Projets;
+import com.example.demo.entites.Stagaire;
+import com.example.demo.entites.StagiaireSujects;
 import com.example.demo.entites.Subject;
 import com.example.demo.mappers.MaperSubject;
+import com.example.demo.repo.AppUserRepository;
+import com.example.demo.repo.StagiaireSubjectsRepository;
 import com.example.demo.repo.SubjectRepo;
 import com.example.demo.service.DoctorService;
-
-
 @RestController
 @CrossOrigin("*")
 public class DoctorController {
@@ -31,21 +36,22 @@ public class DoctorController {
     SubjectRepo subjectRepo;
     @Autowired
     private DoctorService doctorService;
+    @Autowired
+    AppUserRepository appUserRepository;
+    @Autowired
+   StagiaireSubjectsRepository stagiaireSubjectsRepository;
+
     @PostMapping("/subjects")
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
+   @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
     public Subject createSubject(Subject subject) {
-        subject.setAssistantId(subject.getAssistantId());
-        subject.setCategorieId(subject.getCategorieId());
-        subject.setDocumentType(subject.getDocumentType());
-        subject.setProjets(subject.getProjets());
-        subject.setPhaseId(subject.getPhaseId());
        return  doctorService.createSubject(subject);
     }
  @PutMapping("/subjects/{id}")
- @PreAuthorize("hasAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
+ //@PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
 	public ResponseEntity<Subject> updateSubjects(@PathVariable long id, Subject subjectdetail){
 		Subject subject = subjectRepo.findBySubject(id);
 		if (subject==null) throw new RuntimeException("question not exist with id :" + id);
+       subject.setIcon(subjectdetail.getIcon());
        subject.setId(subjectdetail.getId());
        subject.setName(subjectdetail.getName());
        subject.setDescription(subjectdetail.getDescription());
@@ -60,8 +66,6 @@ public class DoctorController {
        subject.setLangue(subjectdetail.getLangue());
        subject.setUsed(subjectdetail.isUsed());
        subject.setCategorieId(subjectdetail.getCategorieId());
-       subject.setProjets(subjectdetail.getProjets());
-       subject.setPhaseId(subjectdetail.getPhaseId());
        subject.setDocumentType(subjectdetail.getDocumentType());
      Subject updatedsubject = subjectRepo.save(subject);
 		return ResponseEntity.ok(updatedsubject);
@@ -82,8 +86,8 @@ Subject subject=subjectRepo.findByAssistantSubjects(assistantId);
   @GetMapping("/subjectsbyProjet")
   @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT','SCOP_STAGIAIRE')")
   public List<Subject> getSubjectsbyProjet(@RequestParam Projets projets){
-   List<Subject> subject=subjectRepo.findByProjets(projets);
-     return subject;
+  // List<Subject> subject=subjectRepo.findByProjets(projets);
+     return null;
    }
 
   @GetMapping("/allsubjects")
@@ -103,6 +107,23 @@ Subject subject=subjectRepo.findByAssistantSubjects(assistantId);
 		response.put("deleted", Boolean.TRUE);
 		return ResponseEntity.ok(response);
 	}
+
+    @PostMapping("/publiersujet")
+  //  @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
+    @Async
+    public void  publiersujet(@RequestParam Subject subject){
+         List<Stagaire> stagaire=appUserRepository.allStagaires();
+         List<StagiaireSujects> stagaires=new ArrayList<>();
+             for(Stagaire appUser:stagaire){
+              StagiaireSujects  stagairesucjts=new StagiaireSujects();
+                   stagairesucjts.setStagaire(appUser);
+                   stagairesucjts.setSubject(subject);
+                   stagairesucjts.setSubjectEtape("1");
+                  stagaires.add(stagairesucjts);
+             }
+             stagiaireSubjectsRepository.saveAll(stagaires);
+        
+    }
 
 
 }

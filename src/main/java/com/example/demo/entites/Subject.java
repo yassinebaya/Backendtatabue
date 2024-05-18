@@ -44,10 +44,6 @@ public class Subject {
     @ManyToOne
     SubjectCategorie  categorieId;
     @ManyToOne
-    Projets projets;
-    @ManyToOne
-    Projetphase phaseId;
-    @ManyToOne
     DocumentType documentType;
     @OneToMany(fetch = FetchType.EAGER )
     @JsonIgnore

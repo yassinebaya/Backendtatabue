@@ -18,6 +18,7 @@ Responce Activercompte(String dossier,String email,String password );
     Inscriptions findInscriptions(String dossier,String email);
     Assistant createAssistant(Assistant assistant);
     public Stagaire createStagiaire(String dossier,String email,String password,Inscriptions inscriptions);
+    public void publierStagiareSubject(Stagaire stagaire);
 
     
 }

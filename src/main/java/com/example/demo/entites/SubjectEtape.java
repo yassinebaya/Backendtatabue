@@ -23,6 +23,5 @@ public class SubjectEtape {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    @OneToMany(fetch=FetchType.EAGER)
-    private Collection<StagiaireSujects> stagiaireSujects;
+  
 }

@@ -1,5 +1,6 @@
 package com.example.demo.service;
-import org.eclipse.jdt.internal.compiler.flow.TryFlowContext;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,10 +12,14 @@ import com.example.demo.entites.AppUser;
 import com.example.demo.entites.Assistant;
 import com.example.demo.entites.Inscriptions;
 import com.example.demo.entites.Stagaire;
+import com.example.demo.entites.StagiaireSujects;
+import com.example.demo.entites.Subject;
 import com.example.demo.exeception.UserAlreadyExistsException;
 import com.example.demo.repo.AppRoleRepository;
 import com.example.demo.repo.AppUserRepository;
 import com.example.demo.repo.InscriptionRepository;
+import com.example.demo.repo.StagiaireSubjectsRepository;
+import com.example.demo.repo.SubjectRepo;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
@@ -27,6 +32,9 @@ public class Accountserviceimpl implements AccoubtService {
     private AppRoleRepository appRoleRepository;
     private PasswordEncoder passwordEncoder;
     private InscriptionRepository inscriptionRepository;
+    private SubjectRepo subjectRepo;
+      @Autowired
+   StagiaireSubjectsRepository stagiaireSubjectsRepository;
   
     @Override
     public AppUser addNewStagaire(String username,String password) {
@@ -83,6 +91,7 @@ public class Accountserviceimpl implements AccoubtService {
     }
   
     @Override
+   
     public Responce Activercompte(String dossier,String email,String password) {
       Responce responce;
    try {
@@ -91,14 +100,18 @@ public class Accountserviceimpl implements AccoubtService {
         
              responce = new Responce(" Stagiare n'est pas inscrit");
            }else{
-            createStagiaire(dossier,email,password,inscriptions);
+       Stagaire  stagaire =createStagiaire(dossier,email,password,inscriptions);
             responce = new Responce("Compte est activer");
+            publierStagiareSubject(stagaire);
+       
+           
         
            }
-           return  responce;
+           return responce;
+         
         } catch (Exception e) {
       responce = new Responce("email or username existe déja");
-      return  responce;
+      return responce;
     }
 
             
@@ -122,9 +135,9 @@ public class Accountserviceimpl implements AccoubtService {
     user.setGroupe(inscriptions.getGroupe());
     user.setPrenom(inscriptions.getPrenome());
     inscriptions.setStatut("Débuté");
-    appUserRepository.save(user); 
+ Stagaire appUser=appUserRepository.save(user); 
     inscriptionRepository.save(inscriptions);
-  return appUserRepository.save(user);
+  return appUser;
 }
 	
     @Override
@@ -132,6 +145,24 @@ public class Accountserviceimpl implements AccoubtService {
     Inscriptions inscriptions=inscriptionRepository.findByEmailandNumeroDossier(email,dossier);
      if (inscriptions==null) ;
      return inscriptions;
+    }
+    @Override
+    public void publierStagiareSubject(Stagaire stagaire) {
+
+        List<Subject> lessubject=subjectRepo.findByEtatPublication();
+       
+         List<StagiaireSujects> stagaires=new ArrayList<>();
+             for(Subject subject:lessubject){
+              StagiaireSujects  stagairesucjts=new StagiaireSujects();
+              System.out.println(subject);
+                   stagairesucjts.setStagaire(stagaire);
+                   stagairesucjts.setSubject(subject);
+                   stagairesucjts.setSubjectEtape("1");
+                  stagaires.add(stagairesucjts);
+             }
+             stagiaireSubjectsRepository.saveAll(stagaires);
+           
+    
     }
     
   

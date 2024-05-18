@@ -35,8 +35,6 @@ public class Groupe {
   
     @OneToOne
     private Assistant assistant;
-   //@OneToMany(mappedBy = "groupe",cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = false )
-  //@JsonIgnore
     @OneToMany
     private Collection<Stagaire> stagaires;
    @OneToMany
