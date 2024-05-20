@@ -32,10 +32,9 @@ InscriptionRepository inscriptionRepository;
    
     }
 
-    @GetMapping("/inscriptionskywordbygroube")
-    @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
+    @GetMapping("/inscriptionskywordbygroube1")
+   // @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
       public Page<Inscriptions> getStagiareKyword(@RequestParam Groupe groupe,@RequestParam String numerodossier,@RequestParam int page,@RequestParam int size){
-      
          Pageable pageable = PageRequest.of(page,size);
          Page<Inscriptions> inscription=inscriptionRepository.findByInscriptionsbyGroupe(groupe,numerodossier,pageable);
          return inscription;

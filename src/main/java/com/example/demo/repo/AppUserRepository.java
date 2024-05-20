@@ -18,10 +18,11 @@ AppUser findByEmail(String email);
 AppUser findByUsername(String username);
 Page<Assistant> findByUsernameLike(String username, Pageable pageable);
 
+@Query("SELECT a FROM AppUser a WHERE a.id= ?1 and a.password=?2 ")
+   AppUser findByIduser(Long id,String password);
+
  @Query("SELECT a FROM Stagaire a WHERE a.id= ?1 ")
   Stagaire findByStagaire(Long id);
-
-
   @Query("SELECT a FROM Assistant a WHERE a.id= ?1 ")
   Assistant findByAssistant(Long id);
 
@@ -30,7 +31,6 @@ Page<Assistant> findByUsernameLike(String username, Pageable pageable);
 
    @Query("SELECT a FROM Stagaire a WHERE a.groupe= ?1 ")
    Page<Stagaire> findByStagairesbyGroupe(Groupe groupe, Pageable pageable);
-
 
    @Query("SELECT a FROM Stagaire a WHERE a.groupe<> ?1 ")
    Page<Stagaire> findByStagairesbynoteGroupe(Groupe groupe, Pageable pageable);

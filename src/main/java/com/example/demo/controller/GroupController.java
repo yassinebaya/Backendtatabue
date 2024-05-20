@@ -40,10 +40,9 @@ public class GroupController {
     }
      
     @GetMapping("/searchGroupes")
-    @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN','SCOPE_STAGIAIRE')")
-    public Page<Groupe> searchGroupes(@RequestParam String nom,@RequestParam int page,@RequestParam int size) {
-        Pageable pageable=PageRequest.of(page,size);
-        Page<Groupe> pageGroupe=groupeRepository.findByNomLike("%"+nom+"%",pageable);
+  @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
+    public Groupe searchGroupes(@RequestParam Assistant assistant) {
+        Groupe pageGroupe=groupeRepository.findByAssistant(assistant);
         return pageGroupe;
     }
 

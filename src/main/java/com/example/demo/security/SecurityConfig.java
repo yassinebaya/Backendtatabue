@@ -67,7 +67,7 @@ public class SecurityConfig {
                 .csrf(csrf->csrf.disable())
                 .cors(Customizer.withDefaults()) 
                 .authorizeHttpRequests(authConfig -> {
-                    authConfig.requestMatchers("/addnewuser/**","/inscriptionskywordbygroube/**","/inscriptionkyword/**","/stagiareskyword/**","/stagiareskywordbygroube/**","/addnewAssistant/**","/addusertorol/**","/uploadImag/**","/downloadImage/**","/objet/**","/ajouterinscription/**").permitAll();
+                    authConfig.requestMatchers("/addnewuser/**","/inscriptionkyword/**","/stagiareskyword/**","/stagiareskywordbygroube/**","/inscriptionskywordbygroube1/**","/addnewAssistant/**","/addusertorol/**","/uploadImag/**","/downloadImage/**","/objet/**","/ajouterinscription/**").permitAll();
                     authConfig.requestMatchers("/login/**","/stagiareskywordbynotegroube/**","/stagiaireDelete/**","/stagiaresCheked/**","/inscriptions/**").permitAll();
                     authConfig.requestMatchers("/assistants/**").permitAll();
                     authConfig.requestMatchers("/stagiaireSujects/**").permitAll();
@@ -79,7 +79,7 @@ public class SecurityConfig {
                     authConfig.requestMatchers("/updateEtat/**").permitAll();
                     authConfig.requestMatchers("/indicateurs/**").permitAll();
                     authConfig.requestMatchers("/notifications/**").permitAll();
-                    authConfig.requestMatchers("/chat-socket/**","publiersujet/**","/swagger-ui/**").permitAll();
+                    authConfig.requestMatchers("/chat-socket/**","publiersujet/**","/swagger-ui/**","/updatepassword/**").permitAll();
                     authConfig.requestMatchers("/chat/**","send/**").permitAll();
                     authConfig.requestMatchers("/getStudent/**","/stagiaires/**","/getallassistants/**","/DefaultGroupe/**","/stagaieGroupe/**","/inscriptionGroupe/**","/AllGroupe/**","/searchGroupes/**","/groupe/**","/sendEmail/**","/ajouterAdmin/**","/getallstagairequestions/**","/getAllIndicateurs/**").permitAll();
                     authConfig.requestMatchers("/Test1/**","/Test12/**","/addnewrole/**","/addroletouser/**","/Inscription/**","/dateenvoi/**","/listestagaire/**","/ajouterassistant/**","/listassistant/**","/incrimenter/**","/dicrimenter/**","/logout1/**").permitAll();
