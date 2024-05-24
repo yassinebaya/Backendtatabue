@@ -35,14 +35,14 @@ MaperQuestion maperQuestion;
 MaperSubject maperSubject;
 
 @PostMapping("/questions")
-@PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
+@PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT')")
 public Question createQuestion(Question question) {
 //	QuestionsDTO questionsDTO=maperQuestion.fromsQuestion(questionRepository.save(question));
     return questionRepository.save(question);
 }
 
     @PutMapping("/questions/{id}")
- @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_STAGIAIRE')")
+ @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_STAGIAIRE')")
 	public ResponseEntity<Question> updateEmployee(@PathVariable long id, Question questiondetail){
 		Question question = questionRepository.findByQuestion(id);
 		if (question==null) throw new RuntimeException("question not exist with id :" + id);
@@ -62,20 +62,20 @@ public Question createQuestion(Question question) {
 	}
 
  @GetMapping("/questions")
- @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT','SCOP_STAGIAIRE')")
+ @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT','SCOPE_STAGIAIRE')")
  public ResponseEntity<List<Question>> getquestion(){
     List<Question> question=questionRepository.findAll();
        return ResponseEntity.ok(question);
   }
 
      @GetMapping("/questionById")
-	 @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
+	 @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT')")
   public ResponseEntity<QuestionsDTO> questionById(@RequestParam Question question){
 	QuestionsDTO questionDTO=maperQuestion.fromsQuestion(question);
 		return ResponseEntity.ok(questionDTO);
    }
    @GetMapping("/questionBySubject")
-   @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
+   @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT')")
    public ResponseEntity<List<QuestionsDTO>> questionBySubject(@RequestParam Subject subject){
          List<Question> questions=questionRepository.findBySubject(subject);
 	     List<QuestionsDTO> questionDTO=maperQuestion.fromlistQuestion(questions);
@@ -85,7 +85,7 @@ public Question createQuestion(Question question) {
 
      	
  @DeleteMapping("/questions")
- @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
+ @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT')")
 	public ResponseEntity<Map<String, Boolean>> deletequestionbysubject(@RequestParam Subject subject){
 		List<Question> question = questionRepository.findBySubject(subject);
 		if (question==null) throw new RuntimeException("question not exist with id :" + subject);
@@ -96,7 +96,7 @@ public Question createQuestion(Question question) {
 	}
 
 	@DeleteMapping("/questions/{id}")
-	@PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
+	@PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT')")
 	public ResponseEntity<Map<String, Boolean>> deletequestionbyid(@PathVariable long id){
 		Question question = questionRepository.findByQuestion(id);
 		if (question==null) throw new RuntimeException("question not exist with id :" + id);

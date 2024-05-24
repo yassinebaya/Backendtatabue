@@ -9,7 +9,7 @@ public interface SubjectRepo extends JpaRepository<Subject,Long>  {
     @Query("SELECT a FROM Subject a WHERE a.id= ?1 ")
     Subject findBySubject(Long id);
     @Query("SELECT a FROM Subject a WHERE a.assistantId= ?1 ")
-    Subject findByAssistantSubjects(Assistant assistant);
+    List<Subject> findByAssistantSubjects(Assistant assistant);
     @Query("SELECT a FROM Subject a WHERE a.etatPublication=true")
     List<Subject> findByEtatPublication();
 

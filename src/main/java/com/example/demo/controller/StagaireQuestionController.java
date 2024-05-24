@@ -11,17 +11,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.dtos.Responce;
+import com.example.demo.dtos.StagaireQuestionDTO;
 import com.example.demo.entites.Stagaire;
 import com.example.demo.entites.Stagairequsetion;
+import com.example.demo.entites.Subject;
 import com.example.demo.repo.StagaireQuestionRepo;
+import com.example.demo.service.StagiareQuestionService;
+
 
 @RestController
 @CrossOrigin("*")
 public class StagaireQuestionController {
     @Autowired
     StagaireQuestionRepo stagaireQuestionRepo;
+
+   @Autowired
+    StagiareQuestionService questionService;
     @PutMapping("/stagiaireQuestions/{id}")
-    @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT','SCOP_STAGAIRE')")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT','SCOPE_STAGIAIRE')")
 	public ResponseEntity<Stagairequsetion> updateStagiaireQuestion(@PathVariable long id, Stagairequsetion stagairequsetiondetail){
 		Stagairequsetion stagairequsetion = stagaireQuestionRepo.findByIdStagairequsetion(id);
 		if (stagairequsetion==null) throw new RuntimeException("question not exist with id :" + id);
@@ -34,23 +43,39 @@ public class StagaireQuestionController {
 	}
 
 @GetMapping("/stagiaireQuestions")
-@PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT','SCOP_STAGAIRE')")
- public Stagairequsetion getQuestionStagaire(@RequestParam Stagaire stagaire){
-    Stagairequsetion stagairequsetion=stagaireQuestionRepo.findByStagaire(stagaire);
+@PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT','SCOPE_STAGIAIRE')")
+ public List<Stagairequsetion> getQuestionStagaire(@RequestParam Stagaire stagaire){
+ List<Stagairequsetion> stagairequsetion=stagaireQuestionRepo.findByStagaire(stagaire);
   return stagairequsetion;
 
  }
 @PostMapping("/stagiaireQuestions")
-@PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT','SCOP_STAGAIRE')")
-    public Stagairequsetion ajouterCommentaireStagiaireSubject(Stagairequsetion stagairequsetion) {
-        return stagaireQuestionRepo.save(stagairequsetion);
+@PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT','SCOPE_STAGIAIRE')")
+    public Responce ajouterCommentaireStagiaireSubject(@RequestParam Subject subject,@RequestParam Stagaire stagaire) {
+
+         questionService.savestagairequestion(subject,stagaire);
+         Responce responce=new Responce("stagaire a ajoute");
+
+        return responce;
     }
 
 @GetMapping("/getallstagairequestions")
-@PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT','SCOP_STAGAIRE')")
+@PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT','SCOPE_STAGIAIRE')")
  public List<Stagairequsetion> getAllStagiairesQuestionsTable(){
 	List<Stagairequsetion> stagairequestion=stagaireQuestionRepo.getAllStagiairesQuestions();
      return  stagairequestion;
     }
+
+
+    @PostMapping("/savestagairequestion")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT','SCOPE_STAGIAIRE')")
+        public Responce ajouterCommentaireStagiaireSubject(@org.springframework.web.bind.annotation.RequestBody List<StagaireQuestionDTO> stagairequsetions) {
+             questionService.saveresponce(stagairequsetions);
+             Responce responce=new Responce("stagaire a ajoute");
+    
+            return responce;
+        }
+    
+
 
 }

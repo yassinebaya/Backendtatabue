@@ -1,5 +1,4 @@
 package com.example.demo.entites;
-
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Entity;

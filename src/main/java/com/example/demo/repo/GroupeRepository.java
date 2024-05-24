@@ -1,4 +1,7 @@
 package com.example.demo.repo;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import com.example.demo.entites.Assistant;
@@ -10,6 +13,12 @@ public interface GroupeRepository extends JpaRepository<Groupe,Long> {
     Groupe findByGroupe(Long id);
     @Query("SELECT a FROM Groupe a WHERE a.assistant= ?1 ")
     Groupe findGroupeByAssistant(Assistant assistant);
+
+    @Query("SELECT a FROM Groupe a WHERE a.nom LIKE ?1% ")
+    Page<Groupe> sherchGroupe(String nom,Pageable page);
+
+
+
 
     
 

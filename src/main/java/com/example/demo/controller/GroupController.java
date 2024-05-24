@@ -41,8 +41,9 @@ public class GroupController {
      
     @GetMapping("/searchGroupes")
   @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
-    public Groupe searchGroupes(@RequestParam Assistant assistant) {
-        Groupe pageGroupe=groupeRepository.findByAssistant(assistant);
+    public Page<Groupe> searchGroupes(@RequestParam String nom,@RequestParam int page,@RequestParam int size) {
+        Pageable pageable = PageRequest.of(page,size);
+       Page<Groupe> pageGroupe=groupeRepository.sherchGroupe(nom,pageable);
         return pageGroupe;
     }
 
@@ -64,7 +65,7 @@ public class GroupController {
 	}
 
     @GetMapping("/groupe/{id}")
-   @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT','SCOPE_STAGIAIRE')")
     public Groupe getgroupe(@PathVariable Long id) {
         Groupe groupe = groupeRepository.findByGroupe(id);
         return groupe;
@@ -72,9 +73,11 @@ public class GroupController {
 
     
     @GetMapping("/groupe")
- //  @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
-    public Groupe getgroupeByassistant(@RequestParam Assistant assistant) {
+    @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
+    public Groupe GroupeAssistant(@RequestParam Assistant assistant) {
+        System.out.println(assistant);
         Groupe groupe = groupeRepository.findGroupeByAssistant(assistant);
+        System.out.println(groupe);
         return groupe;
     }
 
@@ -109,5 +112,7 @@ public class GroupController {
           Groupe updategroupe=groupeRepository.save(groupe);
            return updategroupe;
 	}
+
+    
     
    }

@@ -25,7 +25,7 @@ public class InscriptionController  {
 InscriptionRepository inscriptionRepository;
 
 @GetMapping("/inscriptions")
-@PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
+@PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT')")
   public List<Inscriptions> getInscrits(){
    List<Inscriptions> inscription=inscriptionRepository.getinscrit();
      return inscription;
@@ -33,8 +33,8 @@ InscriptionRepository inscriptionRepository;
     }
 
     @GetMapping("/inscriptionskywordbygroube1")
-   // @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
-      public Page<Inscriptions> getStagiareKyword(@RequestParam Groupe groupe,@RequestParam String numerodossier,@RequestParam int page,@RequestParam int size){
+    @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
+      public Page<Inscriptions> getInscriptionKywordByGroupe(@RequestParam Groupe groupe,@RequestParam String numerodossier,@RequestParam int page,@RequestParam int size){
          Pageable pageable = PageRequest.of(page,size);
          Page<Inscriptions> inscription=inscriptionRepository.findByInscriptionsbyGroupe(groupe,numerodossier,pageable);
          return inscription;
@@ -42,8 +42,8 @@ InscriptionRepository inscriptionRepository;
         }
 
     @GetMapping("/inscriptionkyword")
-    @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
-    public Page<Inscriptions> getStagiareKyword(@RequestParam String numerodossier,@RequestParam int page,@RequestParam int size){
+    @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT')")
+    public Page<Inscriptions> getInscriptionKyword(@RequestParam String numerodossier,@RequestParam int page,@RequestParam int size){
       
        Pageable pageable = PageRequest.of(page,size);
        Page<Inscriptions> inscription=inscriptionRepository.findByInscriptionsbykeyword(numerodossier,pageable);
@@ -51,12 +51,12 @@ InscriptionRepository inscriptionRepository;
 
       }
         @PostMapping("/inscriptions")
-        @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
+        @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT')")
     public Inscriptions saveInscriptions(Inscriptions inscriptions) {
         return inscriptionRepository.save(inscriptions);
     }
     
-@PutMapping("/inscriptionGroupe/{idInscription}")
+/*@PutMapping("/inscriptionGroupe/{idInscription}")
 @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
 	public ResponseEntity<Inscriptions> updateinscriptiongroupe(@PathVariable long idInscription,Inscriptions inscriptionsdetaille){
 	  Inscriptions inscriptions =inscriptionRepository.findByInscription(idInscription);
@@ -64,10 +64,10 @@ InscriptionRepository inscriptionRepository;
     inscriptions.setGroupe(inscriptionsdetaille.getGroupe());
     Inscriptions updatedsInscriptions = inscriptionRepository.save(inscriptions);
 		return ResponseEntity.ok(updatedsInscriptions);
-	}
+	}*/
 
   @PutMapping("/dateenvoi/{id}")
-  @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
+  @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT')")
 	public ResponseEntity<Inscriptions> updateEnvoi(@PathVariable long id,@RequestBody Inscriptions inscriptionsDetaille){
 	   Inscriptions inscriptions =inscriptionRepository.findByInscription(id);
 		if (inscriptions==null) throw new RuntimeException("inscriptions not exist with id :" + id);
@@ -76,6 +76,16 @@ InscriptionRepository inscriptionRepository;
 		return ResponseEntity.ok(updatedinscriptions);
      
       }
+
+      @PutMapping("/inscriptionGroupe/{numeroDossier}")
+@PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT')")
+	public ResponseEntity<Inscriptions> updateinscriptionBygroub(@PathVariable String numeroDossier,Groupe groupe){
+	  Inscriptions inscriptions =inscriptionRepository.findByInscriptionbysossier(numeroDossier);
+		if (inscriptions==null) throw new RuntimeException("inscription not exist with id :" +  numeroDossier);
+    inscriptions.setGroupe(groupe);
+    Inscriptions updatedsInscriptions = inscriptionRepository.save(inscriptions);
+		return ResponseEntity.ok(updatedsInscriptions);
+	}
 
     
     }

@@ -1,8 +1,6 @@
 package com.example.demo.controller;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,7 +15,7 @@ public class LiensController {
 LienRepo lienRepo;
     
     @PutMapping("/lien/{id}")
-//	@PreAuthorize("hasAuthority('SCOPE_ADMIN','SCOP_ASSISTANT')")
+//	@PreAuthorize("hasAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT')")
 	public ResponseEntity<Liens> updateLiens(@PathVariable long id, Liens detaillien){
 		Liens liens =lienRepo.findBylien(id);
 		if (liens==null) throw new RuntimeException("lien not exist with id :" + id);

@@ -72,7 +72,7 @@ public class StagaireControle {
 
   @GetMapping("/stagiareskywordbygroube")
   @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
-  public Page<Stagaire> getStagiareKyword(@RequestParam Groupe groupe,@RequestParam int page,@RequestParam int size){
+  public Page<Stagaire> getStagiareKywordByGroupe(@RequestParam Groupe groupe,@RequestParam int page,@RequestParam int size){
   
      Pageable pageable = PageRequest.of(page,size);
      Page<Stagaire> stagaire=appUserRepository.findByStagairesbyGroupe(groupe,pageable);

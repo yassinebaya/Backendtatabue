@@ -1,5 +1,4 @@
 package com.example.demo.controller;
-
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
@@ -13,11 +12,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
-import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.MediaType;
-
 import com.example.demo.dtos.Responce;
 import com.example.demo.dtos.UserDTO;
 import com.example.demo.entites.Animateur;
@@ -40,27 +36,20 @@ import com.example.demo.entites.Stagaire;
 import com.example.demo.mappers.Maperuser;
 import com.example.demo.repo.AppUserRepository;
 import com.example.demo.repo.InscriptionRepository;
-
 import com.example.demo.service.AccoubtService;
 import com.example.demo.service.ReportService;
 import com.example.demo.services.StorageService;
-
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import org.springframework.data.domain.Pageable;
-
 import java.io.IOException;
 import java.net.URL;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import java.util.HashMap;
 import java.util.List;
-
 import java.util.stream.Collectors;
 
 @RestController
@@ -136,6 +125,7 @@ animateur.setPassword(passwordEncoder.encode(password));
  animateur.setEmail(email);
  animateur.setNom(nom);
  animateur.setTel(tel);
+
  appUserRepository.save(animateur); 
 return animateur;
 }
@@ -184,7 +174,7 @@ return animateur;
     // @PreAuthorize("hasAuthority('SCOPE_USER')")
       public Responce inscription(@RequestParam String numdossier,@RequestParam String email,@RequestParam String password){
       
-        accoubtService.Activercompte(numdossier,email,password);
+      responce=accoubtService.Activercompte(numdossier,email,password);
           
            return responce ;
       }

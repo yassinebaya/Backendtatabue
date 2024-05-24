@@ -1,13 +1,6 @@
 package com.example.demo.security;
 import com.example.demo.service.UserDetailserviceimpl;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
-
-import jakarta.servlet.Filter;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +12,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,7 +21,6 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -79,7 +70,7 @@ public class SecurityConfig {
                     authConfig.requestMatchers("/updateEtat/**").permitAll();
                     authConfig.requestMatchers("/indicateurs/**").permitAll();
                     authConfig.requestMatchers("/notifications/**").permitAll();
-                    authConfig.requestMatchers("/chat-socket/**","publiersujet/**","/swagger-ui/**","/updatepassword/**").permitAll();
+                    authConfig.requestMatchers("/chat-socket/**","publiersujet/**","/swagger-ui/**","/updatepassword/**","/savestagairequestion/**").permitAll();
                     authConfig.requestMatchers("/chat/**","send/**").permitAll();
                     authConfig.requestMatchers("/getStudent/**","/stagiaires/**","/getallassistants/**","/DefaultGroupe/**","/stagaieGroupe/**","/inscriptionGroupe/**","/AllGroupe/**","/searchGroupes/**","/groupe/**","/sendEmail/**","/ajouterAdmin/**","/getallstagairequestions/**","/getAllIndicateurs/**").permitAll();
                     authConfig.requestMatchers("/Test1/**","/Test12/**","/addnewrole/**","/addroletouser/**","/Inscription/**","/dateenvoi/**","/listestagaire/**","/ajouterassistant/**","/listassistant/**","/incrimenter/**","/dicrimenter/**","/logout1/**").permitAll();

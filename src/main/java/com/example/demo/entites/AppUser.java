@@ -28,6 +28,7 @@ public abstract class AppUser {
     private String password;
     private String nom;
     private String tel;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<AppRole> appRoles;
 }

@@ -22,14 +22,14 @@ public class CommentaireAssistantStagiaire {
     @Autowired
 CommentaireASRepository commentaireASRepository;
  @GetMapping("/CommentaireAssistantStagiaire")
- @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin')")
+ @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
 public CommentairesAssistantStagiaire searchCommentairesAssistantStagiaire(@RequestParam Assistant assistant,@RequestParam Stagaire stagaire){
 CommentairesAssistantStagiaire commentaireAssistantStagiaire=commentaireASRepository.findByCommentairesAssistantStagiaire(assistant,stagaire);
   return commentaireAssistantStagiaire;
 
  }
  @DeleteMapping("/CommentaireAssistantStagiaire/{id}")
- @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin')")
+ @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
 	public ResponseEntity<Map<String, Boolean>> deleteCommentairesAssistantStagiaire(@PathVariable Long id){
 	CommentairesAssistantStagiaire commentairesAssistantStagiaire = commentaireASRepository.findByCommentaires(id);
         if (commentairesAssistantStagiaire==null) throw new RuntimeException("Assistant not exist with id :" + id);
@@ -41,7 +41,7 @@ CommentairesAssistantStagiaire commentaireAssistantStagiaire=commentaireASReposi
 
 
 	 @PostMapping("/CommentaireAssistantStagiaire")
-     @PreAuthorize("hasAnyAuthority('SCOPE_assistant','SCOPE_admin')")
+     @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
     public CommentairesAssistantStagiaire ajouterCommentaireStagiaireSubject(CommentairesAssistantStagiaire commentaireAS) {
         return commentaireASRepository.save(commentaireAS);
     }

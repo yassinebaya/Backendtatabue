@@ -98,10 +98,10 @@ public class Accountserviceimpl implements AccoubtService {
     Inscriptions inscriptions= findInscriptions(dossier,email);
            if (inscriptions==null) {
         
-             responce = new Responce(" Stagiare n'est pas inscrit");
+             responce = new Responce("non");
            }else{
        Stagaire  stagaire =createStagiaire(dossier,email,password,inscriptions);
-            responce = new Responce("Compte est activer");
+            responce = new Responce("oui");
             publierStagiareSubject(stagaire);
        
            

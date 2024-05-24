@@ -1,5 +1,6 @@
 package com.example.demo.entites;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,11 +21,11 @@ public class Stagairequsetion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String answer;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Question question;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Stagaire stagaire;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
    private Subject subject;
 
 }

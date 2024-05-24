@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,21 +28,21 @@ public class CommentairesAssistantStagiaireSubjectController {
  @Autowired
  CommentaireASSRepository commentaireASSRepository;
 @GetMapping("/commentairesAssistantStagiaireSubject")
- @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant','SCOP_stagiaire')")
-public CommentairesAssistantStagiaireSubject searchCommentairesAssistantStagiaireSubject(@RequestParam Assistant assistant,@RequestParam Subject subject,@RequestParam Stagaire stagaire){
-CommentairesAssistantStagiaireSubject commentaireAssistantStagiairesSubject=commentaireASSRepository.commentairesAssistantStagiaireSubject(assistant,subject,stagaire);
+ @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT','SCOPE_STAGIAIRE')")
+public List<CommentairesAssistantStagiaireSubject> searchCommentairesAssistantStagiaireSubject(@RequestParam Assistant assistant,@RequestParam Subject subject,@RequestParam Stagaire stagaire){
+   List<CommentairesAssistantStagiaireSubject> commentaireAssistantStagiairesSubject=commentaireASSRepository.commentairesAssistantStagiaireSubject(assistant,subject,stagaire);
   return commentaireAssistantStagiairesSubject;
 
  }
 
   @PostMapping("/commentairesAssistantStagiaireSubject")
-  @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant','SCOP_stagiaire')")
+  @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT','SCOPE_STAGIAIRE')")
     public CommentairesAssistantStagiaireSubject ajouterCommentaireStagiaireSubject(CommentairesAssistantStagiaireSubject commentaireSS) {
         return commentaireASSRepository.save(commentaireSS);
     }
 
     @DeleteMapping("/commentairesAssistantStagiaireSubject/{id}")
-    @PreAuthorize("hasAuthority('SCOPE_admin','SCOP_assistant','SCOP_stagiaire')")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT','SCOPE_STAGIAIRE')")
 	public ResponseEntity<Map<String, Boolean>> deleteCommentairesAssistantStagiaireSubject(@PathVariable Long id){
 		CommentairesAssistantStagiaireSubject commentairesAssistantStagiaireSubject = commentaireASSRepository.findByIdCommentaire(id);
         if (commentairesAssistantStagiaireSubject==null) throw new RuntimeException("Assistant not exist with id :" + id);

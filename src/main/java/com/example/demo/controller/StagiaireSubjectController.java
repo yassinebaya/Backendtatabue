@@ -27,21 +27,21 @@ StagiaireSubjectsRepository stagiaireSubjectsRepository;
 @Autowired
 AppUserRepository appUserRepository;
  @GetMapping("stagiaireSujects/{stagaire}")
-   @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN','SCOP_STAGIAIRE')")
+   @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN','SCOPE_STAGIAIRE')")
 public List<StagiaireSujects> getStagiaireSubjects(@PathVariable Stagaire stagaire){
 List<StagiaireSujects> stagiaireSujects=stagiaireSubjectsRepository.findByListStagiaireSujects(stagaire);
   return stagiaireSujects;
 
  }
  @GetMapping("/stagiaireSujects")
- @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN','SCOP_STAGIAIRE')")
+ @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN','SCOPE_STAGIAIRE')")
  public StagiaireSujects getStagiaireSubjects(@RequestParam Stagaire stagaire,@RequestParam Subject subject){
   StagiaireSujects stagiaireSujects=null;
    stagiaireSujects=stagiaireSubjectsRepository.findByoneStagiaireSujects(stagaire,subject);
     return stagiaireSujects;
   }
  @PutMapping("/stagiaireSujects/{id}")
- @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN','SCOP_STAGIAIRE')")
+ @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN','SCOPE_STAGIAIRE')")
   public ResponseEntity<StagiaireSujects> updateStagiaireSubject(@PathVariable long id,StagiaireSujects detail){
 		StagiaireSujects stagairesuSujects = stagiaireSubjectsRepository.findByidStagiaireSujects(id);
 		if (stagairesuSujects==null) throw new RuntimeException("question not exist with id :" + id);
@@ -54,7 +54,7 @@ List<StagiaireSujects> stagiaireSujects=stagiaireSubjectsRepository.findByListSt
 		return ResponseEntity.ok(updatedsubject);
 	}
    @PostMapping("/stagiaireSujects")
-   @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN','SCOP_STAGIAIRE')")
+   @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN','SCOPE_STAGIAIRE')")
   public StagiaireSujects saveStagiaireSuject(StagiaireSujects detailStagiaireSujects) {
       StagiaireSujects stagairesSujects=stagiaireSubjectsRepository.save(detailStagiaireSujects);
       return stagairesSujects;

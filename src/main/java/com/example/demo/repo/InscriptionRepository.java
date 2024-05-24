@@ -14,8 +14,11 @@ import java.util.List;
 public interface InscriptionRepository extends JpaRepository<Inscriptions,Long> {
 
 
+    @Query("SELECT a FROM Inscriptions a WHERE a.numeroDossier= ?1 ")
+    Inscriptions findByInscriptionbysossier(String numeroDossier);
+
     @Query("SELECT a FROM Inscriptions a WHERE a.id= ?1 ")
-    Inscriptions findByInscription(Long idInscription);
+    Inscriptions findByInscription(Long id);
     
     @Query("SELECT a FROM Inscriptions a  ")
        List<Inscriptions> getinscrit();

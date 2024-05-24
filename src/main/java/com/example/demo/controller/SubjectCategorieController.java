@@ -13,6 +13,8 @@ import com.example.demo.entites.SubjectCategorie;
 import com.example.demo.repo.SubjectCategorieRepo;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.PostMapping;
+
 
 
 @RestController
@@ -21,7 +23,7 @@ public class SubjectCategorieController {
     @Autowired
     SubjectCategorieRepo subjectCategorieRepo;
 @GetMapping("/subjectCategorie")
- @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
+ @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN','SCOPE_STAGIAIRE')")
 public List<SubjectCategorie> subjectCategorieAll(){
        List<SubjectCategorie> stagiaireSujects=subjectCategorieRepo.subjectCategorieAll();
   return stagiaireSujects;
@@ -29,7 +31,7 @@ public List<SubjectCategorie> subjectCategorieAll(){
  }
 
  @GetMapping("/subjectCategorie/{id}")
- @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
+ @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN','SCOPE_STAGIAIRE')")
 public SubjectCategorie getCategoriesByCategorie(@PathVariable Long id){
     SubjectCategorie subjectCategorie =subjectCategorieRepo.findBySubjectCategorie(id);
   return subjectCategorie;
@@ -37,10 +39,10 @@ public SubjectCategorie getCategoriesByCategorie(@PathVariable Long id){
  }
 
 @PutMapping("/subjectCategorie/{id}")
-@PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT')")
+@PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT','SCOPE_STAGIAIRE')")
 	public ResponseEntity<SubjectCategorie> updatecategorie(@PathVariable Long id,SubjectCategorie categoriedetail){
 		SubjectCategorie subjectCategorie =subjectCategorieRepo.findBySubjectCategorie(id);
-        System.out.println(categoriedetail);
+
 		if (subjectCategorie==null) throw new RuntimeException("Categorie not exist with id :" + id);
       
 		subjectCategorie.setSubjects(categoriedetail.getSubjects());
@@ -51,5 +53,16 @@ public SubjectCategorie getCategoriesByCategorie(@PathVariable Long id){
 	}
 
 
+    @PostMapping("/subjectCategorie/{id}")
+   @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT','SCOPE_STAGIAIRE')")
+        public ResponseEntity<SubjectCategorie> saveCategorie(SubjectCategorie categoriedetail){
+            SubjectCategorie subjectCategorie =new SubjectCategorie();
+            subjectCategorie.setSubjects(categoriedetail.getSubjects());
+            subjectCategorie.setTitle(categoriedetail.getTitle());
+            subjectCategorie.setUsed(categoriedetail.getUsed());
+             SubjectCategorie updatesSubjectCategorie =subjectCategorieRepo.save(subjectCategorie);
+            return ResponseEntity.ok(updatesSubjectCategorie);
+        }
+    
 
 }
