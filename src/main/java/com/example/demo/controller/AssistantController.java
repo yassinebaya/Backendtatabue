@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.entites.Assistant;
+import com.example.demo.exeception.UserAlreadyExistsException;
 import com.example.demo.repo.AppUserRepository;
 import com.example.demo.service.AccoubtService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,7 +64,7 @@ private PasswordEncoder passwordEncoder;
   @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN')")
 	public ResponseEntity<Map<String, Boolean>> deleteEmployee(@PathVariable Long id){
 		Assistant assistant = appUserRepository.findByAssistant(id);
-        if (assistant==null) throw new RuntimeException("Assistant not exist with id :" + id);
+		if (assistant==null) throw new UserAlreadyExistsException("Assistant not exist with id :" + id);
 		appUserRepository.delete(assistant);
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
@@ -81,7 +82,7 @@ Assistant Assistant=appUserRepository.findByAssistant(id);
 @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT')")
 	public ResponseEntity<Assistant> updateEmployee(@PathVariable Long id, Assistant assistantdetail){
 		Assistant assistant = appUserRepository.findByAssistant(id);
-		if (assistant==null) throw new RuntimeException("Assistant not exist with id :" + id);
+		if (assistant==null) throw new UserAlreadyExistsException("Assistant not exist with id :" + id);
 		assistant.setUsername(assistantdetail.getUsername());
 		assistant.setPassword(passwordEncoder.encode(assistantdetail.getPassword()));
 		assistant.setEmail(assistantdetail.getEmail());

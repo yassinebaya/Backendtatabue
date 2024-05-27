@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entites.Assistant;
-
+import com.example.demo.entites.CommentairesAssistantStagiaire;
 import com.example.demo.entites.CommentairesAssistantStagiaireSubject;
 import com.example.demo.entites.Stagaire;
 import com.example.demo.entites.Subject;
@@ -52,6 +52,14 @@ public List<CommentairesAssistantStagiaireSubject> searchCommentairesAssistantSt
 		return ResponseEntity.ok(response);
 	}
 
+   
 
+    @GetMapping("/CommentaireAssistantStagiaire")
+ @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN')")
+public List<CommentairesAssistantStagiaireSubject> searchCommentairesAssistantStagiaire(@RequestParam Assistant assistant,@RequestParam Stagaire stagaire){
+    List<CommentairesAssistantStagiaireSubject> commentaireAssistantStagiaire=commentaireASSRepository.findByCommentairesAssistantStagiaire(assistant,stagaire);
+  return commentaireAssistantStagiaire;
+
+ }
     
 }

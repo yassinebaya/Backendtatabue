@@ -42,7 +42,7 @@ public Question createQuestion(Question question) {
 }
 
     @PutMapping("/questions/{id}")
- @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_STAGIAIRE')")
+ @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT','SCOPE_STAGIAIRE')")
 	public ResponseEntity<Question> updateEmployee(@PathVariable long id, Question questiondetail){
 		Question question = questionRepository.findByQuestion(id);
 		if (question==null) throw new RuntimeException("question not exist with id :" + id);

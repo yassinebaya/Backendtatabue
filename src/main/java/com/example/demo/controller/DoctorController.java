@@ -18,14 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dtos.SubjectDTO;
 import com.example.demo.entites.Assistant;
 import com.example.demo.entites.Projets;
-import com.example.demo.entites.Stagaire;
-import com.example.demo.entites.StagiaireSujects;
 import com.example.demo.entites.Subject;
 import com.example.demo.mappers.MaperSubject;
 import com.example.demo.repo.AppUserRepository;
-import com.example.demo.repo.StagiaireSubjectsRepository;
+
 import com.example.demo.repo.SubjectRepo;
 import com.example.demo.service.DoctorService;
+import com.example.demo.service.SujetService;
 @RestController
 @CrossOrigin("*")
 public class DoctorController {
@@ -36,9 +35,8 @@ public class DoctorController {
     @Autowired
     private DoctorService doctorService;
     @Autowired
-    AppUserRepository appUserRepository;
-    @Autowired
-   StagiaireSubjectsRepository stagiaireSubjectsRepository;
+    private SujetService sujetService;
+   
 
     @PostMapping("/subjects")
   @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT')")
@@ -109,19 +107,15 @@ public List<Subject> getAssistantSubjects(@RequestParam Assistant assistantId){
 
     @PostMapping("/publiersujet")
   @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT')")
-    @Async
-    public void  publiersujet(@RequestParam Subject subject){
-         List<Stagaire> stagaire=appUserRepository.allStagaires();
-         List<StagiaireSujects> stagaires=new ArrayList<>();
-             for(Stagaire appUser:stagaire){
-              StagiaireSujects  stagairesucjts=new StagiaireSujects();
-                   stagairesucjts.setStagaire(appUser);
-                   stagairesucjts.setSubject(subject);
-                   stagairesucjts.setSubjectEtape("1");
-                  stagaires.add(stagairesucjts);
-             }
-             stagiaireSubjectsRepository.saveAll(stagaires);
-        
+    public ResponseEntity<Map<String, Boolean>> publiersujet(Subject subject){
+       
+           sujetService.publiersujet(subject);
+            
+             Map<String, Boolean> response = new HashMap<>();
+             response.put("publiersujet", Boolean.TRUE);
+             return ResponseEntity.ok(response);
+
+
     }
 
 
