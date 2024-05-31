@@ -30,27 +30,9 @@ import javax.crypto.spec.SecretKeySpec;
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-
-  
-   
-    @Autowired 
-    private CustomLogoutHandler customLogoutHandler;
-
-  
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
     @org.springframework.context.annotation.Lazy
     @Autowired
     private  UserDetailserviceimpl userDetailsService;
-    private final CustomLogoutHandler logoutHandler;
-    
-    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter,CustomLogoutHandler logoutHandler) {
-   this.jwtAuthenticationFilter=jwtAuthenticationFilter;
-    this.logoutHandler = logoutHandler;
-   
-  
-}
-    
-
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -132,7 +114,7 @@ public class SecurityConfig {
 @Bean
 CorsConfigurationSource corsConfigurationSource(){
     CorsConfiguration corsConfiguration=new CorsConfiguration();
-    corsConfiguration.addAllowedOrigin("http://docutrackproximity.s3-website.eu-north-1.amazonaws.com"); // Autorise seulement cette origine
+    corsConfiguration.addAllowedOrigin("http://localhost:4200"); // Autorise seulement cette origine
     corsConfiguration.addAllowedMethod("*");
     corsConfiguration.addAllowedHeader("*");
     corsConfiguration.setAllowCredentials(true); // Autorise les informations d'authentification

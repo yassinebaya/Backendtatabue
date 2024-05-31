@@ -30,7 +30,7 @@ public class StagaireControle {
  SubjectRepo subjectRepo;
  
 @GetMapping("getStudent/{stagiaireId}")
-@PreAuthorize("hasAnyAuthority('SCOPE_STAGIAIRE','SCOPE_ADMIN')")
+@PreAuthorize("hasAnyAuthority('SCOPE_STAGIAIRE','SCOPE_ASSISTANT','SCOPE_ADMIN')")
  public Stagaire getStudent(@PathVariable Long stagiaireId){
 
  Stagaire stagaire=appUserRepository.findByStagaire(stagiaireId);

@@ -51,7 +51,7 @@ public class StagaireQuestionController {
  }
 @PostMapping("/stagiaireQuestions")
 @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT','SCOPE_STAGIAIRE')")
-    public Responce ajouterCommentaireStagiaireSubject(@RequestParam Subject subject,@RequestParam Stagaire stagaire) {
+    public Responce ajouterCommentaireStagiaireSubject(Subject subject,Stagaire stagaire) {
 
          questionService.savestagairequestion(subject,stagaire);
          Responce responce=new Responce("stagaire a ajoute");

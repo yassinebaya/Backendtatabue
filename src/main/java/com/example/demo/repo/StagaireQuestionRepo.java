@@ -15,8 +15,8 @@ public interface StagaireQuestionRepo extends JpaRepository<Stagairequsetion,Lon
     @Query("SELECT a FROM Stagairequsetion a WHERE a.id= ?1 ")
     Stagairequsetion findByIdStagairequsetion(Long id);
 
-    @Query("SELECT a FROM Stagairequsetion a WHERE a.question= ?1 ")
-    Stagairequsetion findByStagairequsetion(Question question);
+    @Query("SELECT a FROM Stagairequsetion a WHERE a.question= ?1 and a.stagaire= ?2 ")
+    Stagairequsetion findByStagairequsetion(Question question,Stagaire stagaire);
     @Query("SELECT a FROM Stagairequsetion a WHERE a.stagaire= ?1 ")
     List<Stagairequsetion> findByStagaire(Stagaire stagaire);
     @Query("SELECT a FROM Stagairequsetion a ")

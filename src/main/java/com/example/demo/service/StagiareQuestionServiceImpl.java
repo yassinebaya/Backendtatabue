@@ -31,10 +31,9 @@ public class StagiareQuestionServiceImpl implements StagiareQuestionService {
            List<Question> questions=questionRepository.findBySubject(subject);
            List<Stagairequsetion> stagaires=new ArrayList<>();
              for(Question question:questions){
-                Stagairequsetion  stagairequsetion= stagaireQuestionRepo.findByStagairequsetion(question);
-               if  (stagairequsetion!=null) throw new UserAlreadyExistsException("this user existe déja");
+                Stagairequsetion  stagairequsetion= stagaireQuestionRepo.findByStagairequsetion(question,stagaire);
+               if  (stagairequsetion!=null) throw new UserAlreadyExistsException("this  Stagairequsetion  existe déja");
                stagairequsetion=new Stagairequsetion();
-              
               stagairequsetion.setQuestion(question);
               stagairequsetion.setSubject(subject);
               stagairequsetion.setStagaire(stagaire);
