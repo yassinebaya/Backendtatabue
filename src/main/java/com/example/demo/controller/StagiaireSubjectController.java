@@ -13,11 +13,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.dtos.StagiaireSubjectStatutDTO;
 import com.example.demo.entites.Stagaire;
 import com.example.demo.entites.StagiaireSujects;
 import com.example.demo.entites.Subject;
 import com.example.demo.repo.AppUserRepository;
 import com.example.demo.repo.StagiaireSubjectsRepository;
+import com.example.demo.service.StagiareQuestionService;
+
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
 @CrossOrigin("*")
@@ -26,6 +31,8 @@ public class StagiaireSubjectController {
 StagiaireSubjectsRepository stagiaireSubjectsRepository;
 @Autowired
 AppUserRepository appUserRepository;
+@Autowired
+StagiareQuestionService stagiareQuestionService;
  @GetMapping("stagiaireSujects/{stagaire}")
    @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN','SCOPE_STAGIAIRE')")
 public List<StagiaireSujects> getStagiaireSubjects(@PathVariable Stagaire stagaire){

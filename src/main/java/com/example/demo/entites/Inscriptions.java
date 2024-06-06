@@ -31,9 +31,8 @@ public class Inscriptions {
     private String Tel;
     @ManyToOne(fetch = FetchType.EAGER)
      Groupe groupe;
-
-    private String projectTitle;
-
+     @ManyToOne
+    private Projets projectTitle;
     private String emailEnvoie;
    
     

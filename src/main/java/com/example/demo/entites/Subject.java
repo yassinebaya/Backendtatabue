@@ -45,6 +45,8 @@ public class Subject {
     private String langue;
     private boolean used;
     @ManyToOne
+   private Projets projets;
+    @ManyToOne
     SubjectCategorie  categorieId;
     @ManyToOne
     DocumentType documentType;

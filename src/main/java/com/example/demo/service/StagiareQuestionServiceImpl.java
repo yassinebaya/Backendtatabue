@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
 import com.example.demo.dtos.StagaireQuestionDTO;
 import com.example.demo.entites.Question;
 import com.example.demo.entites.Stagaire;
@@ -13,6 +12,7 @@ import com.example.demo.entites.Subject;
 import com.example.demo.exeception.UserAlreadyExistsException;
 import com.example.demo.repo.QuestionRepository;
 import com.example.demo.repo.StagaireQuestionRepo;
+import com.example.demo.repo.StagiaireSubjectsRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
@@ -24,7 +24,8 @@ public class StagiareQuestionServiceImpl implements StagiareQuestionService {
     QuestionRepository questionRepository;
     @Autowired
     StagaireQuestionRepo stagaireQuestionRepo;
-
+    @Autowired
+ StagiaireSubjectsRepository stagiaireSubjectsRepository;
     @Override
     @Async
     public void savestagairequestion(Subject subject ,Stagaire stagaire) {
@@ -41,9 +42,6 @@ public class StagiareQuestionServiceImpl implements StagiareQuestionService {
              }
            stagaireQuestionRepo.saveAll(stagaires);
       
-
-        
-      
     }
 
     @Override
@@ -54,13 +52,13 @@ public class StagiareQuestionServiceImpl implements StagiareQuestionService {
       Stagairequsetion  stagairequsetion= stagaireQuestionRepo.findByIdStagairequsetion(sQuestionDTO.getId());
     //  if  (stagairequsetion==null) throw new UserAlreadyExistsException("stagairequestion is null");
       stagairequsetion.setAnswer(sQuestionDTO.getAnswer());
-      lesstagairesquestion.add( stagairequsetion);
+      lesstagairesquestion.add(stagairequsetion);
 
     }
     stagaireQuestionRepo.saveAll(lesstagairesquestion);
 
-    
-     
     }
+
+   
 
 }

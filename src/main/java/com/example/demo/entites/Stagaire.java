@@ -21,7 +21,8 @@ public class Stagaire extends AppUser {
 private String statut;
 private boolean checked;
 private boolean notification;
-private String projectTitle;
+@ManyToOne()
+private Projets projectTitle;
 private String prenom;
 private String numeroDossier;
 @ManyToOne()

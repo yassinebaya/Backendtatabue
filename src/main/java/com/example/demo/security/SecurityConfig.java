@@ -51,10 +51,10 @@ public class SecurityConfig {
                     authConfig.requestMatchers("/subjects/**").permitAll();
                     authConfig.requestMatchers("/updateEtat/**").permitAll();
                     authConfig.requestMatchers("/indicateurs/**").permitAll();
-                    authConfig.requestMatchers("/notifications/**").permitAll();
-                    authConfig.requestMatchers("/chat-socket/**","publiersujet/**","/swagger-ui/**","/updatepassword/**","/savestagairequestion/**").permitAll();
-                    authConfig.requestMatchers("/chat/**","send/**").permitAll();
-                    authConfig.requestMatchers("/getStudent/**","/stagiaires/**","/getallassistants/**","/DefaultGroupe/**","/stagaieGroupe/**","/inscriptionGroupe/**","/AllGroupe/**","/searchGroupes/**","/groupe/**","/sendEmail/**","/ajouterAdmin/**","/getallstagairequestions/**","/getAllIndicateurs/**").permitAll();
+                    authConfig.requestMatchers("/notifications/**","/StagiaireSubjectStatut/**").permitAll();
+                    authConfig.requestMatchers("/chat-socket/**","publiersujet/**","/updatepassword/**","/savestagairequestion/**").permitAll();
+                    authConfig.requestMatchers("/chat/**","send/**","/lien/**","/calculerEtape/**").permitAll();
+                    authConfig.requestMatchers("/getStudent/**","/stagiaires/**","/getallassistants/**","/DefaultGroupe/**","/stagaieGroupe/**","/inscriptionGroupe/**","/AllGroupe/**","/searchGroupes/**","/groupe/**","/sendEmail/**","/ajouterAdmin/**","/getallstagairequestions/**","/uploadToGoogleDrive/**","/getAllIndicateurs/**").permitAll();
                     authConfig.requestMatchers("/Test1/**","/Test12/**","/addnewrole/**","/addroletouser/**","/Inscription/**","/dateenvoi/**","/listestagaire/**","/ajouterassistant/**","/listassistant/**","/incrimenter/**","/dicrimenter/**","/logout1/**").permitAll();
                     authConfig.requestMatchers("/admin/**").denyAll();
                    

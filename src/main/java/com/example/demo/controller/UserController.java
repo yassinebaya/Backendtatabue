@@ -25,9 +25,7 @@ PasswordEncoder passwordEncoder;
 @PutMapping("/updatepassword/{id}")
 //@PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT')")
 	public ResponseEntity<AppUser> updatepassword(@PathVariable Long id,@RequestParam String ancienpassword,@RequestParam String password){
-        System.out.println(passwordEncoder.encode(ancienpassword));
         AppUser appuser=appUserRepository.findByIduser(id);
-        System.out.println(appuser.getPassword());
        
          if (appuser==null) throw new UserAlreadyExistsException("password ancien incorrect");
             appuser.setPassword(passwordEncoder.encode(password));

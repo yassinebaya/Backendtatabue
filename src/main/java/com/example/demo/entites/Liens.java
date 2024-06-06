@@ -1,5 +1,4 @@
 package com.example.demo.entites;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,7 +20,9 @@ public class Liens {
      private Long id;
      private String lien;
      @ManyToOne
-    private  Assistant assistant;
+    private  AppUser appUser;
+    @ManyToOne
+    private Subject subject;
     private String titre;
      
 }

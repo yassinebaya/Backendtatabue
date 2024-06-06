@@ -41,6 +41,8 @@ public class DoctorController {
     @PostMapping("/subjects")
   @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT')")
     public Subject createSubject(Subject subject) {
+
+      System.out.println(subject.getProjets());
        return  doctorService.createSubject(subject);
     }
  @PutMapping("/subjects/{id}")
@@ -62,6 +64,7 @@ public class DoctorController {
        subject.setTitreLien(subjectdetail.getTitreLien());
        subject.setLangue(subjectdetail.getLangue());
        subject.setUsed(subjectdetail.isUsed());
+       subject.setProjets(subjectdetail.getProjets());
        subject.setCategorieId(subjectdetail.getCategorieId());
        subject.setDocumentType(subjectdetail.getDocumentType());
      Subject updatedsubject = subjectRepo.save(subject);
