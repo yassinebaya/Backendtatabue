@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import com.example.demo.entites.Stagaire;
 import com.example.demo.entites.StagiaireSujects;
 import com.example.demo.entites.Subject;
-import com.example.demo.exeception.UserAlreadyExistsException;
 import com.example.demo.repo.AppUserRepository;
 import com.example.demo.repo.StagiaireSubjectsRepository;
 import jakarta.transaction.Transactional;
@@ -28,8 +27,6 @@ public class SujetServiceImpl implements SujetService {
          List<Stagaire> stagaire=appUserRepository.allStagaires();
          List<StagiaireSujects> stagaires=new ArrayList<>();
              for(Stagaire appUser:stagaire){
-          System.out.println(appUser.getProjectTitle().getId());
-          System.out.println(subject.getProjets().getId());
               if(appUser.getProjectTitle().getId()!=subject.getProjets().getId()) {
                System.out.println("this projet incorrect");
               }

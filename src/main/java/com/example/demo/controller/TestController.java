@@ -150,6 +150,7 @@ return animateur;
         @PostMapping("/addusertorol")
       // @PreAuthorize("hasAuthority('SCOPE_USER')")
         public AppUser addusertorol(String username,String rol){
+          System.out.println(username+""+rol);
                  accoubtService.addRoleToUser(username,rol);
                AppUser  appUser=appUserRepository.findByUsername(username);
             

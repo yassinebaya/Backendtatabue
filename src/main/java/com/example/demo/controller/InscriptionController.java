@@ -53,6 +53,7 @@ InscriptionRepository inscriptionRepository;
         @PostMapping("/inscriptions")
         @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT')")
     public Inscriptions saveInscriptions(Inscriptions inscriptions) {
+ 
         return inscriptionRepository.save(inscriptions);
     }
     

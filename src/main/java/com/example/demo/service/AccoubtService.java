@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dtos.ChangePasswordRequestDTO;
 import com.example.demo.dtos.Responce;
 import com.example.demo.entites.AppRole;
 import com.example.demo.entites.AppUser;
@@ -14,11 +15,13 @@ public interface AccoubtService  {
     void addRoleToUser(String username,String role);
     void removeRoleFromUser(String username,String Role);
     AppUser loadAppUserByname(String username);
-Responce Activercompte(String dossier,String email,String password );
+    Responce Activercompte(String dossier,String email,String password );
     Inscriptions findInscriptions(String dossier,String email);
     Assistant createAssistant(Assistant assistant);
     public Stagaire createStagiaire(String dossier,String email,String password,Inscriptions inscriptions);
     public void publierStagiareSubject(Stagaire stagaire);
+    void changePassword(ChangePasswordRequestDTO request, String token);
+    public void envoyerEmailToken(String username);
 
     
 }

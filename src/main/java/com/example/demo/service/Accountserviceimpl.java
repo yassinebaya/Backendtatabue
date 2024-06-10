@@ -1,12 +1,29 @@
 package com.example.demo.service;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
+import org.springframework.security.oauth2.jwt.JwsHeader;
+import org.springframework.security.oauth2.jwt.JwtClaimsSet;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dtos.ChangePasswordRequestDTO;
 import com.example.demo.dtos.Responce;
+import com.example.demo.dtos.UserDTO;
 import com.example.demo.entites.AppRole;
 import com.example.demo.entites.AppUser;
 import com.example.demo.entites.Assistant;
@@ -20,6 +37,8 @@ import com.example.demo.repo.AppUserRepository;
 import com.example.demo.repo.InscriptionRepository;
 import com.example.demo.repo.StagiaireSubjectsRepository;
 import com.example.demo.repo.SubjectRepo;
+
+import ch.qos.logback.core.subst.Token;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
@@ -35,6 +54,12 @@ public class Accountserviceimpl implements AccoubtService {
     private SubjectRepo subjectRepo;
       @Autowired
    StagiaireSubjectsRepository stagiaireSubjectsRepository;
+     @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private JwtEncoder jwtEncoder;
+    @Autowired
+    private AccoubtService accoubtService;
   
     @Override
     public AppUser addNewStagaire(String username,String password) {
@@ -103,8 +128,6 @@ public class Accountserviceimpl implements AccoubtService {
        Stagaire  stagaire =createStagiaire(dossier,email,password,inscriptions);
             responce = new Responce("oui");
             publierStagiareSubject(stagaire);
-       
-           
         
            }
            return responce;
@@ -153,18 +176,60 @@ public class Accountserviceimpl implements AccoubtService {
        
          List<StagiaireSujects> stagaires=new ArrayList<>();
              for(Subject subject:lessubject){
+
+              if(stagaire.getProjectTitle().getId()!=subject.getProjets().getId()) {
+                System.out.println("this projet incorrect");
+               }else{
+
               StagiaireSujects  stagairesucjts=new StagiaireSujects();
-              System.out.println(subject);
                    stagairesucjts.setStagaire(stagaire);
                    stagairesucjts.setSubject(subject);
                    stagairesucjts.setSubjectEtape("1");
                   stagaires.add(stagairesucjts);
+               }
              }
              stagiaireSubjectsRepository.saveAll(stagaires);
            
     
     }
+   
+
+      @Override
+      public void changePassword(ChangePasswordRequestDTO request,String Token) {
+          AppUser appUser=appUserRepository.findByIduser(userId);
+          if (!passwordEncoder.matches(request.currentPassword(),appUser.getPassword()))
+              throw new RuntimeException("The current password is incorrect");
+          if(!request.newPassword().equals(request.confirmPassword())){
+              throw new RuntimeException("Confirmed password not match");
+          }
+          appUser.setPassword(passwordEncoder.encode(request.newPassword()));
+          appUserRepository.save(appUser);
+      }
+
+  @Override
+    public void envoyerEmailToken(String email){
+       AppUser appUser=appUserRepository.findByEmail(email);
+          Authentication authentication= authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(email,appUser.getPassword()));
+             SecurityContextHolder.getContext().setAuthentication(authentication);
+           Instant instant=Instant.now();
+           String scope=authentication.getAuthorities().stream().map(a->a.getAuthority()).collect(Collectors.joining(" "));
+           JwtClaimsSet jwtClaimsSet=JwtClaimsSet.builder()
+                .issuedAt(instant)
+                .expiresAt(instant.plus(10, ChronoUnit.MINUTES))
+                .subject(email)
+                .claim("email",appUser.getEmail())
+                .build();
+        JwtEncoderParameters jwtEncoderParameters=JwtEncoderParameters.from(JwsHeader.with(MacAlgorithm.HS512).build(),jwtClaimsSet);
+     String jwt=jwtEncoder.encode(jwtEncoderParameters).getTokenValue();
+     String emailContent=String.format("To activate yous account click this link : http://localhost:8888/auth-service/public/emailActivation?token=" + "token =" + jwt );
+
+
+        }
+     
+    }
+    
     
   
 
-}
+
