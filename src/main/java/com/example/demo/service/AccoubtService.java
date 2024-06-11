@@ -22,6 +22,7 @@ public interface AccoubtService  {
     public void publierStagiareSubject(Stagaire stagaire);
     void changePassword(ChangePasswordRequestDTO request, String token);
     public void envoyerEmailToken(String username);
+    public AppUser passwordChangeBytocken(String token);
 
     
 }

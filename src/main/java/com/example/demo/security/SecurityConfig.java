@@ -4,6 +4,7 @@ import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -41,7 +42,7 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults()) 
                 .authorizeHttpRequests(authConfig -> {
                     authConfig.requestMatchers("/addnewuser/**","/inscriptionkyword/**","/stagiareskyword/**","/stagiareskywordbygroube/**","/inscriptionskywordbygroube1/**","/addnewAssistant/**","/addusertorol/**","/uploadImag/**","/downloadImage/**","/objet/**","/ajouterinscription/**").permitAll();
-                    authConfig.requestMatchers("/login/**","/stagiareskywordbynotegroube/**","/stagiaireDelete/**","/stagiaresCheked/**","/inscriptions/**").permitAll();
+                    authConfig.requestMatchers("/login/**","/stagiareskywordbynotegroube/**","/stagiaireDelete/**","/stagiaresCheked/**","/inscriptions/**","/updateStagiaire/**").permitAll();
                     authConfig.requestMatchers("/assistants/**").permitAll();
                     authConfig.requestMatchers("/stagiaireSujects/**").permitAll();
                     authConfig.requestMatchers("/CommentaireAssistantStagiaire/**","/allsubjects/**","/projets/**","/subjectsbyid/**","/documentType/**").permitAll();
@@ -53,7 +54,7 @@ public class SecurityConfig {
                     authConfig.requestMatchers("/indicateurs/**").permitAll();
                     authConfig.requestMatchers("/notifications/**","/StagiaireSubjectStatut/**").permitAll();
                     authConfig.requestMatchers("/chat-socket/**","publiersujet/**","/updatepassword/**","/savestagairequestion/**").permitAll();
-                    authConfig.requestMatchers("/chat/**","send/**","/lien/**","/calculerEtape/**").permitAll();
+                    authConfig.requestMatchers("/chat/**","send/**","/lien/**","/calculerEtape/**","/forgotPassword/**","/ChangerMotDePasse/**").permitAll();
                     authConfig.requestMatchers("/getStudent/**","/stagiaires/**","/getallassistants/**","/DefaultGroupe/**","/stagaieGroupe/**","/inscriptionGroupe/**","/AllGroupe/**","/searchGroupes/**","/groupe/**","/sendEmail/**","/ajouterAdmin/**","/getallstagairequestions/**","/uploadToGoogleDrive/**","/getAllIndicateurs/**").permitAll();
                     authConfig.requestMatchers("/Test1/**","/Test12/**","/addnewrole/**","/addroletouser/**","/Inscription/**","/dateenvoi/**","/listestagaire/**","/ajouterassistant/**","/listassistant/**","/incrimenter/**","/dicrimenter/**","/logout1/**").permitAll();
                     authConfig.requestMatchers("/admin/**").denyAll();
@@ -105,7 +106,8 @@ public class SecurityConfig {
         return NimbusJwtDecoder.withSecretKey(secretKeySpec).macAlgorithm(MacAlgorithm.HS512).build();
     }
     @Bean
-    public AuthenticationManager authenticationManager(UserDetailsService userDetailsService){
+ 
+    public AuthenticationManager authenticationManager(@Lazy UserDetailsService userDetailsService){
         DaoAuthenticationProvider daoAuthenticationProvider=new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         daoAuthenticationProvider.setUserDetailsService(userDetailsService);

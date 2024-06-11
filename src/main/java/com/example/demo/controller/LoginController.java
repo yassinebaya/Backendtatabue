@@ -25,7 +25,7 @@ import com.example.demo.service.AccoubtService;
 @RestController
 @CrossOrigin("*")
 public class LoginController {
- @Autowired
+/* @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
     private JwtEncoder jwtEncoder;
@@ -59,5 +59,5 @@ public class LoginController {
 
     }
 
-    
+    */ 
 }

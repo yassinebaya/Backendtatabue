@@ -121,20 +121,15 @@ public class StagaireControle {
 	}
 
   @PutMapping("/updateStagiaire/{idStagiaire}")
-  @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN')")
-	public ResponseEntity<Stagaire> updateStagiaire(@PathVariable long idStagiaire,@RequestBody Stagaire stagairedetaille){
+  @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT','SCOPE_STAGIAIRE')")
+	public ResponseEntity<Stagaire> updateStagiaire(@PathVariable long idStagiaire,Stagaire stagairedetaille){
 	  Stagaire stagaire =appUserRepository.findByStagaire(idStagiaire);
 		if (stagaire==null) throw new RuntimeException("question not exist with id :" + idStagiaire);
-
     stagaire.setEmail(stagairedetaille.getEmail());
-    stagaire.setGroupe(stagairedetaille.getGroupe());
     stagaire.setNom(stagairedetaille.getNom());
     stagaire.setPrenom(stagairedetaille.getPrenom());
-    stagaire.setUsername(stagairedetaille.getUsername());
     stagaire.setTel(stagairedetaille.getTel());
-    stagaire.setNumeroDossier(stagairedetaille.getNumeroDossier());
-    stagaire.setProjectTitle(stagairedetaille.getProjectTitle());
-    stagaire.setStatut(stagairedetaille.getStatut());
+  
     Stagaire updatedsStagaire = appUserRepository.save(stagaire);
 		return ResponseEntity.ok(updatedsStagaire);
 	}

@@ -3,6 +3,7 @@ import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -55,10 +56,12 @@ import java.util.stream.Collectors;
 @RestController
 @CrossOrigin("*")
 public class TestController {
+@Lazy
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
     private JwtEncoder jwtEncoder;
+    @Lazy
     @Autowired
     private AccoubtService accoubtService;
     @Autowired
