@@ -48,8 +48,8 @@ public class DriveServiceImp implements DriveService {
      
         String currentDirectory = System.getProperty("user.dir");
         
-        System.out.println(currentDirectory);
-        Path filePath = Paths.get(currentDirectory,"src/main/resources/cred.json");
+       
+        Path filePath = Paths.get(currentDirectory,"");
        
         return filePath.toString();
     }
