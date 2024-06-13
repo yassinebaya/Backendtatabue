@@ -116,7 +116,9 @@ public class SecurityConfig {
 @Bean
 CorsConfigurationSource corsConfigurationSource(){
     CorsConfiguration corsConfiguration=new CorsConfiguration();
-    corsConfiguration.addAllowedOrigin("http://localhost:4200"); // Autorise seulement cette origine
+    corsConfiguration.addAllowedOrigin("http://localhost:4200"); 
+    // Autorise seulement cette origine
+    corsConfiguration.addAllowedOrigin("http://docutrackproximity.s3-website.eu-north-1.amazonaws.com/");
     corsConfiguration.addAllowedMethod("*");
     corsConfiguration.addAllowedHeader("*");
     corsConfiguration.setAllowCredentials(true); // Autorise les informations d'authentification
