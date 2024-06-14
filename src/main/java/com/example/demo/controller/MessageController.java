@@ -30,12 +30,12 @@ public class MessageController {
        return messageRepository.save(message);
 	}
 
-     @GetMapping("/message/{id}")
+  /*   @GetMapping("/message/{id}")
      @PreAuthorize("hasAnyAuthority('SCOPE_ASSISTANT','SCOPE_ADMIN','SCOPE_STAGIAIRE')")
     public List<Message> messageByGroupe(@RequestParam Groupe groupe){
       List<Message> messages=messageRepository.findByMessageByGroupe(groupe);
       return messages;
-    }
+    }*/ 
 
 
  @DeleteMapping("/message/{id}")

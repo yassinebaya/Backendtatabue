@@ -80,10 +80,11 @@ InscriptionRepository inscriptionRepository;
 
       @PutMapping("/inscriptionGroupe/{numeroDossier}")
 @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_ASSISTANT')")
-	public ResponseEntity<Inscriptions> updateinscriptionBygroub(@PathVariable String numeroDossier,Groupe groupe){
+	public ResponseEntity<Inscriptions> updateinscriptionBygroub(@PathVariable String numeroDossier,Groupe groupe ,String statut){
 	  Inscriptions inscriptions =inscriptionRepository.findByInscriptionbysossier(numeroDossier);
 		if (inscriptions==null) throw new RuntimeException("inscription not exist with id :" +  numeroDossier);
     inscriptions.setGroupe(groupe);
+    inscriptions.setStatut(statut);
     Inscriptions updatedsInscriptions = inscriptionRepository.save(inscriptions);
 		return ResponseEntity.ok(updatedsInscriptions);
 	}
